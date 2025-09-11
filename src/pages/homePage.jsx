@@ -48,46 +48,49 @@ export default function HomePage() {
     };
 
     return (
-        <div className="min-h-screen w-full flex flex-col">
+        <>
             <Header />
 
-            {loadingSections ? (
-                <div className="flex-1 flex items-center justify-center bg-white">
-                    <ClipLoader color="#000000" loading={loadingSections} size={55} />
-                </div>
-            ) : (
-                <main className="flex-1 mt-20">
-                    <section id="home">
-                        <HomeView />
-                    </section>
-                    <section id="pricing">
-                        <Pricing />
-                    </section>
-                    <section id="services">
-                        <Services />
-                    </section>
-                    <section id="products">
-                        <Product />
-                    </section>
-                    <section id="team">
-                        <Team />
-                    </section>
-                    <section id="reviews">
-                        <Reviews />
-                    </section>
-                    <Footer />
-                </main>
-            )}
+            <div className="min-h-screen w-full flex flex-col overflow-hidden">
+                {loadingSections ? (
+                    <div className="flex-1 flex items-center justify-center bg-white">
+                        <ClipLoader color="#000000" loading={loadingSections} size={55} />
+                    </div>
+                ) : (
+                    <main className="flex-1 mt-16 md:mt-22">
+                        <section id="home">
+                            <HomeView />
+                        </section>
+                        <section id="pricing">
+                            <Pricing />
+                        </section>
+                        <section id="services">
+                            <Services />
+                        </section>
+                        <section id="products">
+                            <Product />
+                        </section>
+                        <section id="team">
+                            <Team />
+                        </section>
+                        <section id="reviews">
+                            <Reviews />
+                        </section>
+                        <Footer />
+                    </main>
+                )}
 
-            {showScrollButton && (
-                <button
-                    onClick={scrollToTop}
-                    className="fixed bottom-6 right-6 z-50 cursor-pointer bg-black hover:bg-gray-900 text-white p-3 shadow-lg transition"
-                    aria-label="Scroll to top"
-                >
-                    <FaArrowUp />
-                </button>
-            )}
-        </div>
+                {showScrollButton && (
+                    <button
+                        onClick={scrollToTop}
+                        className="fixed bottom-6 right-6 z-50 cursor-pointer bg-black hover:bg-gray-900 text-white p-3 shadow-lg transition"
+                        aria-label="Scroll to top"
+                    >
+                        <FaArrowUp />
+                    </button>
+                )}
+            </div>
+        </>
+
     );
 }
