@@ -1,31 +1,40 @@
+import { motion } from "framer-motion";
+
 export default function Brand() {
-    const logos = [
-        "/brands/brand1.png",
-        "/brands/brand2.png",
-        "/brands/brand3.png",
-        "/brands/brand4.png",
-        "/brands/brand5.png",
-    ];
+  const logos = [
+    "/brands/brand1.png",
+    "/brands/brand2.png",
+    "/brands/brand3.png",
+    "/brands/brand4.png",
+    "/brands/brand5.png",
+  ];
 
-    return (
-        <section className="relative bg-gray-200 py-10 px-4 w-full h-[250px] overflow-hidden flex items-center">
+  return (
+    <section className="relative bg-gray-100 py-10 px-4 w-full h-[250px] overflow-hidden flex items-center">
 
-            <div className="absolute top-0 left-0 h-full w-20 bg-gradient-to-r from-gray-200 to-transparent z-10 pointer-events-none" />
-            <div className="absolute top-0 right-0 h-full w-20 bg-gradient-to-l from-gray-200 to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 left-0 h-full w-20 bg-gradient-to-r from-gray-200 to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 right-0 h-full w-20 bg-gradient-to-l from-gray-200 to-transparent z-10 pointer-events-none" />
 
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 1, delay: 0.3 }}
+      >
+        <div className="flex animate-scroll gap-12">
+          {[...logos, ...logos].map((logo, idx) => (
+            <img
+              key={idx}
+              src={logo}
+              alt="Brand Logo"
+              className="h-45 object-contain opacity-80 hover:opacity-100 transition-transform duration-300"
+            />
+          ))}
+        </div>
 
-            <div className="flex animate-scroll gap-12">
-                {[...logos, ...logos].map((logo, idx) => (
-                    <img
-                        key={idx}
-                        src={logo}
-                        alt="Brand Logo"
-                        className="h-45 object-contain opacity-80 hover:opacity-100 transition-transform duration-300"
-                    />
-                ))}
-            </div>
+      </motion.div>
 
-            <style jsx>{`
+      <style jsx>{`
         .animate-scroll {
           display: flex;
           width: max-content;
@@ -41,6 +50,6 @@ export default function Brand() {
           }
         }
       `}</style>
-        </section>
-    );
+    </section>
+  );
 }

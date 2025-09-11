@@ -1,7 +1,7 @@
-export default function aboutPage() {
+export default function About() {
     return (
-        <div>
-            <h1>AboutPage</h1>
+        <div className="bg-gray-800">
+            <h1>About</h1>
         </div>
     );
 }
