@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import HomePage from './pages/homePage'
 import About from './pages/aboutPage'
 import Contact from './pages/contact'
+import DateAndTimeSelect from './pages/dateAndTimeSelect'
+import Appointment from './pages/appointment'
 
 function App() {
 
@@ -17,6 +19,8 @@ function App() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/dateAndTimeSelect" element={<DateAndTimeSelect />} />
+            <Route path="/appointment" element={<Appointment />} />
 
           </Routes>
         </div>

@@ -4,16 +4,16 @@ import { FaFacebookF, FaInstagram, FaTiktok, FaPhoneAlt, FaClock, FaHome } from 
 export default function Footer() {
     return (
         <footer className="bg-black text-white py-10 px-6">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="max-w-8xl mx-auto grid grid-cols-1 md:grid-cols-4  py-6 px-6">
 
 
-                <div className="flex flex-col items-center ">
-                    <div className="flex justify-center">
+                <div className="flex w-[250px] flex-col items-center text-left p-4">
+                    <div className="flex items-start">
                         <Link to="/">
                             <img
                                 src="/LUSTRE.png"
                                 alt="Salon Logo"
-                                className="h-16 md:h-22 w-[200px] object-cover cursor-pointer hover:scale-105 transition-transform duration-300"
+                                className="h-16 md:h-35 w-[200px] object-cover cursor-pointer hover:scale-105 transition-transform duration-300"
                             />
                         </Link>
                     </div>
@@ -27,18 +27,20 @@ export default function Footer() {
 
 
                 <div className="flex flex-col items-center md:items-start">
-                    <h2 className="text-red-600 font-semibold mb-4">QUICK LINKS</h2>
+                    <h2 className="text-red-600 mb-4">QUICK LINKS</h2>
                     <ul className="space-y-2 text-sm">
                         <li><a href="#" className="hover:text-red-500">HOME</a></li>
                         <li><a href="#" className="hover:text-red-500">ABOUT</a></li>
-                        <li><a href="#" className="hover:text-red-500">TERMS & CONDITIONS</a></li>
-                        <li><a href="#" className="hover:text-red-500">CONTACT</a></li>
+                        <li><a href="#" className="hover:text-red-500">PRICING</a></li>
+                        <li><a href="#" className="hover:text-red-500">SERVICES</a></li>
+                        <li><a href="#" className="hover:text-red-500">PRODUCTS</a></li>
+                        <li><a href="#" className="hover:text-red-500">FAQ</a></li>
                     </ul>
                 </div>
 
 
                 <div className="flex flex-col items-center md:items-start">
-                    <h2 className="text-red-600 font-semibold mb-4">CONTACT US</h2>
+                    <h2 className="text-red-600 mb-4">CONTACT US</h2>
                     <div className="flex items-start gap-3 mb-3">
                         <FaClock className="text-red-600 mt-1" />
                         <div>
@@ -60,6 +62,27 @@ export default function Footer() {
                             <p className="font-semibold">+94 77 000 000</p>
                         </div>
                     </div>
+                </div>
+
+
+                <div className="flex flex-col items-center md:items-start">
+                    <h2 className="text-red-600 mb-4">SUBSCRIBE TO OUR NEWSLETTER</h2>
+                    <p className="text-gray-400 text-sm mb-8">Subscribe to our newsletter to get the latest news and updates.</p>
+                    <form className="flex items-center w-full max-w-md bg-white border border-gray-300  shadow-md overflow-hidden">
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            className="flex-grow px-4 py-3 text-sm text-gray-700 focus:outline-none"
+                        />
+                        <button
+                            type="submit"
+                            className="px-6 py-3 bg-red-600 text-white hover:bg-red-700 transition-all duration-300 cursor-pointer"
+                        >
+                            Subscribe
+                        </button>
+                    </form>
+
+
                 </div>
             </div>
 

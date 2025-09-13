@@ -3,7 +3,7 @@ import { User } from "lucide-react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 
 export default function Header() {
-    const sections = ["home", "pricing", "services", "products", "reviews"];
+    const sections = ["home", "pricing", "services", "products"];
     const [activeSection, setActiveSection] = useState("home");
 
     const navigate = useNavigate();
@@ -61,17 +61,17 @@ export default function Header() {
                 </div>
 
                 <div className="flex-grow flex justify-center">
-                    <nav className="hidden md:flex space-x-10 font-semibold text-sm">
+                    <nav className="hidden md:flex space-x-10 font-semibold text-sm ">
                         <button
                             onClick={() => handleScroll("home")}
-                            className={`hover:text-red-600 `}
+                            className={`hover:text-red-600 cursor-pointer `}
                         >
                             HOME
                         </button>
 
                         <button
                             onClick={() => navigate("/about")}
-                            className={`hover:text-red-600 `}
+                            className={`hover:text-red-600 cursor-pointer`}
                         >
                             ABOUT
                         </button>
@@ -80,7 +80,7 @@ export default function Header() {
                             <button
                                 key={sec}
                                 onClick={() => handleScroll(sec)}
-                                className={`hover:text-red-600 `}
+                                className={`hover:text-red-600 cursor-pointer`}
                             >
                                 {sec.toUpperCase()}
                             </button>
@@ -88,7 +88,7 @@ export default function Header() {
 
                         <button
                             onClick={() => navigate("/contact")}
-                            className={`hover:text-red-600 `}
+                            className={`hover:text-red-600 cursor-pointer`}
                         >
                             CONTACT
                         </button>
@@ -96,12 +96,18 @@ export default function Header() {
                 </div>
 
                 <div className="flex items-center space-x-3">
-                    <button className="border border-white px-4 py-2 cursor-pointer hover:bg-white hover:text-black transition">
+                    <Link
+                        to="/appointment"
+                        className="border border-white px-4 py-2 cursor-pointer hover:bg-white hover:text-black transition"
+                    >
                         BOOK NOW
-                    </button>
-                    <button className="border border-white p-2 cursor-pointer hover:bg-white hover:text-black transition">
+                    </Link>
+                    <Link
+                        to="/login"
+                        className="border border-white p-2 cursor-pointer hover:bg-white hover:text-black transition inline-flex items-center justify-center"
+                    >
                         <User size={20} />
-                    </button>
+                    </Link>
                 </div>
             </div>
         </header>

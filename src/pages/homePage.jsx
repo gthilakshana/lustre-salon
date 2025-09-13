@@ -83,7 +83,7 @@ export default function HomePage() {
                 {showScrollButton && (
                     <button
                         onClick={scrollToTop}
-                        className="fixed bottom-6 right-6 z-50 cursor-pointer bg-black hover:bg-gray-900 text-white p-3 shadow-lg transition"
+                        className="fixed bottom-0 right-6 z-50 cursor-pointer bg-black hover:bg-gray-900 text-white p-3 shadow-lg transition"
                         aria-label="Scroll to top"
                     >
                         <FaArrowUp />

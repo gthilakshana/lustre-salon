@@ -11,13 +11,29 @@ export default function About() {
             <div className="w-full min-h-screen  pt-16 flex flex-col items-center justify-start">
 
 
-                <div className="w-full h-64 md:h-80 relative">
-                    <img
-                        src="/banner.jpg"
-                        alt="About Us"
-                        className="w-full h-full object-cover"
-                    />
+                <div className="w-full   flex flex-col items-center justify-start ">
+                    <div className="w-full h-64 md:h-80 relative">
+                        <img
+                            src="/banner.jpg"
+                            alt="About Us"
+                            className="w-full h-full object-cover"
+                        />
+
+                        <div className="absolute inset-0 flex flex-col justify-start items-center bg-black/40 pt-16">
+                            <div className="bg-black/50 rounded-2xl px-6 md:px-10 py-6 shadow-lg max-w-3xl text-center">
+                                <h2 className="text-white text-3xl md:text-5xl font-bold">
+                                    About
+                                </h2>
+                                <p className="text-white mt-4 text-base md:text-lg leading-relaxed">
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                    when an unknown printer took.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
 
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
