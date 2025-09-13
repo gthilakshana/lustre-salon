@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 import Header from "../components/header";
 import ServiceGrid from "../components/serviceGrid";
 import Calendar from "../components/calender";
@@ -52,10 +53,23 @@ export default function DateAndTimeSelect() {
             { id: 11, title: "Master Surith’s Expert Hair Coloring", price: "30000.00 LKR" },
             { id: 12, title: "Senior Assistants’ Hair Coloring", price: "12000.00 LKR" },
             { id: 13, title: "Gents’ Hair Coloring Services", price: "5000.00 LKR" },
+            { id: 14, title: "Ladies’ Full Hair Root Touch-Ups", price: "7000.00 LKR" },
+            { id: 15, title: "Gents’ Root Touch-Up", price: "3500.00 LKR" },
+            { id: 16, title: "Ladies crown hair root touch up", price: "5000.00 LKR" },
+            { id: 17, title: "Ladies’ Hair Fringe Touch-Up", price: "3000.00 LKR" },
+            { id: 18, title: "Fashion Hair Color Lines", price: "3000.00 LKR" },
         ],
         chemical: [
             { id: 19, title: "Ladies' Hair Rebounding", price: "14000.00 LKR" },
             { id: 20, title: "Ladies’ Crown Rebonding", price: "9500.00 LKR" },
+            { id: 21, title: "Ladies’ Crown Rebonding", price: "9500.00 LKR" },
+            { id: 22, title: "Ladies’ Crown Rebonding", price: "9500.00 LKR" },
+            { id: 23, title: "Ladies’ Crown Rebonding", price: "9500.00 LKR" },
+            { id: 24, title: "Ladies’ Crown Rebonding", price: "9500.00 LKR" },
+            { id: 25, title: "Ladies’ Crown Rebonding", price: "9500.00 LKR" },
+            { id: 26, title: "Ladies’ Crown Rebonding", price: "9500.00 LKR" },
+            { id: 27, title: "Ladies’ Crown Rebonding", price: "9500.00 LKR" },
+            { id: 28, title: "Ladies’ Crown Rebonding", price: "9500.00 LKR" },
         ],
     };
 
@@ -115,7 +129,7 @@ export default function DateAndTimeSelect() {
 
                         <div className="w-full h-[750px] flex flex-col items-center">
                             {step === "select" && (
-                                <>
+                                <div className="w-full flex flex-col items-center">
                                     <h2 className="text-3xl font-bold mb-4 uppercase">Select Service</h2>
                                     <span className="text-sm text-gray-500 mb-9">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque adipisci incidunt iusto beatae! Ea possimus eligendi sed laudantium recusandae laborum molestias nemo reiciendis labore quaerat, facere vitae! Harum, quaerat excepturi.</span>
                                     <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -126,21 +140,23 @@ export default function DateAndTimeSelect() {
                                         setSelectedService={setSelectedService}
                                     />
 
-                                    {selectedService && (
-                                        <div className="w-full flex justify-end mt-6">
-                                            <button
-                                                onClick={() => setStep("datetime")}
-                                                className="flex px-8 py-2 rounded-md bg-black w-[200px] h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-500 hover:text-white transition"
-                                            >
-                                                Confirm Selection
-                                            </button>
-                                        </div>
-                                    )}
-                                </>
+                                    <div className="w-[80%] flex flex-col items-center ">
+                                        {selectedService && (
+                                            <div className="w-full flex justify-end mt-6">
+                                                <button
+                                                    onClick={() => setStep("datetime")}
+                                                    className="flex px-8 py-2 rounded-full bg-black w-[200px] h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-500 hover:text-white transition"
+                                                >
+                                                    Confirm Selection
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
                             )}
 
                             {step === "datetime" && (
-                                <div className="w-[80%]  h-[600px] p-6 mt-6 ">
+                                <div className="w-[90%]  h-[600px] p-6 mt-6 ">
                                     <h2 className="text-3xl font-bold mb-4 uppercase">Pick Date & Time</h2>
                                     <span className="text-sm text-gray-500 ">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque adipisci incidunt iusto beatae! Ea possimus eligendi sed laudantium recusandae laborum molestias nemo reiciendis labore quaerat, facere vitae! Harum, quaerat excepturi.</span>
 
@@ -159,24 +175,24 @@ export default function DateAndTimeSelect() {
 
                                     </div>
 
-                                    <div className="flex flex-col md:flex-row w-full mt-6">
-                                        <div className="flex w-full justify-between">
+                                    <div className="flex w-full mt-6 items-center justify-between">
 
-                                            <button
-                                                onClick={() => setStep("select")}
-                                                className="px-8 py-2 rounded-md bg-black w-[200px] h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-500 hover:text-white transition">
-                                                Back
-                                            </button>
+                                        <button
+                                            onClick={() => setStep("select")}
+                                            className="flex items-center justify-center px-4 py-2 rounded-full bg-black w-12 h-12 font-medium text-white shadow cursor-pointer hover:bg-red-500 hover:text-white transition"
+                                        >
+                                            <FaArrowLeft size={20} />
+                                        </button>
 
 
-                                            <button
-                                                onClick={() => setStep("payment")}
-                                                className="px-8 py-2 rounded-md bg-black w-auto h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-500 hover:text-white transition"
-                                            >
-                                                Confirm Appointment
-                                            </button>
-                                        </div>
+                                        <button
+                                            onClick={() => setStep("payment")}
+                                            className="px-8 py-2 rounded-full bg-black w-auto h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-500 hover:text-white transition"
+                                        >
+                                            Confirm Appointment
+                                        </button>
                                     </div>
+
 
 
 

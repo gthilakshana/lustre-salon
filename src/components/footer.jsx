@@ -27,7 +27,7 @@ export default function Footer() {
 
 
                 <div className="flex flex-col items-center md:items-start">
-                    <h2 className="text-red-600 mb-4">QUICK LINKS</h2>
+                    <h2 className="text-red-500 mb-4">QUICK LINKS</h2>
                     <ul className="space-y-2 text-sm">
                         <li><a href="#" className="hover:text-red-500">HOME</a></li>
                         <li><a href="#" className="hover:text-red-500">ABOUT</a></li>
@@ -40,7 +40,7 @@ export default function Footer() {
 
 
                 <div className="flex flex-col items-center md:items-start">
-                    <h2 className="text-red-600 mb-4">CONTACT US</h2>
+                    <h2 className="text-red-500 mb-4">CONTACT US</h2>
                     <div className="flex items-start gap-3 mb-3">
                         <FaClock className="text-red-600 mt-1" />
                         <div>
@@ -66,8 +66,8 @@ export default function Footer() {
 
 
                 <div className="flex flex-col items-center md:items-start">
-                    <h2 className="text-red-600 mb-4">SUBSCRIBE TO OUR NEWSLETTER</h2>
-                    <p className="text-gray-400 text-sm mb-8">Subscribe to our newsletter to get the latest news and updates.</p>
+                    <h2 className="text-red-500 mb-4">SUBSCRIBE TO OUR NEWSLETTER</h2>
+                    <p className="text-gray-400 text-sm mb-8">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis impedit ducimus rerum eum voluptas, sequi suscipit expedita obcaecati consectetur facilis tenetur ratione perspiciatis quas, illo mollitia alias eaque et consequuntur.</p>
                     <form className="flex items-center w-full max-w-md bg-white border border-gray-300  shadow-md overflow-hidden">
                         <input
                             type="email"
@@ -76,7 +76,7 @@ export default function Footer() {
                         />
                         <button
                             type="submit"
-                            className="px-6 py-3 bg-red-600 text-white hover:bg-red-700 transition-all duration-300 cursor-pointer"
+                            className="px-6 py-3 bg-red-500 text-white hover:bg-red-600 transition-all duration-300 cursor-pointer"
                         >
                             Subscribe
                         </button>
