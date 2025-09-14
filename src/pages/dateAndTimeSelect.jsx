@@ -7,20 +7,55 @@ import ServiceGrid from "../components/serviceGrid";
 import Calendar from "../components/calender";
 import TimeSlots from "../components/timeSlots";
 import Tabs from "../components/tabs";
+import Cart from "../components/cart";
 import Footer from "../components/footer";
 
 export default function DateAndTimeSelect() {
     const location = useLocation();
     const serviceFromState = location.state;
+
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedTime, setSelectedTime] = useState("");
-
+    const [selectedGender, setSelectedGender] = useState(null);
+    const [cartItems, setCartItems] = useState([]);
 
     const [activeTab, setActiveTab] = useState("haircuts");
     const [selectedService, setSelectedService] = useState(null);
     const [step, setStep] = useState("select");
+
     const displayInfo = selectedService ? (selectedService.name || selectedService.title) : null;
 
+    const handleAddToCart = () => {
+        if (!selectedService || !selectedDate || !selectedTime || !selectedGender) {
+            alert("Please select a service, date/time, and gender.");
+            return;
+        }
+
+
+        const duplicate = cartItems.find(
+            item =>
+                item.id === selectedService.id &&
+                item.date === selectedDate &&
+                item.time === selectedTime &&
+                item.gender === selectedGender
+        );
+
+        if (duplicate) {
+            alert("This service is already in the cart for the selected date/time and gender.");
+            return;
+        }
+
+        const newItem = {
+            id: Date.now(),
+            ...selectedService,
+            date: selectedDate,
+            time: selectedTime,
+            gender: selectedGender,
+        };
+
+        setCartItems([...cartItems, newItem]);
+        setStep("cart");
+    };
 
 
     useEffect(() => {
@@ -32,11 +67,9 @@ export default function DateAndTimeSelect() {
         }
     }, [serviceFromState]);
 
-
     useEffect(() => {
         console.log("Selected service:", selectedService);
     }, [selectedService]);
-
     const services = {
         haircuts: [
             { id: 1, title: "Ladies’ long Haircuts", price: "8000.00 LKR" },
@@ -103,7 +136,7 @@ export default function DateAndTimeSelect() {
                             <button className="px-8 py-4 text-sm font-semibold border-r bg-black text-white transition-colors duration-300">
                                 Pick Date & Time
                             </button>
-                            <button className="px-8 py-4 text-sm font-semibold hover:bg-black hover:text-white transition-colors duration-300">
+                            <button className="px-8 py-4 text-sm font-semibold bg-black text-white transition-colors duration-300">
                                 Confirm Payment
                             </button>
                         </div>
@@ -128,7 +161,7 @@ export default function DateAndTimeSelect() {
 
 
 
-                        <div className="w-full h-[750px] flex flex-col items-center">
+                        <div className="w-full min-h-screen flex flex-col justify-between items-center">
                             {step === "select" && (
                                 <motion.div
                                     className="w-full flex flex-col items-center"
@@ -196,7 +229,7 @@ export default function DateAndTimeSelect() {
 
                             {step === "datetime" && (
                                 <motion.div
-                                    className="w-[90%] h-[600px] p-6 mt-6"
+                                    className="w-[90%]  p-6 mt-6"
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.8, ease: "easeOut" }}
@@ -238,8 +271,14 @@ export default function DateAndTimeSelect() {
                                         transition={{ duration: 0.8, delay: 0.4 }}
                                     >
                                         <Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-                                        <TimeSlots selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
+                                        <TimeSlots
+                                            selectedTime={selectedTime}
+                                            setSelectedTime={setSelectedTime}
+                                            selectedGender={selectedGender}
+                                            setSelectedGender={setSelectedGender}
+                                        />
                                     </motion.div>
+
 
                                     <motion.div
                                         className="flex w-full mt-6 items-center justify-between"
@@ -255,14 +294,94 @@ export default function DateAndTimeSelect() {
                                         </button>
 
                                         <button
-                                            onClick={() => setStep("payment")}
+                                            onClick={handleAddToCart}
                                             className="px-8 py-2 rounded-full bg-black w-auto h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-500 hover:text-white transition"
                                         >
                                             Confirm Appointment
                                         </button>
+
                                     </motion.div>
                                 </motion.div>
                             )}
+
+
+
+
+
+                            {step === "cart" && (
+                                <motion.div
+                                    className="w-[90%]  p-6 mt-6 "
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.8, ease: "easeOut" }}
+                                >
+                                    <motion.h2
+                                        className="text-3xl font-bold mb-4 uppercase"
+                                        initial={{ opacity: 0, y: -20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.8, delay: 0.1 }}
+                                    >
+                                        Confirm Appointment Payment
+                                    </motion.h2>
+
+                                    <motion.span
+                                        className="text-sm text-gray-500"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ duration: 0.8, delay: 0.2 }}
+                                    >
+                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque adipisci incidunt iusto beatae! Ea possimus eligendi sed laudantium recusandae laborum molestias nemo reiciendis labore quaerat, facere vitae! Harum, quaerat excepturi.
+                                    </motion.span>
+
+                                    <div className="w-full relative mt-6 h-[200px] rounded-md overflow-hidden">
+
+                                        <img
+                                            className="w-full h-full object-cover"
+                                            src="banner.jpg"
+                                            alt="Banner"
+                                        />
+
+
+                                        <div className="absolute inset-0 flex items-center justify-center p-4">
+                                            <p className="text-white text-center text-lg md:text-xl font-semibold bg-black/40 p-2 rounded">
+                                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Numquam quod, blanditiis consectetur voluptatem iusto quibusdam voluptates itaque, assumenda sint quaerat ex natus architecto, enim repellat dolorum vel non nulla cum.
+                                            </p>
+                                        </div>
+
+
+                                        <div className="absolute bottom-4 right-4 w-[100px] h-[100px]">
+                                            <img
+                                                className="w-full h-full object-contain"
+                                                src="LUSTRE.png"
+                                                alt="Logo"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-10">
+                                        <Cart cartItems={cartItems} setCartItems={setCartItems} />
+                                    </div>
+
+                                    <motion.div
+                                        className="flex w-full mt-6 items-center justify-between"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.8, delay: 0.5 }}
+                                    >
+                                        <button
+                                            onClick={() => setStep("datetime")}
+                                            className="flex items-center justify-center px-4 py-2 rounded-full bg-black w-12 h-12 font-medium text-white shadow cursor-pointer hover:bg-red-500 hover:text-white transition"
+                                        >
+                                            <FaArrowLeft size={20} />
+                                        </button>
+                                    </motion.div>
+                                </motion.div>
+                            )}
+
+
+
+
+
                         </div>
                     </div>
                 </div>

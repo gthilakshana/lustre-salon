@@ -1,22 +1,9 @@
 import { FaMale, FaFemale } from "react-icons/fa";
-import { useState } from "react";
 
-export default function TimeSlots() {
-    const [selectedTime, setSelectedTime] = useState(null);
-    const [selectedGender, setSelectedGender] = useState(null);
-
+export default function TimeSlots({ selectedTime, setSelectedTime, selectedGender, setSelectedGender }) {
     const times = [
-        "9:00 AM",
-        "9:45 AM",
-        "10:30 AM",
-        "11:15 AM",
-        "12:00 PM",
-        "1:00 PM",
-        "1:45 PM",
-        "2:30 PM",
-        "3:15 PM",
-        "4:00 PM",
-        "4:45 PM",
+        "9:00 AM", "9:45 AM", "10:30 AM", "11:15 AM", "12:00 PM",
+        "1:00 PM", "1:45 PM", "2:30 PM", "3:15 PM", "4:00 PM", "4:45 PM"
     ];
 
     return (
@@ -27,9 +14,10 @@ export default function TimeSlots() {
                     <button
                         key={time}
                         onClick={() => setSelectedTime(time)}
-                        className={`py-2 px-3 border cursor-pointer rounded-full transition ${selectedTime === time
-                            ? "bg-blue-500 text-white"
-                            : "text-gray-700 hover:bg-blue-100 hover:text-blue-700"
+                        className={`py-2 px-3 border cursor-pointer rounded-full transition 
+                            ${selectedTime === time
+                                ? "bg-blue-500 text-white border-blue-500"
+                                : "text-gray-700 hover:bg-blue-100 hover:text-blue-700"
                             }`}
                     >
                         {time}
@@ -39,48 +27,36 @@ export default function TimeSlots() {
 
             <h3 className="font-semibold mt-4">For whom is the appointment being made?</h3>
             <div className="flex gap-4 justify-center items-center">
-
                 <button
                     onClick={() => setSelectedGender("Gents")}
-                    className={`flex flex-col items-center p-3 border rounded-lg transition cursor-pointer 
-            ${selectedGender === "Gents"
+                    className={`flex flex-col items-center p-3 border rounded-lg transition cursor-pointer
+                    ${selectedGender === "Gents"
                             ? "border-blue-500 bg-blue-100"
-                            : "border-gray-300 hover:bg-blue-50"
+                            : "border-gray-300 bg-white"
                         }`}
                 >
-                    <div
-                        className={`mb-1 transition ${selectedGender === "Gents" ? "text-blue-500" : "text-blue-200"
-                            }`}
-                    >
-                        <FaMale size={48} />
-                    </div>
-                    <span
-                        className={`font-medium transition ${selectedGender === "Gents" ? "text-blue-600" : "text-blue-500"
-                            }`}
-                    >
+                    <FaMale
+                        size={48}
+                        className={`${selectedGender === "Gents" ? "text-blue-500" : "text-gray-400"}`}
+                    />
+                    <span className={`${selectedGender === "Gents" ? "text-blue-600" : "text-gray-500"} font-medium`}>
                         Gents
                     </span>
                 </button>
 
-
                 <button
                     onClick={() => setSelectedGender("Ladies")}
                     className={`flex flex-col items-center p-3 border rounded-lg transition cursor-pointer
-            ${selectedGender === "Ladies"
+                    ${selectedGender === "Ladies"
                             ? "border-pink-500 bg-pink-100"
-                            : "border-gray-300 hover:bg-pink-50"
+                            : "border-gray-300 bg-white"
                         }`}
                 >
-                    <div
-                        className={`mb-1 transition ${selectedGender === "Ladies" ? "text-pink-500" : "text-pink-200"
-                            }`}
-                    >
-                        <FaFemale size={48} />
-                    </div>
-                    <span
-                        className={`font-medium transition ${selectedGender === "Ladies" ? "text-pink-600" : "text-pink-500"
-                            }`}
-                    >
+                    <FaFemale
+                        size={48}
+                        className={`${selectedGender === "Ladies" ? "text-pink-500" : "text-gray-400"}`}
+                    />
+                    <span className={`${selectedGender === "Ladies" ? "text-pink-600" : "text-gray-500"} font-medium`}>
                         Ladies
                     </span>
                 </button>
