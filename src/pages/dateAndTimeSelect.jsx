@@ -131,22 +131,42 @@ export default function DateAndTimeSelect() {
 
                 <div className="relative z-10 w-full flex flex-col items-center">
 
+                    {/** Page Content */}
                     <div className="w-full flex justify-center py-12">
                         <div className="flex bg-white shadow-lg overflow-hidden">
-                            <button className="px-8 py-4 text-sm font-semibold border-r hover:bg-black hover:text-white transition-colors duration-300">
+                            <button
+                                className={`px-8 py-4 text-sm font-semibold border-r transition-colors duration-300 ${step === "barber" ? "bg-black text-white" : "bg-white text-black"
+                                    }`}
+                                onClick={() => setStep("barber")}
+                            >
                                 Select Barber
                             </button>
-                            <button className="px-8 py-4 text-sm font-semibold border-r bg-black text-white transition-colors duration-300">
+                            <button
+                                className={`px-8 py-4 text-sm font-semibold border-r transition-colors duration-300 ${step === "select" ? "bg-black text-white" : "bg-white text-black"
+                                    }`}
+                                onClick={() => setStep("select")}
+                            >
                                 Select Service
                             </button>
-                            <button className="px-8 py-4 text-sm font-semibold border-r bg-black text-white transition-colors duration-300">
+                            <button
+                                className={`px-8 py-4 text-sm font-semibold border-r transition-colors duration-300 ${step === "datetime" ? "bg-black text-white" : "bg-white text-black"
+                                    }`}
+                                onClick={() => setStep("datetime")}
+                            >
                                 Pick Date & Time
                             </button>
-                            <button className="px-8 py-4 text-sm font-semibold bg-black text-white transition-colors duration-300">
+                            <button
+                                className={`px-8 py-4 text-sm font-semibold transition-colors duration-300 ${step === "cart" ? "bg-black text-white" : "bg-white text-black"
+                                    }`}
+                                onClick={() => setStep("cart")}
+                            >
                                 Confirm Payment
                             </button>
                         </div>
                     </div>
+
+
+                    {/** Page Content */}
 
                     <div className="w-full p-10 bg-white/90 backdrop-blur-md shadow-xl text-center flex flex-col items-center h-full">
 
@@ -219,7 +239,7 @@ export default function DateAndTimeSelect() {
                                             <div className="w-full flex justify-end mt-6">
                                                 <button
                                                     onClick={() => setStep("datetime")}
-                                                    className="flex px-8 py-2 rounded-full bg-black w-[200px] h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-500 hover:text-white transition"
+                                                    className="flex px-8 py-2 rounded-full bg-red-500 w-[200px] h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-600 hover:text-white transition"
                                                 >
                                                     Confirm Selection
                                                 </button>
@@ -290,7 +310,7 @@ export default function DateAndTimeSelect() {
 
                                         <button
                                             onClick={handleAddToCart}
-                                            className="px-8 py-2 rounded-full bg-black w-auto h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-500 hover:text-white transition"
+                                            className="px-8 py-2 rounded-full bg-red-500 w-auto h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-600 hover:text-white transition"
                                         >
                                             Confirm Appointment
                                         </button>

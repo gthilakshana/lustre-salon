@@ -48,7 +48,7 @@ export default function Cart({ cartItems, setCartItems }) {
             </div>
 
             <div className="flex justify-end mt-4">
-                <button className="flex items-center cursor-pointer gap-2 px-6 py-3 bg-black text-white font-semibold rounded shadow hover:bg-red-500 transition">
+                <button className="flex items-center cursor-pointer gap-2 px-6 py-3 bg-red-500 text-white font-semibold rounded shadow hover:bg-red-600 transition">
                     <FaCreditCard size={18} />
                     Proceed to Checkout
                 </button>
