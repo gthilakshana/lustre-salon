@@ -139,28 +139,28 @@ export default function DateAndTimeSelect() {
                     <div className="w-full flex justify-center py-12">
                         <div className="flex bg-white shadow-lg overflow-hidden">
                             <button
-                                className={`px-8 py-4 text-sm font-semibold border-r transition-colors duration-300 ${step === "barber" ? "bg-black text-white" : "bg-white text-black"
+                                className={`px-8 py-4 text-sm cursor-pointer font-semibold border-r transition-colors duration-300 ${step === "barber" ? "bg-black text-white" : "bg-white text-black"
                                     }`}
                                 onClick={() => navigate("/appointment")}
                             >
                                 Select Barber
                             </button>
                             <button
-                                className={`px-8 py-4 text-sm font-semibold border-r transition-colors duration-300 ${step === "select" ? "bg-black text-white" : "bg-white text-black"
+                                className={`px-8 py-4 text-sm cursor-pointer font-semibold border-r transition-colors duration-300 ${step === "select" ? "bg-black text-white" : "bg-white text-black"
                                     }`}
                                 onClick={() => setStep("select")}
                             >
                                 Select Service
                             </button>
                             <button
-                                className={`px-8 py-4 text-sm font-semibold border-r transition-colors duration-300 ${step === "datetime" ? "bg-black text-white" : "bg-white text-black"
+                                className={`px-8 py-4 cursor-pointer text-sm font-semibold border-r transition-colors duration-300 ${step === "datetime" ? "bg-black text-white" : "bg-white text-black"
                                     }`}
                                 onClick={() => setStep("datetime")}
                             >
                                 Pick Date & Time
                             </button>
                             <button
-                                className={`px-8 py-4 text-sm font-semibold transition-colors duration-300 ${step === "cart" ? "bg-black text-white" : "bg-white text-black"
+                                className={`px-8 py-4 cursor-pointer text-sm font-semibold transition-colors duration-300 ${step === "cart" ? "bg-black text-white" : "bg-white text-black"
                                     }`}
                                 onClick={() => setStep("cart")}
                             >

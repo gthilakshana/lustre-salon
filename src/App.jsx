@@ -5,6 +5,8 @@ import About from './pages/aboutPage'
 import Contact from './pages/contact'
 import DateAndTimeSelect from './pages/dateAndTimeSelect'
 import Appointment from './pages/appointment'
+import Register from './pages/register'
+import Login from './pages/login'
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -17,6 +19,8 @@ function App() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/dateAndTimeSelect" element={<DateAndTimeSelect />} />
             <Route path="/appointment" element={<Appointment />} />
           </Routes>
