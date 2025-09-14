@@ -7,10 +7,13 @@ export default function Brand() {
     "/brands/brand3.png",
     "/brands/brand4.png",
     "/brands/brand5.png",
+    "/brands/brand1.png",
+    "/brands/brand2.png",
+    "/brands/brand3.png",
   ];
 
   return (
-    <section className="relative bg-gray-100 py-10 px-4 w-full h-[250px] overflow-hidden flex items-center">
+    <section className="relative bg-gray-100 py-10 px-4 w-full h-[200px] overflow-hidden flex items-center">
 
 
       <div className="absolute top-0 left-0 h-full w-20 bg-gradient-to-r from-gray-200 to-transparent z-10 pointer-events-none" />

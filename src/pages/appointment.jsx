@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import ServiceCard from "../components/serviceCard";
@@ -32,16 +33,25 @@ export default function Appointment() {
                         </div>
                     </div>
 
-                    <div className="w-full p-10 bg-white/90 backdrop-blur-md shadow-xl text-center">
+                    <motion.div
+                        className="w-full p-10 bg-white/90 backdrop-blur-md shadow-xl text-center"
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                    >
                         <h2 className="text-3xl font-bold mb-4">
                             Select LusTre Haircut Appointment or Salon Services
                         </h2>
                         <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto mb-10">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
                         </p>
 
-
-                        <div className="flex flex-col md:flex-row items-start justify-center gap-12">
+                        <motion.div
+                            className="flex flex-col md:flex-row items-start justify-center gap-12"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                        >
                             <div className="flex flex-col items-center space-y-6">
                                 <h2 className="text-xl font-semibold text-black uppercase">Choose Your Stylist</h2>
                                 <div className="grid md:grid-cols-4 sm:grid-cols-2 gap-8 cursor-pointer">
@@ -51,10 +61,14 @@ export default function Appointment() {
                                     <ServiceCard image="/founder.jpg" name="Nuvan" />
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
 
-
-                        <div className="flex flex-col md:flex-row items-start justify-center mt-[50px] gap-12">
+                        <motion.div
+                            className="flex flex-col md:flex-row items-start justify-center mt-[50px] gap-12"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.4 }}
+                        >
                             <div className="flex flex-col items-center space-y-8">
                                 <h2 className="text-xl font-semibold text-black uppercase">Choose a Service</h2>
                                 <div className="flex flex-col items-center justify-center">
@@ -69,8 +83,8 @@ export default function Appointment() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </motion.div>
+                    </motion.div>
                 </div>
             </div>
 

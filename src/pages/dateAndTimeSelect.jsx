@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import { motion } from "framer-motion";
 import Header from "../components/header";
 import ServiceGrid from "../components/serviceGrid";
 import Calendar from "../components/calender";
@@ -129,19 +130,57 @@ export default function DateAndTimeSelect() {
 
                         <div className="w-full h-[750px] flex flex-col items-center">
                             {step === "select" && (
-                                <div className="w-full flex flex-col items-center">
-                                    <h2 className="text-3xl font-bold mb-4 uppercase">Select Service</h2>
-                                    <span className="text-sm text-gray-500 mb-9">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque adipisci incidunt iusto beatae! Ea possimus eligendi sed laudantium recusandae laborum molestias nemo reiciendis labore quaerat, facere vitae! Harum, quaerat excepturi.</span>
-                                    <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+                                <motion.div
+                                    className="w-full flex flex-col items-center"
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.8, ease: "easeOut" }}
+                                >
+                                    <motion.h2
+                                        className="text-3xl font-bold mb-4 uppercase"
+                                        initial={{ opacity: 0, y: -20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.8, delay: 0.1 }}
+                                    >
+                                        Select Service
+                                    </motion.h2>
 
-                                    <ServiceGrid
-                                        services={services[activeTab]}
-                                        selectedService={selectedService}
-                                        setSelectedService={setSelectedService}
-                                    />
+                                    <motion.span
+                                        className="text-sm text-gray-500 mb-9 text-center max-w-2xl"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ duration: 0.8, delay: 0.2 }}
+                                    >
+                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque adipisci incidunt iusto beatae! Ea possimus eligendi sed laudantium recusandae laborum molestias nemo reiciendis labore quaerat, facere vitae! Harum, quaerat excepturi.
+                                    </motion.span>
 
-                                    <div className="w-[80%] flex flex-col items-center ">
-                                        {selectedService && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.8, delay: 0.3 }}
+                                    >
+                                        <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+                                    </motion.div>
+
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.8, delay: 0.4 }}
+                                    >
+                                        <ServiceGrid
+                                            services={services[activeTab]}
+                                            selectedService={selectedService}
+                                            setSelectedService={setSelectedService}
+                                        />
+                                    </motion.div>
+
+                                    {selectedService && (
+                                        <motion.div
+                                            className="w-[80%] flex flex-col items-center"
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ duration: 0.8, delay: 0.5 }}
+                                        >
                                             <div className="w-full flex justify-end mt-6">
                                                 <button
                                                     onClick={() => setStep("datetime")}
@@ -150,33 +189,64 @@ export default function DateAndTimeSelect() {
                                                     Confirm Selection
                                                 </button>
                                             </div>
-                                        )}
-                                    </div>
-                                </div>
+                                        </motion.div>
+                                    )}
+                                </motion.div>
                             )}
 
                             {step === "datetime" && (
-                                <div className="w-[90%]  h-[600px] p-6 mt-6 ">
-                                    <h2 className="text-3xl font-bold mb-4 uppercase">Pick Date & Time</h2>
-                                    <span className="text-sm text-gray-500 ">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque adipisci incidunt iusto beatae! Ea possimus eligendi sed laudantium recusandae laborum molestias nemo reiciendis labore quaerat, facere vitae! Harum, quaerat excepturi.</span>
+                                <motion.div
+                                    className="w-[90%] h-[600px] p-6 mt-6"
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.8, ease: "easeOut" }}
+                                >
+                                    <motion.h2
+                                        className="text-3xl font-bold mb-4 uppercase"
+                                        initial={{ opacity: 0, y: -20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.8, delay: 0.1 }}
+                                    >
+                                        Pick Date & Time
+                                    </motion.h2>
 
-                                    <p className="mb-4 mt-6 text-black text-lg">
-                                        <strong className="text-lg font-bold text-red-500">Service: &nbsp; </strong>{"  "}
+                                    <motion.span
+                                        className="text-sm text-gray-500"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ duration: 0.8, delay: 0.2 }}
+                                    >
+                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque adipisci incidunt iusto beatae! Ea possimus eligendi sed laudantium recusandae laborum molestias nemo reiciendis labore quaerat, facere vitae! Harum, quaerat excepturi.
+                                    </motion.span>
+
+                                    <motion.p
+                                        className="mb-4 mt-6 text-black text-lg"
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.8, delay: 0.3 }}
+                                    >
+                                        <strong className="text-lg font-bold text-red-500">Service: &nbsp;</strong>
                                         {selectedService
-
                                             ? `${selectedService.title} – ${selectedService.price}`
                                             : "No service selected"}
-                                    </p>
+                                    </motion.p>
 
-
-                                    <div className="flex flex-col md:flex-row gap-6 w-full mx-auto  mt-10">
+                                    <motion.div
+                                        className="flex flex-col md:flex-row gap-6 w-full mx-auto mt-10"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.8, delay: 0.4 }}
+                                    >
                                         <Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
                                         <TimeSlots selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
+                                    </motion.div>
 
-                                    </div>
-
-                                    <div className="flex w-full mt-6 items-center justify-between">
-
+                                    <motion.div
+                                        className="flex w-full mt-6 items-center justify-between"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.8, delay: 0.5 }}
+                                    >
                                         <button
                                             onClick={() => setStep("select")}
                                             className="flex items-center justify-center px-4 py-2 rounded-full bg-black w-12 h-12 font-medium text-white shadow cursor-pointer hover:bg-red-500 hover:text-white transition"
@@ -184,19 +254,14 @@ export default function DateAndTimeSelect() {
                                             <FaArrowLeft size={20} />
                                         </button>
 
-
                                         <button
                                             onClick={() => setStep("payment")}
                                             className="px-8 py-2 rounded-full bg-black w-auto h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-500 hover:text-white transition"
                                         >
                                             Confirm Appointment
                                         </button>
-                                    </div>
-
-
-
-
-                                </div>
+                                    </motion.div>
+                                </motion.div>
                             )}
                         </div>
                     </div>
