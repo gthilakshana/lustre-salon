@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
@@ -5,7 +6,7 @@ export default function Login() {
     return (
         <>
             <Header />
-            <div className="min-h-screen flex flex-col bg-white">
+            <div className="min-h-screen flex pt-16 flex-col bg-white">
                 <main className="flex-1 flex items-center justify-center px-4 mt-16 mb-16">
                     <div className="w-full max-w-md bg-white">
 
@@ -72,9 +73,12 @@ export default function Login() {
 
                             <p className="text-center text-sm text-gray-600 mt-6 border-t pt-6">
                                 Don’t have an account?{" "}
-                                <a href="/register" className="text-black font-medium hover:underline">
+
+                                <Link
+                                    to="/register"
+                                    className="text-black font-medium hover:underline">
                                     Create one
-                                </a>
+                                </Link>
                             </p>
                         </form>
                     </div>

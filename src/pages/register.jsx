@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
@@ -84,9 +85,12 @@ export default function Register() {
 
                             <p className="text-center text-sm text-gray-600 mt-6 border-t pt-6">
                                 Already have an account?{" "}
-                                <a href="/login" className="text-black font-medium hover:underline">
+
+                                <Link
+                                    to="/login"
+                                    className="text-black font-medium hover:underline">
                                     Login
-                                </a>
+                                </Link>
                             </p>
                         </form>
                     </div>
