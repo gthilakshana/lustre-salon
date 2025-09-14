@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -14,6 +15,7 @@ export default function DateAndTimeSelect() {
     const location = useLocation();
     const state = location.state || {}; // fallback
     const { employee: employeeName, title, price } = state;
+    const navigate = useNavigate();
 
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedTime, setSelectedTime] = useState("");
@@ -137,7 +139,7 @@ export default function DateAndTimeSelect() {
                             <button
                                 className={`px-8 py-4 text-sm font-semibold border-r transition-colors duration-300 ${step === "barber" ? "bg-black text-white" : "bg-white text-black"
                                     }`}
-                                onClick={() => setStep("barber")}
+                                onClick={() => navigate("/appointment")}
                             >
                                 Select Barber
                             </button>
