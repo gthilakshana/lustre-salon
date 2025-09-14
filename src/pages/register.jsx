@@ -9,7 +9,7 @@ export default function Register() {
                 <main className="flex-1 flex items-center justify-center px-4 mt-16 mb-16">
                     <div className="w-full max-w-md bg-white">
 
-                        <h1 className="text-2xl font-semibold text-center mb-8">
+                        <h1 className="text-3xl font-bold uppercase text-center mb-8">
                             Create an Account
                         </h1>
 
