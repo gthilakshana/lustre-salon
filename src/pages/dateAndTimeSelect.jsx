@@ -12,7 +12,8 @@ import Footer from "../components/footer";
 
 export default function DateAndTimeSelect() {
     const location = useLocation();
-    const serviceFromState = location.state;
+    const state = location.state || {}; // fallback
+    const { employee: employeeName, title, price } = state;
 
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedTime, setSelectedTime] = useState("");
@@ -20,56 +21,61 @@ export default function DateAndTimeSelect() {
     const [cartItems, setCartItems] = useState([]);
 
     const [activeTab, setActiveTab] = useState("haircuts");
-    const [selectedService, setSelectedService] = useState(null);
+    const [selectedServices, setSelectedServices] = useState([]);
     const [step, setStep] = useState("select");
 
-    const displayInfo = selectedService ? (selectedService.name || selectedService.title) : null;
+
+    const stylistName = employeeName ? decodeURIComponent(employeeName) : "Unnamed Stylist";
+
+    const displayInfo =
+        selectedServices.length > 0
+            ? `${stylistName} : ${selectedServices.map((s) => s.title).join(" , ")}`
+            : null;
 
     const handleAddToCart = () => {
-        if (!selectedService || !selectedDate || !selectedTime || !selectedGender) {
-            alert("Please select a service, date/time, and gender.");
+        if (!selectedServices.length || !selectedDate || !selectedTime || !selectedGender) {
+            alert("Please select at least one service, date/time, and gender.");
             return;
         }
 
-
-        const duplicate = cartItems.find(
-            item =>
-                item.id === selectedService.id &&
-                item.date === selectedDate &&
-                item.time === selectedTime &&
-                item.gender === selectedGender
-        );
-
-        if (duplicate) {
-            alert("This service is already in the cart for the selected date/time and gender.");
-            return;
-        }
-
-        const newItem = {
-            id: Date.now(),
-            ...selectedService,
+        const newItems = selectedServices.map((service) => ({
+            id: Date.now() + service.id,
+            ...service,
             date: selectedDate,
             time: selectedTime,
             gender: selectedGender,
-        };
+            stylist: stylistName,
+        }));
 
-        setCartItems([...cartItems, newItem]);
+        const filtered = newItems.filter(
+            (newItem) =>
+                !cartItems.some(
+                    (item) =>
+                        item.title === newItem.title &&
+                        item.date === newItem.date &&
+                        item.time === newItem.time &&
+                        item.gender === newItem.gender &&
+                        item.stylist === newItem.stylist
+                )
+        );
+
+        if (!filtered.length) {
+            alert("These services are already in the cart for the selected date/time, gender, and stylist.");
+            return;
+        }
+
+        setCartItems([...cartItems, ...filtered]);
         setStep("cart");
     };
 
-
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
-
-        if (serviceFromState) {
-            setSelectedService(serviceFromState);
+        if (title) {
+            setSelectedServices([{ title, price }]);
             setStep("select");
         }
-    }, [serviceFromState]);
+    }, [title, price]);
 
-    useEffect(() => {
-        console.log("Selected service:", selectedService);
-    }, [selectedService]);
     const services = {
         haircuts: [
             { id: 1, title: "Ladies’ long Haircuts", price: "8000.00 LKR" },
@@ -147,21 +153,17 @@ export default function DateAndTimeSelect() {
                         <div className="w-full flex justify-end items-center mb-6">
                             {displayInfo ? (
                                 <div className="flex items-center px-4 py-2 space-x-4 transition">
-                                    <h2 className="text-lg text-gray-800 font-semibold">
-                                        {selectedService.name}
+                                    <h2 className="text-sm text-gray-800 ">
+                                        {displayInfo}
                                     </h2>
                                 </div>
                             ) : (
-                                <h2 className="text-lg text-gray-500">No stylist selected yet</h2>
+                                <h2 className="text-sm text-gray-500">No stylist selected yet</h2>
                             )}
                         </div>
 
-
-
-
-
-
                         <div className="w-full min-h-screen flex flex-col justify-between items-center">
+
                             {step === "select" && (
                                 <motion.div
                                     className="w-full flex flex-col items-center"
@@ -179,12 +181,12 @@ export default function DateAndTimeSelect() {
                                     </motion.h2>
 
                                     <motion.span
-                                        className="text-sm text-gray-500 mb-9 text-center max-w-2xl"
+                                        className="text-md text-gray-500 mb-9 text-center max-w-4xl"
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         transition={{ duration: 0.8, delay: 0.2 }}
                                     >
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque adipisci incidunt iusto beatae! Ea possimus eligendi sed laudantium recusandae laborum molestias nemo reiciendis labore quaerat, facere vitae! Harum, quaerat excepturi.
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam nihil vero assumenda reiciendis, error quaerat quidem commodi fugit explicabo. Optio odio nulla similique ad molestiae ab debitis necessitatibus reprehenderit harum.
                                     </motion.span>
 
                                     <motion.div
@@ -202,12 +204,12 @@ export default function DateAndTimeSelect() {
                                     >
                                         <ServiceGrid
                                             services={services[activeTab]}
-                                            selectedService={selectedService}
-                                            setSelectedService={setSelectedService}
+                                            selectedServices={selectedServices}
+                                            setSelectedServices={setSelectedServices}
                                         />
                                     </motion.div>
 
-                                    {selectedService && (
+                                    {selectedServices.length > 0 && (
                                         <motion.div
                                             className="w-[80%] flex flex-col items-center"
                                             initial={{ opacity: 0, y: 20 }}
@@ -227,6 +229,7 @@ export default function DateAndTimeSelect() {
                                 </motion.div>
                             )}
 
+
                             {step === "datetime" && (
                                 <motion.div
                                     className="w-[90%]  p-6 mt-6"
@@ -243,24 +246,17 @@ export default function DateAndTimeSelect() {
                                         Pick Date & Time
                                     </motion.h2>
 
-                                    <motion.span
-                                        className="text-sm text-gray-500"
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        transition={{ duration: 0.8, delay: 0.2 }}
-                                    >
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque adipisci incidunt iusto beatae! Ea possimus eligendi sed laudantium recusandae laborum molestias nemo reiciendis labore quaerat, facere vitae! Harum, quaerat excepturi.
-                                    </motion.span>
-
                                     <motion.p
                                         className="mb-4 mt-6 text-black text-lg"
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.8, delay: 0.3 }}
                                     >
-                                        <strong className="text-lg font-bold text-red-500">Service: &nbsp;</strong>
-                                        {selectedService
-                                            ? `${selectedService.title} – ${selectedService.price}`
+                                        <strong className="text-lg font-bold text-red-500">
+                                            Services:&nbsp;
+                                        </strong>
+                                        {selectedServices.length > 0
+                                            ? selectedServices.map((s) => `${s.title} – ${s.price}`).join(", ")
                                             : "No service selected"}
                                     </motion.p>
 
@@ -278,7 +274,6 @@ export default function DateAndTimeSelect() {
                                             setSelectedGender={setSelectedGender}
                                         />
                                     </motion.div>
-
 
                                     <motion.div
                                         className="flex w-full mt-6 items-center justify-between"
@@ -299,13 +294,9 @@ export default function DateAndTimeSelect() {
                                         >
                                             Confirm Appointment
                                         </button>
-
                                     </motion.div>
                                 </motion.div>
                             )}
-
-
-
 
 
                             {step === "cart" && (
@@ -324,31 +315,19 @@ export default function DateAndTimeSelect() {
                                         Confirm Appointment Payment
                                     </motion.h2>
 
-                                    <motion.span
-                                        className="text-sm text-gray-500"
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        transition={{ duration: 0.8, delay: 0.2 }}
-                                    >
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque adipisci incidunt iusto beatae! Ea possimus eligendi sed laudantium recusandae laborum molestias nemo reiciendis labore quaerat, facere vitae! Harum, quaerat excepturi.
-                                    </motion.span>
+                                    <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo recusandae ea, quae minima, iusto dolorem ducimus accusamus amet error commodi aspernatur architecto laboriosam nobis sed consequuntur impedit. Voluptatum, at illo?</span>
 
                                     <div className="w-full relative mt-6 h-[200px] rounded-md overflow-hidden">
-
                                         <img
                                             className="w-full h-full object-cover"
                                             src="banner.jpg"
                                             alt="Banner"
                                         />
-
-
                                         <div className="absolute inset-0 flex items-center justify-center p-4">
                                             <p className="text-white text-center text-lg md:text-xl font-semibold bg-black/40 p-2 rounded">
-                                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Numquam quod, blanditiis consectetur voluptatem iusto quibusdam voluptates itaque, assumenda sint quaerat ex natus architecto, enim repellat dolorum vel non nulla cum.
+                                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. At modi beatae quam voluptate sequi sit officia, fugit neque quia ducimus reiciendis aliquam aliquid labore laboriosam consequuntur nobis aperiam! Impedit, cumque.
                                             </p>
                                         </div>
-
-
                                         <div className="absolute bottom-4 right-4 w-[100px] h-[100px]">
                                             <img
                                                 className="w-full h-full object-contain"
@@ -377,11 +356,6 @@ export default function DateAndTimeSelect() {
                                     </motion.div>
                                 </motion.div>
                             )}
-
-
-
-
-
                         </div>
                     </div>
                 </div>

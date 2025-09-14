@@ -7,8 +7,8 @@ export default function ServiceCard({ image, name, title, price, comingSoon }) {
 
     const handleClick = () => {
         if (!comingSoon) {
-            navigate("/dateAndTimeSelect", { state: { name, title, price } });
 
+            navigate("/dateAndTimeSelect", { state: { employee: name, title, price } });
         }
     };
 

@@ -11,7 +11,10 @@ export default function Cart({ cartItems, setCartItems }) {
         setCartItems(cartItems.filter(item => item.id !== id));
     };
 
-    const total = cartItems.reduce((sum, item) => sum + parseFloat(item.price.replace(/,/g, '').replace(' LKR', '')), 0);
+    const total = cartItems.reduce((sum, item) => {
+        const priceNumber = parseFloat(item.price.replace(/,/g, '').replace(' LKR', '')) || 0;
+        return sum + priceNumber;
+    }, 0);
 
     return (
         <div className="flex flex-col gap-4 mt-6 w-full">
@@ -28,6 +31,7 @@ export default function Cart({ cartItems, setCartItems }) {
                         <p className="text-gray-600">{item.price}</p>
                         <p className="text-gray-500">{item.date} at {item.time}</p>
                         <p className="text-gray-500">For: {item.gender}</p>
+                        <p className="text-gray-500">Stylist: {item.stylist || "Unnamed Stylist"}</p>
                     </div>
                     <button
                         onClick={() => handleDelete(item.id)}

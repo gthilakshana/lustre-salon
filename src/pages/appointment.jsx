@@ -16,6 +16,8 @@ export default function Appointment() {
 
                 <div className="relative z-10 w-full flex flex-col items-center">
 
+
+
                     <div className="w-full flex justify-center py-12">
                         <div className="flex bg-white shadow-lg overflow-hidden">
                             <button className="px-8 py-4 text-sm font-semibold border-r bg-black text-white transition-colors duration-300">
@@ -42,7 +44,7 @@ export default function Appointment() {
                         <h2 className="text-3xl font-bold mb-4">
                             Select LusTre Haircut Appointment or Salon Services
                         </h2>
-                        <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto mb-10">
+                        <p className="text-gray-600 leading-relaxed max-w-6xl mx-auto mb-10">
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
                         </p>
 
