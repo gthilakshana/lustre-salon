@@ -12,14 +12,16 @@ export default function Brand() {
   return (
     <section className="relative bg-gray-100 py-10 px-4 w-full h-[250px] overflow-hidden flex items-center">
 
+
       <div className="absolute top-0 left-0 h-full w-20 bg-gradient-to-r from-gray-200 to-transparent z-10 pointer-events-none" />
       <div className="absolute top-0 right-0 h-full w-20 bg-gradient-to-l from-gray-200 to-transparent z-10 pointer-events-none" />
 
+
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 1, delay: 0.3 }}
+        transition={{ duration: 1 }}
       >
         <div className="flex animate-scroll gap-12">
           {[...logos, ...logos].map((logo, idx) => (
@@ -27,12 +29,10 @@ export default function Brand() {
               key={idx}
               src={logo}
               alt="Brand Logo"
-              className="h-45 object-contain opacity-80 hover:opacity-100 transition-transform duration-300"
-            />
-          ))}
+              className="h-45 object-contain opacity-80 hover:opacity-100 transition-transform duration-300" />))}
         </div>
-
       </motion.div>
+
 
       <style jsx>{`
         .animate-scroll {

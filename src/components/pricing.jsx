@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Pricing() {
     const [activeTab, setActiveTab] = useState("haircuts");
@@ -58,45 +59,66 @@ export default function Pricing() {
     return (
         <section id="pricing" className="bg-black text-white py-16 px-6 md:px-20">
 
-            <h1 className="text-4xl font-bold  text-center mb-10 uppercase">Our Pricing</h1>
+            <motion.h1
+                className="text-4xl font-bold text-center mb-10 uppercase"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+                Our Pricing
+            </motion.h1>
 
 
             <div className="flex justify-center flex-wrap gap-3 mb-10">
                 {tabs.map((tab) => (
-                    <button
+                    <motion.button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        className={`px-6 py-2  font-medium transition ${activeTab === tab.id
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className={`px-6 py-2 font-medium transition ${activeTab === tab.id
                             ? "bg-white text-black"
                             : "bg-gray-800 text-white hover:bg-gray-700"
                             }`}
                     >
                         {tab.label}
-                    </button>
+                    </motion.button>
                 ))}
             </div>
 
-
-            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                {pricingData[activeTab].map((item, i) => (
-                    <div
-                        key={i}
-                        className="flex justify-between border-b border-gray-700 pb-2"
-                    >
-                        <span>{item.title}</span>
-                        <span className="font-semibold">{item.price}</span>
-                    </div>
-                ))}
-            </div>
-
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={activeTab}
+                    className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    {pricingData[activeTab].map((item, i) => (
+                        <motion.div
+                            key={i}
+                            className="flex justify-between border-b border-gray-700 pb-2"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.1, duration: 0.4 }}
+                        >
+                            <span>{item.title}</span>
+                            <span className="font-semibold">{item.price}</span>
+                        </motion.div>
+                    ))}
+                </motion.div>
+            </AnimatePresence>
 
             <div className="text-center mt-10">
-                <a
+                <motion.a
                     href="#"
                     className="text-sm font-medium text-gray-400 hover:text-white transition"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                 >
                     See all prices
-                </a>
+                </motion.a>
             </div>
         </section>
     );

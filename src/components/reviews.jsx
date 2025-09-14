@@ -46,8 +46,8 @@ export default function Reviews() {
     };
 
     return (
-        <section className="w-full py-16 bg-gray-50 border-t-2 border-gray-200">
-            <div className="max-w-4xl mx-auto text-center px-6">
+        <section className="w-full py-16 bg-gray-100 border-t-2 border-gray-200">
+            <div className="max-w-6xl mx-auto text-center px-6">
                 <Slider {...settings}>
                     {reviews.map((review, index) => (
                         <div key={index}>

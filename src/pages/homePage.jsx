@@ -1,5 +1,4 @@
-import { useEffect, useState, useRef } from "react";
-import { ClipLoader } from "react-spinners";
+import { useEffect, useState } from "react";
 import { FaArrowUp } from "react-icons/fa";
 import Header from "../components/header";
 import Footer from "../components/footer";
@@ -12,23 +11,21 @@ import HomeView from "../components/homeView";
 
 export default function HomePage() {
     const [showScrollButton, setShowScrollButton] = useState(false);
-    const [loadingSections, setLoadingSections] = useState(true);
-    const lastScrollY = useRef(0);
 
-    // Scroll button logic
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+        window.history.replaceState(null, "", "#home");
+    }, []);
+
+
     useEffect(() => {
         const handleScroll = () => setShowScrollButton(window.scrollY > 200);
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    // Loading spinner
-    useEffect(() => {
-        const timer = setTimeout(() => setLoadingSections(false), 2000);
-        return () => clearTimeout(timer);
-    }, []);
 
-    // Scroll to hash
     useEffect(() => {
         const scrollToHash = () => {
             const hash = window.location.hash.substring(1);
@@ -52,33 +49,27 @@ export default function HomePage() {
             <Header />
 
             <div className="min-h-screen w-full flex flex-col overflow-hidden">
-                {loadingSections ? (
-                    <div className="flex-1 flex items-center justify-center bg-white">
-                        <ClipLoader color="#000000" loading={loadingSections} size={55} />
-                    </div>
-                ) : (
-                    <main className="flex-1 mt-16 md:mt-22">
-                        <section id="home">
-                            <HomeView />
-                        </section>
-                        <section id="pricing">
-                            <Pricing />
-                        </section>
-                        <section id="services">
-                            <Services />
-                        </section>
-                        <section id="products">
-                            <Product />
-                        </section>
-                        <section id="team">
-                            <Team />
-                        </section>
-                        <section id="reviews">
-                            <Reviews />
-                        </section>
-                        <Footer />
-                    </main>
-                )}
+                <main className="flex-1 mt-16 md:mt-22">
+                    <section id="home">
+                        <HomeView />
+                    </section>
+                    <section id="pricing">
+                        <Pricing />
+                    </section>
+                    <section id="services">
+                        <Services />
+                    </section>
+                    <section id="products">
+                        <Product />
+                    </section>
+                    <section id="team">
+                        <Team />
+                    </section>
+                    <section id="reviews">
+                        <Reviews />
+                    </section>
+                    <Footer />
+                </main>
 
                 {showScrollButton && (
                     <button
@@ -91,6 +82,5 @@ export default function HomePage() {
                 )}
             </div>
         </>
-
     );
 }
