@@ -5,13 +5,11 @@ import About from './pages/aboutPage'
 import Contact from './pages/contact'
 import DateAndTimeSelect from './pages/dateAndTimeSelect'
 import Appointment from './pages/appointment'
+import { Toaster } from "react-hot-toast";
 
 function App() {
-
-
   return (
     <>
-
       <BrowserRouter>
         <div className="w-full h-[100vh]">
           <Routes>
@@ -21,12 +19,22 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/dateAndTimeSelect" element={<DateAndTimeSelect />} />
             <Route path="/appointment" element={<Appointment />} />
-
           </Routes>
         </div>
       </BrowserRouter>
 
 
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          success: {
+            style: { background: "#10b981", color: "white" },
+          },
+          error: {
+            style: { background: "#ef4444", color: "white" },
+          },
+        }}
+      />
     </>
   )
 }

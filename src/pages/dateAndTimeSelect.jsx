@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 import Header from "../components/header";
 import ServiceGrid from "../components/serviceGrid";
 import Calendar from "../components/calender";
@@ -36,7 +37,7 @@ export default function DateAndTimeSelect() {
 
     const handleAddToCart = () => {
         if (!selectedServices.length || !selectedDate || !selectedTime || !selectedGender) {
-            alert("Please select at least one service, date/time, and gender.");
+            toast.error("Please select at least one service, date/time, and gender.");
             return;
         }
 
@@ -62,9 +63,10 @@ export default function DateAndTimeSelect() {
         );
 
         if (!filtered.length) {
-            alert("These services are already in the cart for the selected date/time, gender, and stylist.");
+            toast.error("These services are already in the cart for the selected date/time, gender, and stylist.");
             return;
         }
+
 
         setCartItems([...cartItems, ...filtered]);
         setStep("cart");
@@ -241,7 +243,7 @@ export default function DateAndTimeSelect() {
                                             <div className="w-full flex justify-end mt-6">
                                                 <button
                                                     onClick={() => setStep("datetime")}
-                                                    className="flex px-8 py-2 rounded-full bg-red-500 w-[200px] h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-600 hover:text-white transition"
+                                                    className="flex px-8 py-2 rounded-lg bg-red-500 w-[200px] h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-600 hover:text-white transition"
                                                 >
                                                     Confirm Selection
                                                 </button>
@@ -312,7 +314,7 @@ export default function DateAndTimeSelect() {
 
                                         <button
                                             onClick={handleAddToCart}
-                                            className="px-8 py-2 rounded-full bg-red-500 w-auto h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-600 hover:text-white transition"
+                                            className="px-8 py-2 rounded-lg bg-red-500 w-auto h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-600 hover:text-white transition"
                                         >
                                             Confirm Appointment
                                         </button>
