@@ -98,17 +98,26 @@ export default function Header() {
                 <div className="flex items-center space-x-3">
                     <Link
                         to="/appointment"
-                        className="border border-white px-4 py-2 cursor-pointer hover:bg-white hover:text-black transition"
+                        className="border border-white px-4 py-2 cursor-pointer 
+               hover:bg-red-500 hover:text-white 
+               active:border-red-500 
+               transition-colors duration-500"
                     >
                         BOOK NOW
                     </Link>
+
                     <Link
                         to="/login"
-                        className="border border-white p-2 cursor-pointer hover:bg-white hover:text-black transition inline-flex items-center justify-center"
+                        className="border border-white p-2 cursor-pointer 
+               hover:bg-white hover:text-black 
+               active:border-red-500 
+               transition-colors duration-500 inline-flex items-center justify-center"
                     >
                         <User size={20} />
                     </Link>
                 </div>
+
+
             </div>
         </header>
     );
