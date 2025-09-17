@@ -8,7 +8,7 @@ export default function TimeSlots({ selectedTime, setSelectedTime, selectedGende
 
     return (
         <div className="bg-gray-50 p-6 rounded-xl shadow-md w-full flex flex-col gap-4">
-            <h3 className="font-bold mb-3">Select your time</h3>
+            <h3 className="font-medium mb-3">Select your time</h3>
             <div className="grid grid-cols-4 gap-2">
                 {times.map((time) => (
                     <button

@@ -2,42 +2,89 @@ import { FaCheckCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 export default function ServiceGrid({ services, selectedServices, setSelectedServices }) {
+    const getId = (service) => service._id || service.id;
+    const getName = (service) => service.subName || service.name || service.title;
+
+
     const toggleService = (service) => {
-        if (selectedServices.some((s) => s.id === service.id)) {
+        if (service.status?.toLowerCase() !== "active") return;
 
-            setSelectedServices(selectedServices.filter((s) => s.id !== service.id));
+        const serviceId = getId(service);
+        if (selectedServices.some((s) => getId(s) === serviceId)) {
+            setSelectedServices(selectedServices.filter((s) => getId(s) !== serviceId));
         } else {
-
             setSelectedServices([...selectedServices, service]);
         }
     };
 
-    return (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-6xl p-4">
-            {services.map((service, index) => (
-                <motion.div
-                    key={service.id}
-                    onClick={() => toggleService(service)}
-                    className={`cursor-pointer relative flex flex-col justify-center items-center text-center p-4 border transition-all duration-300
-                        ${selectedServices.some((s) => s.id === service.id)
-                            ? "bg-blue-500 text-white shadow-lg scale-105"
-                            : "bg-white text-gray-800 hover:bg-gray-100"
-                        }`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    whileHover={{ scale: 1.05 }}
-                >
-                    {selectedServices.some((s) => s.id === service.id) && (
-                        <FaCheckCircle className="absolute top-2 right-2 text-white text-lg" />
-                    )}
 
-                    <h3 className="font-medium text-sm md:text-base leading-tight">
-                        {service.title}
-                    </h3>
-                    <p className="text-xs md:text-sm mt-1">{service.price}</p>
-                </motion.div>
-            ))}
+    const getStatusClasses = (status) => {
+        switch (status?.toLowerCase()) {
+            case "active":
+                return "bg-green-100 text-green-800";
+            case "inactive":
+                return "bg-red-100 text-red-800";
+            case "pending":
+                return "bg-yellow-100 text-yellow-800";
+            default:
+                return "bg-gray-200 text-gray-600";
+        }
+    };
+
+
+    const activeServices = services.filter(s => s.status?.toLowerCase() === "active");
+    const otherServices = services.filter(s => s.status?.toLowerCase() !== "active");
+    const sortedServices = [...activeServices, ...otherServices];
+
+    return (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-6xl p-4">
+            {sortedServices.map((service, index) => {
+                const serviceId = getId(service);
+                const isSelected = selectedServices.some((s) => getId(s) === serviceId);
+
+                const cursorClass = service.status?.toLowerCase() === "active"
+                    ? "cursor-pointer"
+                    : "cursor-not-allowed opacity-60";
+
+                return (
+                    <motion.div
+                        key={serviceId}
+                        onClick={() => toggleService(service)}
+                        className={`relative flex flex-col justify-between p-5 border  shadow hover:shadow-lg transition-all 
+                            ${isSelected ? "bg-blue-600 text-white border-blue-500" : "bg-white text-gray-800 border-gray-200"}
+                            ${cursorClass}
+                        `}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: index * 0.05 }}
+                    >
+                        {isSelected && (
+                            <FaCheckCircle className="absolute top-3 right-3 text-white text-xl" />
+                        )}
+
+                        <div className="flex flex-col gap-2">
+                            <h3 className="text-lg font-semibold">{getName(service)}</h3>
+                            <p className={`text-sm font-medium ${isSelected ? "text-white" : ""}`}>
+                                Price: <span className="font-bold">{service.price.toLocaleString()} LKR</span>
+                            </p>
+                            {service.description && (
+                                <p className={`text-xs line-clamp-3 ${isSelected ? "text-white" : "text-gray-600"}`}>
+                                    {service.description}
+                                </p>
+                            )}
+                            {service.status && (
+                                <span
+                                    className={`text-xs font-semibold px-2 py-1 rounded-full self-start mt-2 
+                                        ${isSelected ? "bg-white text-blue-500" : getStatusClasses(service.status)}
+                                    `}
+                                >
+                                    {service.status}
+                                </span>
+                            )}
+                        </div>
+                    </motion.div>
+                );
+            })}
         </div>
     );
 }

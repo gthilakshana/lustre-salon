@@ -17,6 +17,9 @@ import AdminAdd from "./admin/adminAdd";
 import AdminMessage from "./admin/adminMessage";
 import AdminUpdate from "./admin/adminUpdate";
 import AdminTable from "./admin/adminTable";
+import AdminService from "./admin/adminService";
+import AdminServiceUpdate from "./admin/adminServiceUpdate";
+import AdminServiceAdd from "./admin/adminServiceAdd";
 
 
 
@@ -28,8 +31,9 @@ export default function AdminPage() {
     const menuItems = [
         { name: "Dashboard", icon: <FaChartLine />, path: "/admin/dashboard" },
         { name: "Customers List", icon: <FaUsers />, path: "/admin/customers" },
-        { name: "Manage Admins", icon: <FaUserShield />, path: "/admin/admins" },
         { name: "Appointments List", icon: <FaShoppingCart />, path: "/admin/orders" },
+        { name: "Manage Admins", icon: <FaUserShield />, path: "/admin/admins" },
+        { name: "Manage Services", icon: <FaLeaf />, path: "/admin/services" },
         { name: "Customer Messages", icon: <FaLeaf />, path: "/admin/messages" },
 
     ];
@@ -110,6 +114,9 @@ export default function AdminPage() {
                         <Route path="/admins" element={<AdminTable />} />
                         <Route path="/add-admin" element={<AdminAdd />} />
                         <Route path="/messages" element={<AdminMessage />} />
+                        <Route path="/services" element={<AdminService />} />
+                        <Route path="/add-service" element={<AdminServiceAdd />} />
+                        <Route path="/update-service/:id" element={<AdminServiceUpdate />} />
                         <Route path="/update-admin/:id" element={<AdminUpdate />} />
                         {/* <Route path="/orders" element={<AdminOrders />} />  */}
 

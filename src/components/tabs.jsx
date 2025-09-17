@@ -5,10 +5,14 @@ export default function Tabs({ tabs, activeTab, setActiveTab }) {
                 <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`px-6 py-2 w-[200px] h-[50px]  font-medium transition uppercase cursor-pointer ${activeTab === tab.id
-                        ? "bg-blue-500 text-white"
-                        : "bg-white text-black"
-                        }`}
+                    className={`
+                        px-6 py-2 min-w-[200px] text-sm md:text-base font-semibold cursor-pointer uppercase transition-all duration-300 shadow-sm
+                        focus:outline-none
+                        ${activeTab === tab.id
+                            ? "bg-black text-white shadow-lg scale-105"
+                            : "bg-white text-gray-800 hover:bg-gray-100 hover:scale-105"
+                        }
+                    `}
                 >
                     {tab.label}
                 </button>
