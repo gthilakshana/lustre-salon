@@ -1,28 +1,86 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
 export default function Login() {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [mobile, setMobile] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
+        if (!email && !mobile) {
+            return toast.error("Enter email or mobile number", {
+                style: { background: "#fcd0d0", color: "#000" },
+            });
+        }
+
+        try {
+            const response = await axios.post(
+                import.meta.env.VITE_API_URL + "/api/users/login",
+                { email, mobile, password }
+            );
+
+            const { message, token, user } = response.data;
+
+
+            if (user?.status === "blocked") {
+                return toast.error("Your account is blocked. Please contact admin.", {
+                    style: { background: "#fcd0d0", color: "#000" },
+                });
+            }
+
+            toast.success(message, {
+                style: { background: "#d0f0fd", color: "#000" },
+            });
+
+            if (token) {
+                localStorage.setItem("token", token);
+            }
+            if (user) {
+                localStorage.setItem("user", JSON.stringify(user));
+            }
+
+            setTimeout(() => {
+                if (user?.role === "admin") {
+                    navigate("/admin");
+                } else {
+                    navigate("/");
+                }
+            }, 2000);
+        } catch (error) {
+            const errorMsg = error?.response?.data?.message || "Login failed.";
+            toast.error(errorMsg, {
+                style: { background: "#fcd0d0", color: "#000" },
+            });
+        }
+    };
+
     return (
         <>
             <Header />
+
             <div className="min-h-screen flex pt-16 flex-col bg-white">
                 <main className="flex-1 flex items-center justify-center px-4 mt-16 mb-16">
                     <div className="w-full max-w-md bg-white">
+                        <h1 className="text-3xl font-bold uppercase text-center mb-8">Login</h1>
 
-                        <h1 className="text-3xl font-bold uppercase text-center mb-8">
-                            Login
-                        </h1>
-
-
-                        <form className="space-y-4">
+                        <form onSubmit={handleLogin} className="space-y-4">
 
                             <input
                                 type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 placeholder="Gmail address"
                                 className="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                             />
-
 
                             <div className="flex items-center gap-2">
                                 <div className="flex-1 h-px bg-gray-300"></div>
@@ -31,52 +89,61 @@ export default function Login() {
                             </div>
 
 
+                            {/* Mobile */}
                             <div className="flex">
-                                <span className="px-4 py-3 border border-r-0 rounded-l-md bg-gray-50">
+
+                                <span className="flex items-center justify-center px-4 border-t border-b border-l rounded-l-md bg-gray-100 text-gray-700">
                                     +94
                                 </span>
+
+
                                 <input
-                                    type="text"
-                                    placeholder="Mobile Number"
-                                    className="w-full px-4 py-3 border-t border-b focus:outline-none"
+                                    type="tel"
+                                    value={mobile}
+                                    onChange={(e) => setMobile(e.target.value)}
+                                    placeholder="Mobile number"
+                                    className="flex-1 h-[54px] w-full px-4 border-t border-b border-r-0 focus:outline-none"
                                 />
+
+
                                 <button
                                     type="button"
-                                    className="px-5 py-3 bg-black text-white font-medium rounded-r-md hover:bg-gray-800 transition"
+                                    className="h-[54px] px-5 bg-black text-white font-medium rounded-r-md cursor-pointer hover:bg-gray-800 transition"
                                 >
                                     Verify
                                 </button>
                             </div>
 
 
+
+
+
                             <input
                                 type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Password"
                                 className="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                required
                             />
 
 
                             <button
                                 type="submit"
-                                className="w-full py-3 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition"
+                                className="w-full py-3 cursor-pointer bg-black text-white font-medium rounded-md hover:bg-gray-800 transition"
                             >
                                 Login
                             </button>
 
-
                             <p className="text-right text-sm text-gray-600">
-                                <a href="/forgot-password" className="text-black font-medium hover:underline">
+                                <Link to="/forgotPassword" className="text-black font-medium hover:underline">
                                     Forgot password?
-                                </a>
+                                </Link>
                             </p>
-
 
                             <p className="text-center text-sm text-gray-600 mt-6 border-t pt-6">
                                 Don’t have an account?{" "}
-
-                                <Link
-                                    to="/register"
-                                    className="text-black font-medium hover:underline">
+                                <Link to="/register" className="text-black font-medium hover:underline">
                                     Create one
                                 </Link>
                             </p>

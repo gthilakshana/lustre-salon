@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import { HiArrowRight, HiCheck } from "react-icons/hi";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import Header from "../components/header";
@@ -243,9 +244,10 @@ export default function DateAndTimeSelect() {
                                             <div className="w-full flex justify-end mt-6">
                                                 <button
                                                     onClick={() => setStep("datetime")}
-                                                    className="flex px-8 py-2 rounded-lg bg-red-500 w-[200px] h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-600 hover:text-white transition"
+                                                    className="flex px-8 py-2 items-center justify-center rounded bg-red-500 w-auto h-[50px] font-medium text-white shadow cursor-pointer hover:bg-red-600 hover:text-white transition"
                                                 >
                                                     Confirm Selection
+                                                    <HiArrowRight className="ml-2 w-5 h-5" />
                                                 </button>
                                             </div>
                                         </motion.div>
@@ -314,9 +316,10 @@ export default function DateAndTimeSelect() {
 
                                         <button
                                             onClick={handleAddToCart}
-                                            className="px-8 py-2 rounded-lg bg-red-500 w-auto h-[40px] font-medium text-white shadow cursor-pointer hover:bg-red-600 hover:text-white transition"
+                                            className="flex items-center px-8 py-2 rounded bg-red-500 w-auto h-[50px] font-medium text-white shadow cursor-pointer hover:bg-red-600 hover:text-white transition"
                                         >
                                             Confirm Appointment
+                                            <HiCheck className="ml-2 w-5 h-5" />
                                         </button>
                                     </motion.div>
                                 </motion.div>

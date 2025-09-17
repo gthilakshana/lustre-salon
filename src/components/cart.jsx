@@ -1,8 +1,14 @@
 import { FaTrash, FaCreditCard } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { motion } from "framer-motion";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+import toast from "react-hot-toast";
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export default function Cart({ cartItems, setCartItems }) {
+    console.log(cartItems);
     if (!cartItems.length) {
         return <p className="text-gray-500 mt-6">Please select a service, date/time, and gender.</p>;
     }
@@ -15,6 +21,29 @@ export default function Cart({ cartItems, setCartItems }) {
         const priceNumber = parseFloat(item.price.replace(/,/g, '').replace(' LKR', '')) || 0;
         return sum + priceNumber;
     }, 0);
+
+    const handleCheckout = async () => {
+        try {
+            const stripe = await stripePromise;
+
+            // Create checkout session on backend
+            const { data } = await axios.post(
+                import.meta.env.VITE_API_URL + "/api/stripe/create-checkout-session",
+                { cartItems },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}` // pass JWT if needed
+                    }
+                }
+            );
+
+            // Redirect to Stripe Checkout
+            await stripe.redirectToCheckout({ sessionId: data.id });
+        } catch (err) {
+            console.error("Checkout error:", err);
+            toast.error("Failed to process payment.");
+        }
+    };
 
     return (
         <div className="flex flex-col gap-4 mt-6 w-full">
@@ -48,7 +77,10 @@ export default function Cart({ cartItems, setCartItems }) {
             </div>
 
             <div className="flex justify-end mt-4">
-                <button className="flex items-center cursor-pointer gap-2 px-6 py-3 bg-red-500 text-white font-semibold rounded shadow hover:bg-red-600 transition">
+                <button
+                    onClick={handleCheckout}
+                    className="flex items-center cursor-pointer gap-2 px-6 py-3 bg-red-500 text-white font-semibold rounded shadow hover:bg-red-600 transition"
+                >
                     <FaCreditCard size={18} />
                     Proceed to Checkout
                 </button>

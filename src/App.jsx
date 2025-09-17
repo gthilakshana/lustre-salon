@@ -7,6 +7,8 @@ import DateAndTimeSelect from './pages/dateAndTimeSelect'
 import Appointment from './pages/appointment'
 import Register from './pages/register'
 import Login from './pages/login'
+import ResetPassword from './pages/resetPassword'
+import ForgotPassword from './pages/forgotPassword'
 import AdminPage from './pages/adminPage'
 import { Toaster } from "react-hot-toast";
 
@@ -22,6 +24,8 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/forgotPassword" element={<ForgotPassword />} />
+            <Route path="/resetPassword" element={<ResetPassword />} />
             <Route path="/admin/*" element={<AdminPage />} />
             <Route path="/dateAndTimeSelect" element={<DateAndTimeSelect />} />
             <Route path="/appointment" element={<Appointment />} />
@@ -31,7 +35,7 @@ function App() {
 
 
       <Toaster
-        position="top-center"
+        position="down-right"
         toastOptions={{
           success: {
             style: { background: "#10b981", color: "white" },

@@ -1,8 +1,21 @@
 import { useState } from "react";
-import { FaSignOutAlt, FaUsers, FaChartLine, FaShoppingCart, FaLeaf, FaBars, FaTimes, FaUserShield } from "react-icons/fa";
+import {
+    FaSignOutAlt,
+    FaUsers,
+    FaChartLine,
+    FaShoppingCart,
+    FaLeaf,
+    FaBars,
+    FaTimes,
+    FaUserShield
+} from "react-icons/fa";
+
 import { Link, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import AdminView from "./admin/adminView";
 import AdminCustomer from "./admin/adminCustomer";
+import AdminAdd from "./admin/adminAdd";
+import AdminMessage from "./admin/adminMessage";
+import AdminUpdate from "./admin/adminUpdate";
 import AdminTable from "./admin/adminTable";
 
 
@@ -78,7 +91,7 @@ export default function AdminPage() {
                             setIsOpen(false);
                             navigate("/login");
                         }}
-                        className="flex items-center gap-3 p-3 mt-auto cursor-pointer bg-gray-700 text-white hover:bg-red-600 hover:text-white transition duration-300 justify-center font-medium w-full "
+                        className="flex items-center rounded-full gap-3 p-3 mt-auto cursor-pointer bg-gray-700 text-white hover:bg-red-600 hover:text-white transition duration-300 justify-center font-medium w-full "
                     >
                         <FaSignOutAlt /> Logout
                     </button>
@@ -95,6 +108,9 @@ export default function AdminPage() {
                         <Route path="/dashboard" element={<AdminView />} />
                         <Route path="/customers" element={<AdminCustomer />} />
                         <Route path="/admins" element={<AdminTable />} />
+                        <Route path="/add-admin" element={<AdminAdd />} />
+                        <Route path="/messages" element={<AdminMessage />} />
+                        <Route path="/update-admin/:id" element={<AdminUpdate />} />
                         {/* <Route path="/orders" element={<AdminOrders />} />  */}
 
 
