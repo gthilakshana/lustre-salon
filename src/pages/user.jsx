@@ -3,7 +3,7 @@ import { FaCalendarAlt, FaTachometerAlt, FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import Footer from "../components/footer";
-import AppointmentCard from "../components/AppointmentCard";
+import AppointmentCard from "../components/AppointmentCard.jsx";
 import axios from "axios";
 import toast from "react-hot-toast";
 
