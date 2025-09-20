@@ -1,55 +1,35 @@
-import { useState, useEffect } from "react";
-import { User } from "lucide-react";
+import { User as UserIcon } from "lucide-react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-export default function Header() {
+export default function Header({ currentUser }) {
     const sections = ["home", "pricing", "services", "products"];
-    const [activeSection, setActiveSection] = useState("home");
-
     const navigate = useNavigate();
     const location = useLocation();
+    const [user, setUser] = useState(currentUser || null);
+
+
+    useEffect(() => {
+        if (!currentUser) {
+            const storedUser = localStorage.getItem("user");
+            if (storedUser) setUser(JSON.parse(storedUser));
+        }
+    }, [currentUser]);
 
     const handleScroll = (id) => {
         if (location.pathname !== "/") {
             navigate("/#" + id);
         } else {
             const section = document.getElementById(id);
-            if (section) {
-                section.scrollIntoView({ behavior: "smooth" });
-                setActiveSection(id);
-                window.history.pushState(null, "", `#${id}`);
-            }
+            if (section) section.scrollIntoView({ behavior: "smooth" });
+            window.history.pushState(null, "", `#${id}`);
         }
     };
-
-    useEffect(() => {
-        if (location.pathname !== "/") return;
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) setActiveSection(entry.target.id);
-                });
-            },
-            { threshold: 0.6 }
-        );
-
-        sections.forEach((id) => {
-            const section = document.getElementById(id);
-            if (section) observer.observe(section);
-        });
-
-        return () => {
-            sections.forEach((id) => {
-                const section = document.getElementById(id);
-                if (section) observer.unobserve(section);
-            });
-        };
-    }, [location.pathname]);
 
     return (
         <header className="fixed top-0 w-full z-50 bg-black text-white">
             <div className="w-full mx-auto flex items-center justify-between px-8 py-1">
+
                 <div className="flex justify-start">
                     <Link to="/">
                         <img
@@ -60,64 +40,54 @@ export default function Header() {
                     </Link>
                 </div>
 
+
                 <div className="flex-grow flex justify-center">
-                    <nav className="hidden md:flex space-x-10 font-semibold text-sm ">
-                        <button
-                            onClick={() => handleScroll("home")}
-                            className={`hover:text-red-600 cursor-pointer `}
-                        >
+                    <nav className="hidden md:flex space-x-10 font-semibold text-sm">
+                        <button onClick={() => handleScroll("home")} className="hover:text-red-600 cursor-pointer">
                             HOME
                         </button>
-
-                        <button
-                            onClick={() => navigate("/about")}
-                            className={`hover:text-red-600 cursor-pointer`}
-                        >
+                        <button onClick={() => navigate("/about")} className="hover:text-red-600 cursor-pointer">
                             ABOUT
                         </button>
-
                         {sections.slice(1).map((sec) => (
-                            <button
-                                key={sec}
-                                onClick={() => handleScroll(sec)}
-                                className={`hover:text-red-600 cursor-pointer`}
-                            >
+                            <button key={sec} onClick={() => handleScroll(sec)} className="hover:text-red-600 cursor-pointer">
                                 {sec.toUpperCase()}
                             </button>
                         ))}
-
-                        <button
-                            onClick={() => navigate("/contact")}
-                            className={`hover:text-red-600 cursor-pointer`}
-                        >
+                        <button onClick={() => navigate("/contact")} className="hover:text-red-600 cursor-pointer">
                             CONTACT
                         </button>
                     </nav>
                 </div>
 
+
                 <div className="flex items-center space-x-3">
                     <Link
                         to="/appointment"
-                        className="border border-white px-4 py-2 cursor-pointer 
-               hover:bg-red-500 hover:text-white 
-               active:border-red-500 
-               transition-colors duration-500"
+                        className="border border-white px-4 py-2 cursor-pointer hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-500"
                     >
                         BOOK NOW
                     </Link>
 
-                    <Link
-                        to="/login"
-                        className="border border-white p-2 cursor-pointer 
-               hover:bg-white hover:text-black 
-               active:border-red-500 
-               transition-colors duration-500 inline-flex items-center justify-center"
-                    >
-                        <User size={20} />
-                    </Link>
+
+                    {user && user.fullName && user.role === "user" ? (
+                        <span
+                            onClick={() => navigate("/user")}
+                            className="cursor-pointer text-white font-semibold flex items-center space-x-2 truncate max-w-[150px]"
+                            title={user.fullName}
+                        >
+                            <UserIcon size={20} />
+                            <span>{user.fullName.charAt(0).toUpperCase()}</span>
+                        </span>
+                    ) : (
+                        <Link
+                            to="/login"
+                            className="border border-white p-2 cursor-pointer hover:bg-white hover:text-black transition-colors duration-500 inline-flex items-center justify-center "
+                        >
+                            <UserIcon size={20} />
+                        </Link>
+                    )}
                 </div>
-
-
             </div>
         </header>
     );

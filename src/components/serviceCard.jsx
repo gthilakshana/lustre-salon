@@ -4,11 +4,18 @@ export default function ServiceCard({ image, name, title, price, comingSoon }) {
     const navigate = useNavigate();
 
     const displayName = name || title;
-
     const handleClick = () => {
-        if (!comingSoon) {
+        if (comingSoon) return;
+
+
+        const storedUser = localStorage.getItem("user");
+
+        if (storedUser) {
 
             navigate("/dateAndTimeSelect", { state: { employee: name, title, price } });
+        } else {
+
+            navigate("/login");
         }
     };
 

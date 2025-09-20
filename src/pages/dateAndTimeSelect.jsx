@@ -151,48 +151,74 @@ export default function DateAndTimeSelect() {
                     {/* --- Steps Header --- */}
                     <div className="w-full flex justify-center py-12">
                         <div className="flex bg-white shadow-lg overflow-hidden">
+
                             <button
-                                className={`px-8 py-4 text-sm cursor-pointer font-semibold border-r transition-colors duration-300 ${step === "barber"
-                                    ? "bg-black text-white"
-                                    : "bg-white text-black"
-                                    }`}
+                                className={`px-8 py-4 text-sm cursor-pointer font-semibold border-r transition-colors duration-300 flex items-center justify-center 
+                                  ${step === "barber" ? "bg-black text-white" : "bg-white text-black"}`}
                                 onClick={() => navigate("/appointment")}
                             >
-                                Select Barber
+
+                                <span
+                                    className={`sm:hidden w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold 
+                                 ${step === "barber" ? "bg-black text-white" : "bg-black text-white"}`}
+                                >
+                                    1
+                                </span>
+
+                                <span className="hidden sm:inline">Select Barber</span>
                             </button>
+
+
                             <button
-                                className={`px-8 py-4 text-sm cursor-pointer font-semibold border-r transition-colors duration-300 ${step === "select"
-                                    ? "bg-black text-white"
-                                    : "bg-white text-black"
-                                    }`}
+                                className={`px-8 py-4 text-sm cursor-pointer font-semibold border-r transition-colors duration-300 flex items-center justify-center 
+                                 ${step === "select" ? "bg-black text-white" : "bg-white text-black"}`}
                                 onClick={() => setStep("select")}
                             >
-                                Select Service
+                                <span
+                                    className={`sm:hidden w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold 
+                                ${step === "select" ? "bg-black text-white" : "bg-black text-white"}`}
+                                >
+                                    2
+                                </span>
+                                <span className="hidden sm:inline">Select Service</span>
                             </button>
+
+
                             <button
-                                className={`px-8 py-4 cursor-pointer text-sm font-semibold border-r transition-colors duration-300 ${step === "datetime"
-                                    ? "bg-black text-white"
-                                    : "bg-white text-black"
-                                    }`}
+                                className={`px-8 py-4 text-sm cursor-pointer font-semibold border-r transition-colors duration-300 flex items-center justify-center 
+                                ${step === "datetime" ? "bg-black text-white" : "bg-white text-black"}`}
                                 onClick={() => setStep("datetime")}
                             >
-                                Pick Date & Time
+                                <span
+                                    className={`sm:hidden w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold 
+                                ${step === "datetime" ? "bg-black text-white" : "bg-black text-white"}`}
+                                >
+                                    3
+                                </span>
+                                <span className="hidden sm:inline">Pick Date & Time</span>
                             </button>
+
+
                             <button
-                                className={`px-8 py-4 cursor-pointer text-sm font-semibold transition-colors duration-300 ${step === "cart"
-                                    ? "bg-black text-white"
-                                    : "bg-white text-black"
-                                    }`}
+                                className={`px-8 py-4 text-sm cursor-pointer font-semibold transition-colors duration-300 flex items-center justify-center 
+                               ${step === "cart" ? "bg-black text-white" : "bg-white text-black"}`}
                                 onClick={() => setStep("cart")}
                             >
-                                Confirm Payment
+                                <span
+                                    className={`sm:hidden w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold 
+                               ${step === "cart" ? "bg-black text-white" : "bg-black text-white"}`}
+                                >
+                                    4
+                                </span>
+                                <span className="hidden sm:inline">Confirm Payment</span>
                             </button>
                         </div>
                     </div>
 
+
                     {/* --- Main Content --- */}
                     <div className="w-full p-10 bg-white/90 backdrop-blur-md shadow-xl text-center flex flex-col items-center h-full">
-                        {/* Stylist Info */}
+
                         <div className="w-full flex justify-end items-center mb-6">
                             {displayInfo ? (
                                 <div className="flex items-center px-4 py-2 space-x-4 transition">
@@ -253,13 +279,13 @@ export default function DateAndTimeSelect() {
                             {/* Step: Pick Date & Time */}
                             {step === "datetime" && (
                                 <motion.div
-                                    className="w-[90%]  p-6 mt-6"
+                                    className="w-full sm:w-full md:w-[90%] p-4 sm:p-6 mt-6"
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.8, ease: "easeOut" }}
                                 >
                                     <motion.h2
-                                        className="text-3xl font-bold mb-4 uppercase"
+                                        className="text-2xl sm:text-3xl font-bold mb-4 uppercase"
                                         initial={{ opacity: 0, y: -20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.8, delay: 0.1 }}
@@ -267,32 +293,12 @@ export default function DateAndTimeSelect() {
                                         Pick Date & Time
                                     </motion.h2>
 
-                                    <p className="mb-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-
-                                    {/* <motion.p
-                                        className="mb-4 mt-6 text-black text-lg"
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.8, delay: 0.3 }}
-                                    >
-                                        <strong className="text-lg font-bold text-red-500">
-                                            Services : &nbsp;
-                                        </strong>
-                                        {selectedServices.length > 0
-                                            ? selectedServices
-                                                .map(
-                                                    (s) =>
-                                                        `${s.name || s.subName} – ${typeof s.price === "number"
-                                                            ? `${s.price} LKR`
-                                                            : s.price
-                                                        }`
-                                                )
-                                                .join(", ")
-                                            : "No service selected"}
-                                    </motion.p> */}
+                                    <p className="mb-6 text-sm sm:text-base">
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                    </p>
 
                                     <motion.div
-                                        className="flex flex-col md:flex-row gap-6 w-full mx-auto mt-10"
+                                        className="flex flex-col md:flex-row gap-4 md:gap-6 w-full mx-auto mt-6 md:mt-10"
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.8, delay: 0.4 }}
@@ -310,39 +316,40 @@ export default function DateAndTimeSelect() {
                                     </motion.div>
 
                                     <motion.div
-                                        className="flex w-full mt-6 items-center justify-between"
+                                        className="flex flex-col sm:flex-row w-full mt-4 sm:mt-6 items-center justify-between gap-4"
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.8, delay: 0.5 }}
                                     >
                                         <button
                                             onClick={() => setStep("select")}
-                                            className="flex items-center justify-center px-4 py-2 rounded-full bg-black w-12 h-12 font-medium text-white shadow cursor-pointer hover:bg-red-500 hover:text-white transition"
+                                            className="flex items-center justify-center px-3 sm:px-4 py-2 sm:py-2.5 rounded-full bg-black w-10 sm:w-12 h-10 sm:h-12 font-medium text-white shadow cursor-pointer hover:bg-red-500 hover:text-white transition"
                                         >
-                                            <FaArrowLeft size={20} />
+                                            <FaArrowLeft size={16} sm={20} />
                                         </button>
 
                                         <button
                                             onClick={handleAddToCart}
-                                            className="flex items-center px-8 py-2 rounded bg-red-500 w-auto h-[50px] font-medium text-white shadow cursor-pointer hover:bg-red-600 hover:text-white transition"
+                                            className="flex items-center justify-center px-4 sm:px-8 py-2 sm:py-2.5 rounded bg-red-500 h-[45px] sm:h-[50px] w-full sm:w-auto font-medium text-white shadow cursor-pointer hover:bg-red-600 transition"
                                         >
                                             Confirm Appointment
-                                            <HiCheck className="ml-2 w-5 h-5" />
+                                            <HiCheck className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
                                         </button>
                                     </motion.div>
                                 </motion.div>
                             )}
 
+
                             {/* Step: Cart */}
                             {step === "cart" && (
                                 <motion.div
-                                    className="w-[90%]  p-6 mt-6 "
+                                    className="w-full sm:w-[90%] p-4 sm:p-6 mt-6"
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.8, ease: "easeOut" }}
                                 >
                                     <motion.h2
-                                        className="text-3xl font-bold mb-4 uppercase"
+                                        className="text-2xl sm:text-3xl font-bold mb-4 uppercase"
                                         initial={{ opacity: 0, y: -20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.8, delay: 0.1 }}
@@ -350,25 +357,25 @@ export default function DateAndTimeSelect() {
                                         Confirm Appointment Payment
                                     </motion.h2>
 
-                                    <span>
+                                    <span className="text-sm sm:text-base">
                                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo
                                         recusandae ea, quae minima, iusto dolorem ducimus accusamus
                                         amet error commodi aspernatur architecto laboriosam nobis sed
                                         consequuntur impedit.
                                     </span>
 
-                                    <div className="w-full relative mt-6 h-[200px] rounded-md overflow-hidden">
+                                    <div className="w-full relative mt-6 h-[180px] sm:h-[200px] rounded-md overflow-hidden">
                                         <img
                                             className="w-full h-full object-cover"
                                             src="banner.jpg"
                                             alt="Banner"
                                         />
-                                        <div className="absolute inset-0 flex items-center justify-center p-4">
-                                            <p className="text-white text-center text-lg md:text-xl font-semibold bg-black/40 p-2 rounded">
+                                        <div className="absolute inset-0 flex items-center justify-center p-2 sm:p-4">
+                                            <p className="text-white text-center text-sm sm:text-lg md:text-xl font-semibold bg-black/40 p-1 sm:p-2 rounded">
                                                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries
                                             </p>
                                         </div>
-                                        <div className="absolute bottom-4 right-4 w-[100px] h-[100px]">
+                                        <div className="absolute bottom-2 sm:bottom-4 right-2 sm:right-4 w-[80px] sm:w-[100px] h-[80px] sm:h-[100px]">
                                             <img
                                                 className="w-full h-full object-contain"
                                                 src="LUSTRE.png"
@@ -377,25 +384,26 @@ export default function DateAndTimeSelect() {
                                         </div>
                                     </div>
 
-                                    <div className="mt-10">
+                                    <div className="mt-6 sm:mt-10">
                                         <Cart cartItems={cartItems} setCartItems={setCartItems} />
                                     </div>
 
                                     <motion.div
-                                        className="flex w-full mt-6 items-center justify-between"
+                                        className="flex w-full mt-4 sm:mt-6 items-center justify-between"
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.8, delay: 0.5 }}
                                     >
                                         <button
                                             onClick={() => setStep("datetime")}
-                                            className="flex items-center justify-center px-4 py-2 rounded-full bg-black w-12 h-12 font-medium text-white shadow cursor-pointer hover:bg-red-500 hover:text-white transition"
+                                            className="flex items-center justify-center px-3 sm:px-4 py-2 sm:py-2.5 rounded-full bg-black w-10 sm:w-12 h-10 sm:h-12 font-medium text-white shadow cursor-pointer hover:bg-red-500 hover:text-white transition"
                                         >
-                                            <FaArrowLeft size={20} />
+                                            <FaArrowLeft size={16} sm={20} />
                                         </button>
                                     </motion.div>
                                 </motion.div>
                             )}
+
                         </div>
                     </div>
                 </div>

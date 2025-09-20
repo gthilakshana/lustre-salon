@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { FaTimes, FaExclamationTriangle } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { CiCirclePlus } from "react-icons/ci";
 import axios from "axios";
@@ -11,39 +10,36 @@ import AdminServiceUpdate from "./adminServiceUpdate";
 // Delete confirm modal
 function ServiceDeleteConfirm({ serviceID, close, confirmDelete, loading }) {
     return (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex justify-center items-center px-4">
-            <div className="bg-white shadow-2xl relative max-w-sm w-full p-6 flex flex-col items-center gap-6 rounded-md animate-fadeIn">
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex justify-center items-center px-4">
+            <div className="bg-white shadow-xl max-w-sm w-full p-5 rounded-md animate-fadeIn relative">
                 <button
                     onClick={close}
                     disabled={loading}
-                    className="absolute -top-5 -right-5 w-10 h-10 bg-red-600 rounded-full text-white flex justify-center items-center shadow-lg hover:bg-white hover:text-red-500 transition disabled:opacity-50"
+                    className="absolute -top-4 -right-4 w-8 h-8 bg-red-600 text-white rounded-full hover:bg-white hover:text-red-600 border border-red-600 flex items-center justify-center transition disabled:opacity-50"
                 >
-                    <FaTimes />
+                    ✕
                 </button>
-
-                <FaExclamationTriangle className="text-yellow-500 text-4xl" />
-                <p className="text-center text-gray-800 font-semibold text-lg">
-                    Are you sure you want to delete service ID:{" "}
-                    <span className="font-bold">{serviceID}</span>?
+                <p className="text-center text-sm text-gray-700 mb-4">
+                    Are you sure you want to delete service:
+                    <span className="block font-semibold mt-1 text-gray-900">{serviceID}</span>
                 </p>
-
-                <div className="flex gap-4 mt-2">
+                <div className="flex justify-center gap-3">
                     <button
                         onClick={close}
                         disabled={loading}
-                        className="px-4 py-2 w-[100px] bg-gray-200 text-gray-800 font-medium hover:bg-gray-300 transition rounded-md disabled:opacity-50"
+                        className="px-4 py-1.5 text-sm bg-gray-200 hover:bg-gray-300 rounded-md disabled:opacity-50"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={() => confirmDelete(serviceID)}
                         disabled={loading}
-                        className="px-4 py-2 w-[100px] bg-red-600 text-white font-medium hover:bg-red-700 transition rounded-md flex items-center justify-center disabled:opacity-50"
+                        className="px-4 py-1.5 text-sm bg-red-600 hover:bg-red-700 text-white rounded-md disabled:opacity-50"
                     >
                         {loading ? (
-                            <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                            <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin inline-block"></span>
                         ) : (
-                            "Yes"
+                            "Delete"
                         )}
                     </button>
                 </div>
@@ -55,23 +51,23 @@ function ServiceDeleteConfirm({ serviceID, close, confirmDelete, loading }) {
 export default function AdminService() {
     const [services, setServices] = useState([]);
     const [search, setSearch] = useState("");
-    const [fetching, setFetching] = useState(true);
+    const [statusFilter, setStatusFilter] = useState("All");
     const [loading, setLoading] = useState(false);
-    const [isDeleteConfirmVisible, setIsDeleteConfirmVisible] = useState(false);
+    const [fetching, setFetching] = useState(true);
+    const [confirmVisible, setConfirmVisible] = useState(false);
     const [serviceToDelete, setServiceToDelete] = useState(null);
     const [isAddOpen, setIsAddOpen] = useState(false);
     const [isUpdateOpen, setIsUpdateOpen] = useState(false);
     const [serviceToUpdate, setServiceToUpdate] = useState(null);
-    const [statusFilter, setStatusFilter] = useState("All");
 
     // Fetch services
     const fetchServices = async () => {
         try {
             setFetching(true);
-            const res = await axios.get(import.meta.env.VITE_API_URL + "/api/services");
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/services`);
             setServices(res.data);
         } catch (err) {
-            console.error("Failed to fetch services:", err);
+            console.error(err);
             toast.error("Failed to load services");
         } finally {
             setFetching(false);
@@ -87,40 +83,36 @@ export default function AdminService() {
         try {
             setLoading(true);
             await axios.delete(`${import.meta.env.VITE_API_URL}/api/services/${id}`);
-            toast.success("Service deleted successfully");
-            setServices(services.filter((s) => s._id !== id));
-            setIsDeleteConfirmVisible(false);
-        } catch (err) {
-            console.error("Delete error:", err);
-            toast.error("Failed to delete service");
+            toast.success("Service deleted");
+            setServices(prev => prev.filter(s => s._id !== id));
+            setConfirmVisible(false);
+        } catch {
+            toast.error("Delete failed");
         } finally {
             setLoading(false);
         }
     };
 
-
-
-
-    // Search filter
-    const filteredServices = services.filter((s) => {
-        const matchesSearch =
-            (s.serviceName || "").toLowerCase().includes(search.toLowerCase()) ||
-            (s.subName || "").toLowerCase().includes(search.toLowerCase()) ||
-            (s.price || "").toString().includes(search.toLowerCase()) ||
-            (s.description || "").toLowerCase().includes(search.toLowerCase());
-
-        const matchesStatus = statusFilter === "All" ? true : s.status === statusFilter;
-
-        return matchesSearch && matchesStatus;
+    const filtered = services.filter(s => {
+        const term = search.toLowerCase();
+        const matchSearch =
+            (s.serviceName || "").toLowerCase().includes(term) ||
+            (s.subName || "").toLowerCase().includes(term) ||
+            (s.description || "").toLowerCase().includes(term);
+        const matchStatus = statusFilter === "All" || s.status === statusFilter;
+        return matchSearch && matchStatus;
     });
 
+    const statusColor = (status) =>
+        status === "Active" ? "text-green-600" :
+            status === "Inactive" ? "text-red-600" : "text-yellow-600";
 
     return (
-        <div className="w-full min-h-screen bg-white p-6 relative">
-            {isDeleteConfirmVisible && (
+        <div className="w-full min-h-screen bg-white p-4 text-sm relative">
+            {confirmVisible && (
                 <ServiceDeleteConfirm
                     serviceID={serviceToDelete}
-                    close={() => setIsDeleteConfirmVisible(false)}
+                    close={() => setConfirmVisible(false)}
                     confirmDelete={handleDelete}
                     loading={loading}
                 />
@@ -136,130 +128,89 @@ export default function AdminService() {
             )}
 
             {fetching && (
-                <div className="absolute inset-0 flex items-center justify-center bg-white/70 z-50">
-                    <span className="w-10 h-10 border-3 border-red-600 border-t-transparent rounded-full animate-spin"></span>
+                <div className="absolute inset-0 flex items-center justify-center bg-white/60 z-50">
+                    <span className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></span>
                 </div>
             )}
 
-            <div className="flex items-center justify-between mb-6">
-                <h1 className="text-2xl font-bold text-gray-800 uppercase">Services</h1>
-                <span className="px-3 py-1 text-sm font-medium text-white bg-red-500 rounded-2xl">
-                    {filteredServices.length} Services
+            {/* Header */}
+            <div className="flex items-center justify-between mb-4">
+                <h1 className="text-lg font-bold text-gray-800 uppercase">Services</h1>
+                <span className="px-2 py-1 text-xs font-medium bg-red-500 text-white rounded-full">
+                    {filtered.length} records
                 </span>
             </div>
 
-            <div className="mb-6">
+            {/* Search & Filter */}
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
                 <input
                     type="text"
-                    placeholder="Search services..."
+                    placeholder="Search by name, category, description..."
                     value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="w-full md:w-1/2 px-4 py-3 border rounded-md focus:ring-1 focus:ring-gray-400 outline-none"
+                    onChange={e => setSearch(e.target.value)}
+                    className="px-3 py-2 border rounded-md w-full md:w-1/2 focus:ring-1 focus:ring-gray-400"
                 />
-            </div>
-
-
-            {/** Toggle button filter by status - start */}
-            <div className="flex gap-3 mb-4">
-                {["All", "Active", "Inactive", "Pending"].map((status) => {
-                    let bgColor = "";
-                    let textColor = "text-white";
-
-                    if (statusFilter === status) {
-                        switch (status) {
-                            case "All":
-                                bgColor = "bg-black";
-                                break;
-                            case "Active":
-                                bgColor = "bg-green-600";
-                                break;
-                            case "Inactive":
-                                bgColor = "bg-red-600";
-                                break;
-                            case "Pending":
-                                bgColor = "bg-yellow-500";
-                                textColor = "text-black";
-                                break;
-                        }
-                    } else {
-                        bgColor = "bg-gray-200 hover:bg-gray-300";
-                        textColor = "text-gray-700";
-                    }
-
-                    return (
+                <div className="flex gap-2 flex-wrap">
+                    {["All", "Active", "Inactive", "Pending"].map(status => (
                         <button
                             key={status}
                             onClick={() => setStatusFilter(status)}
-                            className={`px-4 py-2  font-sm transition ${bgColor} ${textColor}`}
+                            className={`px-3 py-1.5 rounded-md border text-xs font-medium transition
+                ${statusFilter === status
+                                    ? status === "Active"
+                                        ? "bg-green-600 text-white"
+                                        : status === "Inactive"
+                                            ? "bg-red-600 text-white"
+                                            : "bg-yellow-500 text-black"
+                                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
                         >
                             {status}
                         </button>
-                    );
-                })}
+                    ))}
+                </div>
             </div>
-            {/** Toggle button filter by status - end */}
 
-
-
-
-
-
-            <div className="overflow-x-auto">
-                <table className="w-full min-w-[800px] text-left border rounded-lg overflow-hidden">
-                    <thead className="bg-gray-900 text-white">
+            {/* Table */}
+            <div className="overflow-x-auto border rounded-md">
+                <table className="w-full min-w-[900px] text-left">
+                    <thead className="bg-gray-800 text-white">
                         <tr>
-                            <th className="px-4 py-3 text-xs font-sm uppercase">Category</th>
-                            <th className="px-4 py-3 text-xs font-sm uppercase">Service Name</th>
-                            <th className="px-4 py-3 text-xs font-sm uppercase">Price</th>
-                            <th className="px-4 py-3 text-xs font-sm uppercase">Description</th>
-                            <th className="px-4 py-3 text-xs font-sm uppercase">Status</th>
-                            <th className="px-4 py-3 text-xs font-sm uppercase text-center">Actions</th>
+                            {["Category", "Service Name", "Price", "Description", "Status", "Actions"].map(h => (
+                                <th key={h} className="px-3 py-2 uppercase text-xs">{h}</th>
+                            ))}
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-200">
-                        {filteredServices.length > 0 ? (
-                            filteredServices.map((s) => (
-                                <tr key={s._id} className="hover:bg-blue-50 transition">
-                                    <td className="px-4 py-3 text-gray-800 font-medium">{s.serviceName}</td>
-                                    <td className="px-4 py-3 text-gray-800 font-medium">{s.subName}</td>
-                                    <td className="px-4 py-3 text-gray-700">Rs. {s.price}</td>
-                                    <td className="px-4 py-3 text-gray-700">{s.description}</td>
-                                    <td
-                                        className={`px-4 py-3 font-medium text-center ${s.status === "Active"
-                                            ? "text-green-600"
-                                            : s.status === "Inactive"
-                                                ? "text-red-600"
-                                                : "text-yellow-600"
-                                            }`}
-                                    >
-                                        {s.status}
-                                    </td>
-                                    <td className="px-4 py-3 text-center">
-                                        <div className="flex items-center justify-center gap-3">
-                                            <RiDeleteBin6Line
-                                                className="cursor-pointer rounded-lg p-2 text-gray-500 ring-1 ring-gray-300 hover:bg-red-100 hover:text-red-600 transition"
-                                                size={34}
-                                                onClick={() => {
-                                                    setServiceToDelete(s._id);
-                                                    setIsDeleteConfirmVisible(true);
-                                                }}
-                                            />
-                                            <FiEdit
-                                                className="cursor-pointer rounded-lg p-2 text-gray-500 ring-1 ring-gray-300 hover:bg-blue-100 hover:text-blue-600 transition"
-                                                size={34}
-                                                onClick={() => {
-                                                    setServiceToUpdate(s);
-                                                    setIsUpdateOpen(true);
-                                                }}
-                                            />
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))
-                        ) : (
+                    <tbody>
+                        {filtered.length > 0 ? filtered.map(s => (
+                            <tr key={s._id} className="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition">
+                                <td className="px-3 py-2">{s.subName || "-"}</td>
+                                <td className="px-3 py-2">{s.serviceName || "-"}</td>
+                                <td className="px-3 py-2">Rs. {s.price || "-"}</td>
+                                <td className="px-3 py-2">{s.description || "-"}</td>
+                                <td className={`px-3 py-2 font-medium ${statusColor(s.status)}`}>{s.status || "-"}</td>
+                                <td className="px-3 py-2 text-center flex items-center justify-center gap-3">
+                                    <RiDeleteBin6Line
+                                        size={20}
+                                        className="cursor-pointer text-gray-500 hover:text-red-600 transition"
+                                        onClick={() => {
+                                            setServiceToDelete(s._id);
+                                            setConfirmVisible(true);
+                                        }}
+                                    />
+                                    <FiEdit
+                                        size={20}
+                                        className="cursor-pointer text-gray-500 hover:text-blue-600 transition"
+                                        onClick={() => {
+                                            setServiceToUpdate(s);
+                                            setIsUpdateOpen(true);
+                                        }}
+                                    />
+                                </td>
+                            </tr>
+                        )) : (
                             <tr>
-                                <td colSpan={6} className="px-4 py-12 text-center text-gray-500">
-                                    No services to display.
+                                <td colSpan={6} className="px-3 py-8 text-center text-gray-500">
+                                    No services found.
                                 </td>
                             </tr>
                         )}
@@ -267,10 +218,10 @@ export default function AdminService() {
                 </table>
             </div>
 
-
+            {/* Add Button */}
             <button
                 onClick={() => setIsAddOpen(true)}
-                className="fixed right-[50px] bottom-[50px] text-5xl text-black hover:text-gray-800 cursor-pointer transition-colors duration-200"
+                className="fixed right-12 bottom-12 text-5xl text-black hover:text-gray-800 cursor-pointer transition-colors duration-200"
             >
                 <CiCirclePlus />
             </button>

@@ -1,27 +1,21 @@
 import { useState } from "react";
-import {
-    FaSignOutAlt,
-    FaUsers,
-    FaChartLine,
-    FaShoppingCart,
-    FaLeaf,
-    FaBars,
-    FaTimes,
-    FaUserShield
-} from "react-icons/fa";
-
+import { FaSignOutAlt, FaBars, FaTimes } from "react-icons/fa";
+import { BiMessageAdd } from "react-icons/bi";
+import { MdHomeRepairService, MdOutlineDashboardCustomize, MdBorderColor } from "react-icons/md";
+import { RiAdminLine } from "react-icons/ri";
+import { FiUsers } from "react-icons/fi";
 import { Link, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+
 import AdminView from "./admin/adminView";
 import AdminCustomer from "./admin/adminCustomer";
 import AdminAdd from "./admin/adminAdd";
 import AdminMessage from "./admin/adminMessage";
 import AdminUpdate from "./admin/adminUpdate";
 import AdminTable from "./admin/adminTable";
+import AdminAppoinment from "./admin/adminAppoinment";
 import AdminService from "./admin/adminService";
 import AdminServiceUpdate from "./admin/adminServiceUpdate";
 import AdminServiceAdd from "./admin/adminServiceAdd";
-
-
 
 export default function AdminPage() {
     const [isOpen, setIsOpen] = useState(false);
@@ -29,65 +23,63 @@ export default function AdminPage() {
     const navigate = useNavigate();
 
     const menuItems = [
-        { name: "Dashboard", icon: <FaChartLine />, path: "/admin/dashboard" },
-        { name: "Customers List", icon: <FaUsers />, path: "/admin/customers" },
-        { name: "Appointments List", icon: <FaShoppingCart />, path: "/admin/orders" },
-        { name: "Manage Admins", icon: <FaUserShield />, path: "/admin/admins" },
-        { name: "Manage Services", icon: <FaLeaf />, path: "/admin/services" },
-        { name: "Customer Messages", icon: <FaLeaf />, path: "/admin/messages" },
-
+        { name: "Dashboard", icon: <MdOutlineDashboardCustomize />, path: "/admin/dashboard" },
+        { name: "Customers", icon: <FiUsers />, path: "/admin/customers" },
+        { name: "Appointments", icon: <MdBorderColor />, path: "/admin/orders" },
+        { name: "Admins", icon: <RiAdminLine />, path: "/admin/admins" },
+        { name: "Services", icon: <MdHomeRepairService />, path: "/admin/services" },
+        { name: "Messages", icon: <BiMessageAdd />, path: "/admin/messages" },
     ];
 
     return (
         <>
-
+            {/* Mobile Toggle */}
             <div className="md:hidden fixed top-4 left-4 z-50">
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className="p-3 bg-black text-white rounded-xl shadow-md hover:bg-red-600 transition duration-300 cursor-pointer"
+                    className="p-3 bg-black text-white rounded-xl shadow-md hover:bg-red-600 transition duration-300"
                 >
                     {isOpen ? <FaTimes size={18} /> : <FaBars size={18} />}
                 </button>
             </div>
 
-
+            {/* Sidebar */}
             <aside
-                className={`fixed top-0 left-0 h-full w-64 bg-gradient-to-b from-black to-black shadow-lg p-6 z-40 border-r border-gray-700 transform transition-transform duration-300
-                ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:w-1/5 flex flex-col`}
+                className={`fixed top-0 left-0 h-full w-64 md:w-1/5 bg-gradient-to-b from-gray-900 to-black shadow-lg p-6 z-40 border-r border-gray-700 transform transition-transform duration-300
+                ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 flex flex-col`}
             >
-
-                <header className="flex justify-center items-center w-full h-[100px] md:h-[100px] cursor-pointer  ">
+                <header className="flex justify-center items-center w-full h-[100px] cursor-pointer">
                     <Link to="/admin">
-                        <img src="LUSTRE.png"
+                        <img
+                            src="LUSTRE.png"
                             alt="Lustre Logo"
-                            className="h-[100px] w-[250px] object-cover cursor-pointer hover:scale-105 transition-transform duration-300 " />
-
+                            className="h-[100px] w-[250px] object-cover hover:scale-105 transition-transform duration-300"
+                        />
                     </Link>
-
                 </header>
 
-
-                <main className="flex flex-col flex-1">
-                    <nav className="flex flex-col gap-2 mt-10">
+                <main className="flex flex-col flex-1 mt-8">
+                    <nav className="flex flex-col gap-2">
                         {menuItems.map((item) => {
                             const active = location.pathname === item.path;
                             return (
                                 <Link
                                     key={item.name}
                                     to={item.path}
-                                    className={`flex items-center gap-3 p-3  font-sm transition-all duration-300 ${active
-                                        ? "bg-gray-700 text-white shadow-md"
-                                        : "text-gray-300 hover:bg-gray-700/60 hover:text-white"
+                                    className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all duration-300 ${active
+                                            ? "bg-gray-700 text-white shadow-md"
+                                            : "text-gray-300 hover:bg-gray-700/60 hover:text-white"
                                         }`}
                                     onClick={() => setIsOpen(false)}
                                 >
-                                    {item.icon} <span>{item.name}</span>
+                                    {item.icon}
+                                    <span>{item.name}</span>
                                 </Link>
                             );
                         })}
                     </nav>
 
-
+                    {/* Logout Button */}
                     <button
                         onClick={() => {
                             localStorage.removeItem("authToken");
@@ -95,18 +87,16 @@ export default function AdminPage() {
                             setIsOpen(false);
                             navigate("/login");
                         }}
-                        className="flex items-center rounded-full gap-3 p-3 mt-auto cursor-pointer bg-gray-700 text-white hover:bg-red-600 hover:text-white transition duration-300 justify-center font-medium w-full "
+                        className="flex items-center gap-3 mt-auto p-3 rounded-lg bg-gray-700 text-white hover:bg-red-600 justify-center font-medium transition duration-300"
                     >
                         <FaSignOutAlt /> Logout
                     </button>
                 </main>
             </aside>
 
-
-
-
-            <div className="w-full md:w-[calc(100%-20%)] bg-white flex flex-col overflow-hidden ml-0 md:ml-[20%]">
-                <div className="h-default w-full overflow-y-auto p-6">
+            {/* Content Area */}
+            <div className="w-full md:w-[calc(100%-20%)] bg-gray-50 min-h-screen ml-0 md:ml-[20%] flex flex-col">
+                <div className="overflow-y-auto p-6">
                     <Routes>
                         <Route path="/" element={<AdminView />} />
                         <Route path="/dashboard" element={<AdminView />} />
@@ -116,11 +106,9 @@ export default function AdminPage() {
                         <Route path="/messages" element={<AdminMessage />} />
                         <Route path="/services" element={<AdminService />} />
                         <Route path="/add-service" element={<AdminServiceAdd />} />
+                        <Route path="/orders" element={<AdminAppoinment />} />
                         <Route path="/update-service/:id" element={<AdminServiceUpdate />} />
                         <Route path="/update-admin/:id" element={<AdminUpdate />} />
-                        {/* <Route path="/orders" element={<AdminOrders />} />  */}
-
-
                     </Routes>
                 </div>
             </div>

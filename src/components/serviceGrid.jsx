@@ -51,7 +51,7 @@ export default function ServiceGrid({ services, selectedServices, setSelectedSer
                         key={serviceId}
                         onClick={() => toggleService(service)}
                         className={`relative flex flex-col justify-between p-5 border  shadow hover:shadow-lg transition-all 
-                            ${isSelected ? "bg-blue-600 text-white border-blue-500" : "bg-white text-gray-800 border-gray-200"}
+                            ${isSelected ? "bg-black text-white border-gray-800" : "bg-white text-gray-800 border-gray-200"}
                             ${cursorClass}
                         `}
                         initial={{ opacity: 0, y: 20 }}
@@ -62,9 +62,9 @@ export default function ServiceGrid({ services, selectedServices, setSelectedSer
                             <FaCheckCircle className="absolute top-3 right-3 text-white text-xl" />
                         )}
 
-                        <div className="flex flex-col gap-2">
-                            <h3 className="text-lg font-semibold">{getName(service)}</h3>
-                            <p className={`text-sm font-medium ${isSelected ? "text-white" : ""}`}>
+                        <div className="flex flex-col gap-2 h-[200px] justify-center">
+                            <h3 className="text-[20px] uppercase font-semibold">{getName(service)}</h3>
+                            <p className={`text-md font-medium ${isSelected ? "text-white" : ""}`}>
                                 Price: <span className="font-bold">{service.price.toLocaleString()} LKR</span>
                             </p>
                             {service.description && (

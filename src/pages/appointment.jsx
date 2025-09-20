@@ -1,9 +1,12 @@
+
 import { motion } from "framer-motion";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import ServiceCard from "../components/serviceCard";
 
 export default function Appointment() {
+
+
     return (
         <>
             <Header />
@@ -17,24 +20,47 @@ export default function Appointment() {
                 <div className="relative z-10 w-full flex flex-col items-center">
 
 
-
                     <div className="w-full flex justify-center py-12">
                         <div className="flex bg-white shadow-lg overflow-hidden">
-                            <button className="px-8 py-4 text-sm font-semibold border-r bg-black text-white transition-colors duration-300">
-                                Select Barber
+
+                            <button className="px-8 py-4 text-sm font-semibold border-r bg-black text-white transition-colors duration-300 flex items-center justify-center">
+
+                                <span className="sm:hidden w-8 h-8 flex items-center justify-center rounded-full bg-black text-white text-sm font-bold">
+                                    1
+                                </span>
+
+                                <span className="hidden sm:inline">Select Barber</span>
                             </button>
-                            <button className="px-8 py-4 text-sm font-semibold border-r hover:bg-black hover:text-white transition-colors duration-300">
-                                Select Service
+
+                            {/* Step 2 */}
+                            <button className="px-8 py-4 text-sm font-semibold border-r hover:bg-black hover:text-white transition-colors duration-300 flex items-center justify-center">
+                                <span className="sm:hidden w-8 h-8 flex items-center justify-center rounded-full bg-black text-white text-sm font-bold">
+                                    2
+                                </span>
+                                <span className="hidden sm:inline">Select Service</span>
                             </button>
-                            <button className="px-8 py-4 text-sm font-semibold border-r hover:bg-black hover:text-white transition-colors duration-300">
-                                Pick Date & Time
+
+                            {/* Step 3 */}
+                            <button className="px-8 py-4 text-sm font-semibold border-r hover:bg-black hover:text-white transition-colors duration-300 flex items-center justify-center">
+                                <span className="sm:hidden w-8 h-8 flex items-center justify-center rounded-full bg-black text-white text-sm font-bold">
+                                    3
+                                </span>
+                                <span className="hidden sm:inline">Pick Date &amp; Time</span>
                             </button>
-                            <button className="px-8 py-4 text-sm font-semibold hover:bg-black hover:text-white transition-colors duration-300">
-                                Confirm Payment
+
+                            {/* Step 4 */}
+                            <button className="px-8 py-4 text-sm font-semibold hover:bg-black hover:text-white transition-colors duration-300 flex items-center justify-center">
+                                <span className="sm:hidden w-8 h-8 flex items-center justify-center rounded-full bg-black text-white text-sm font-bold">
+                                    4
+                                </span>
+                                <span className="hidden sm:inline">Confirm Payment</span>
                             </button>
                         </div>
                     </div>
 
+
+
+                    {/* Main Content */}
                     <motion.div
                         className="w-full p-10 bg-white/90 backdrop-blur-md shadow-xl text-center"
                         initial={{ opacity: 0, y: 30 }}
@@ -45,9 +71,10 @@ export default function Appointment() {
                             Select LusTre Haircut Appointment or Salon Services
                         </h2>
                         <p className="text-gray-600 leading-relaxed max-w-6xl mx-auto mb-10">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                         </p>
 
+                        {/* Choose Stylist */}
                         <motion.div
                             className="flex flex-col md:flex-row items-start justify-center gap-12"
                             initial={{ opacity: 0, y: 20 }}
@@ -65,6 +92,7 @@ export default function Appointment() {
                             </div>
                         </motion.div>
 
+                        {/* Choose Service */}
                         <motion.div
                             className="flex flex-col md:flex-row items-start justify-center mt-[50px] gap-12"
                             initial={{ opacity: 0, y: 20 }}

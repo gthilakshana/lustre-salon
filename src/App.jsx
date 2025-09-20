@@ -9,7 +9,9 @@ import Register from './pages/register'
 import Login from './pages/login'
 import ResetPassword from './pages/resetPassword'
 import ForgotPassword from './pages/forgotPassword'
+import NotFoundPage from './pages/notFoundPage'
 import AdminPage from './pages/adminPage'
+import User from './pages/user'
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
             <Route path="/forgotPassword" element={<ForgotPassword />} />
             <Route path="/resetPassword" element={<ResetPassword />} />
             <Route path="/admin/*" element={<AdminPage />} />
+            <Route path="/user" element={<User />} />
+            <Route path="*" element={<NotFoundPage />} />
             <Route path="/dateAndTimeSelect" element={<DateAndTimeSelect />} />
             <Route path="/appointment" element={<Appointment />} />
           </Routes>

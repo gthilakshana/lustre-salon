@@ -5,11 +5,13 @@ import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export default function Cart({ cartItems, setCartItems }) {
     const [paymentOption, setPaymentOption] = useState("full");
+    const navigate = useNavigate();
 
     if (!cartItems.length) {
         return <p className="text-gray-500 mt-6">Please select a service, date/time, and gender.</p>;
@@ -19,53 +21,95 @@ export default function Cart({ cartItems, setCartItems }) {
         setCartItems(cartItems.filter(item => item.id !== id));
     };
 
-    const totalAmount = useMemo(() => {
+    // Calculate payment amounts
+    const amounts = useMemo(() => {
         const total = cartItems.reduce((sum, item) => sum + Number(item.price), 0);
-        if (paymentOption === "half") return total / 2;
-        if (paymentOption === "book-only") return 0;
-        return total;
+        if (paymentOption === "half") return { payNow: total / 2, due: total / 2 };
+        if (paymentOption === "book-only") return { payNow: 0, due: total };
+        return { payNow: total, due: 0 };
     }, [cartItems, paymentOption]);
 
     const handleCheckout = async () => {
         try {
+            const appointmentsPayload = cartItems.map(item => {
+                const totalCost = Number(item.price);
+                let fullPayment = 0;
+                let duePayment = 0;
+
+                if (paymentOption === "full") fullPayment = totalCost;
+                else if (paymentOption === "half") {
+                    fullPayment = totalCost / 2;
+                    duePayment = totalCost / 2;
+                } else if (paymentOption === "book-only") {
+                    duePayment = totalCost;
+                }
+
+                return {
+                    stylistName: item.stylist || "Unnamed Stylist",
+                    serviceName: item.serviceName, // directly use string
+                    subName: item.subName,         // directly use string
+                    date: item.date,
+                    time: item.time,
+                    type: item.gender,
+                    paymentType:
+                        paymentOption === "book-only"
+                            ? "Book Only"
+                            : paymentOption === "half"
+                                ? "Half"
+                                : "Full",
+                    fullPayment,
+                    duePayment
+                };
+            });
+
+
+
+            console.log("Appointments Payload:", appointmentsPayload);
+
+            // Book-Only path
             if (paymentOption === "book-only") {
-                toast.success("Appointment booked without payment.");
+                await axios.post(
+                    `${import.meta.env.VITE_API_URL}/api/appointments/book-only`,
+                    { appointments: appointmentsPayload },
+                    { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+                );
+                toast.success("Booking successful!");
+                setCartItems([]);
+                navigate("/");
                 return;
             }
 
-            const stripe = await stripePromise;
+            // Full/Half payment path
+            await axios.post(
+                `${import.meta.env.VITE_API_URL}/api/appointments/cart`,
+                { cartItems: appointmentsPayload },
+                { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+            );
 
+            const stripe = await stripePromise;
             const { data } = await axios.post(
-                import.meta.env.VITE_API_URL + "/api/stripe/create-checkout-session",
-                { cartItems, paymentOption },
-                {
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-                }
+                `${import.meta.env.VITE_API_URL}/api/stripe/create-checkout-session`,
+                { cartItems: appointmentsPayload, paymentOption },
+                { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
             );
 
             await stripe.redirectToCheckout({ sessionId: data.id });
         } catch (err) {
             console.error("Checkout error:", err);
-            toast.error("Failed to process payment.");
+            toast.error(err.response?.data?.message || "Failed to process appointment.");
         }
     };
 
     const getDescription = () => {
-        switch (paymentOption) {
-            case "full":
-                return "You will pay the full amount at checkout. Ensure your payment details are correct to confirm your appointment.";
-            case "half":
-                return "You will pay 50% of the total amount at checkout. The remaining amount will be collected during your visit.";
-            case "book-only":
-                return "No payment now. Your appointment will be booked only, without any payment. Please ensure to attend on the scheduled date and time, otherwise the booking may be subject to cancellation or rescheduling.";
-            default:
-                return "";
-        }
+        if (paymentOption === "full") return "You will pay the full amount at checkout.";
+        if (paymentOption === "half") return "You will pay 50% now. The remaining amount will be collected at your visit.";
+        if (paymentOption === "book-only") return "No payment now. Full amount will be due on your visit.";
+        return "";
     };
-
 
     return (
         <div className="flex flex-col gap-4 mt-6 w-full max-w-7xl mx-auto">
+            {/* Cart Items */}
             {cartItems.map((item, index) => (
                 <motion.div
                     key={item.id}
@@ -80,6 +124,10 @@ export default function Cart({ cartItems, setCartItems }) {
                         <p className="text-gray-500">{item.date} at {item.time}</p>
                         <p className="text-gray-500">For: {item.gender}</p>
                         <p className="text-gray-500">Stylist: {item.stylist || "Unnamed Stylist"}</p>
+                        <p className="text-gray-500 text-sm">
+                            {item.servicesData?.[0]?.serviceName} - {item.servicesData?.[0]?.subName}
+                        </p>
+
                     </div>
                     <button
                         onClick={() => handleDelete(item.id)}
@@ -91,16 +139,17 @@ export default function Cart({ cartItems, setCartItems }) {
             ))}
 
             {/* Payment Option */}
-            <div className="mt-6 p-5  flex flex-col gap-3 shadow-sm">
+            <div className="mt-6 p-5 flex flex-col gap-3 shadow-sm">
                 <div className="flex flex-wrap gap-4">
                     {[
-                        { value: "full", label: "Full Payment", color: "bg-red-800 text-white" },
-                        { value: "half", label: "Half Payment", color: "bg-yellow-800 text-white" },
+                        { value: "full", label: "Full Payment", color: "bg-red-500 text-white" },
+                        { value: "half", label: "Half Payment", color: "bg-red-500 text-white" },
                         { value: "book-only", label: "Book Only", color: "bg-black text-white" }
                     ].map(option => (
                         <label
                             key={option.value}
-                            className={`cursor-pointer px-5 py-2  border transition font-medium uppercase ${paymentOption === option.value ? option.color : "bg-white text-black hover:bg-gray-200"}`}
+                            className={`cursor-pointer px-5 py-2 border transition font-medium uppercase ${paymentOption === option.value ? option.color : "bg-white text-black hover:bg-gray-200"
+                                }`}
                         >
                             <input
                                 type="radio"
@@ -114,23 +163,32 @@ export default function Cart({ cartItems, setCartItems }) {
                         </label>
                     ))}
                 </div>
-                <p className="text-gray-600 mt-10">{getDescription()}</p>
+                <p className="text-gray-600 mt-4">{getDescription()}</p>
             </div>
 
             {/* Total */}
-            <div className="flex justify-between items-center mt-4 p-4 border-t border-gray-300">
-                <h3 className="text-lg font-bold">Total:</h3>
-                <span className="text-lg font-semibold">{totalAmount.toLocaleString()} LKR</span>
+            <div className="flex flex-col gap-1 mt-4 p-4 border-t border-gray-300">
+                <div className="flex justify-between w-full">
+                    <h3 className="text-lg font-bold">Payment Now:</h3>
+                    <span className="text-lg font-semibold">{amounts.payNow.toLocaleString()} LKR</span>
+                </div>
+                <div className="flex justify-between w-full">
+                    <h3 className="text-lg font-bold text-gray-500">Due Amount:</h3>
+                    <span className="text-lg font-semibold text-gray-500">{amounts.due.toLocaleString()} LKR</span>
+                </div>
             </div>
 
             {/* Checkout */}
-            <div className="flex justify-end mt-4">
+            <div className="flex justify-end mt-4 gap-3">
                 <button
                     onClick={handleCheckout}
-                    className="flex items-center cursor-pointer gap-2 px-6 py-3 bg-red-500 text-white font-semibold rounded shadow hover:bg-red-600 transition"
+                    className={`flex items-center cursor-pointer gap-2 px-6 py-3 font-semibold rounded shadow transition ${paymentOption === "book-only"
+                        ? "bg-black text-white hover:bg-gray-800"
+                        : "bg-red-500 text-white hover:bg-red-600"
+                        }`}
                 >
                     <FaCreditCard size={18} />
-                    Proceed to Checkout
+                    {paymentOption === "book-only" ? "Book Appointment" : "Proceed to Checkout"}
                 </button>
             </div>
         </div>

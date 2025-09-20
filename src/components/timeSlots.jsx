@@ -7,14 +7,15 @@ export default function TimeSlots({ selectedTime, setSelectedTime, selectedGende
     ];
 
     return (
-        <div className="bg-gray-50 p-6 rounded-xl shadow-md w-full flex flex-col gap-4">
-            <h3 className="font-medium mb-3">Select your time</h3>
-            <div className="grid grid-cols-4 gap-2">
+        <div className="bg-gray-50 p-4 sm:p-6 rounded-xl shadow-md w-full flex flex-col gap-4">
+            <h3 className="font-medium mb-3 text-base sm:text-lg">Select your time</h3>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {times.map((time) => (
                     <button
                         key={time}
                         onClick={() => setSelectedTime(time)}
-                        className={`py-2 px-3 border cursor-pointer rounded-full transition 
+                        className={`py-2 px-3 text-sm sm:text-base border cursor-pointer rounded-full transition 
                             ${selectedTime === time
                                 ? "bg-blue-500 text-white border-blue-500"
                                 : "text-gray-700 hover:bg-blue-100 hover:text-blue-700"
@@ -25,8 +26,8 @@ export default function TimeSlots({ selectedTime, setSelectedTime, selectedGende
                 ))}
             </div>
 
-            <h3 className="font-semibold mt-4">For whom is the appointment being made?</h3>
-            <div className="flex gap-4 justify-center items-center">
+            <h3 className="font-semibold mt-4 text-base sm:text-lg">For whom is the appointment being made?</h3>
+            <div className="flex flex-col-4 sm:flex-row gap-4 justify-center items-center">
                 <button
                     onClick={() => setSelectedGender("Gents")}
                     className={`flex flex-col items-center p-3 border rounded-lg transition cursor-pointer
@@ -36,10 +37,10 @@ export default function TimeSlots({ selectedTime, setSelectedTime, selectedGende
                         }`}
                 >
                     <FaMale
-                        size={48}
+                        size={36}
                         className={`${selectedGender === "Gents" ? "text-blue-500" : "text-gray-400"}`}
                     />
-                    <span className={`${selectedGender === "Gents" ? "text-blue-600" : "text-gray-500"} font-medium`}>
+                    <span className={`${selectedGender === "Gents" ? "text-blue-600" : "text-gray-500"} font-medium text-sm sm:text-base`}>
                         Gents
                     </span>
                 </button>
@@ -53,10 +54,10 @@ export default function TimeSlots({ selectedTime, setSelectedTime, selectedGende
                         }`}
                 >
                     <FaFemale
-                        size={48}
+                        size={36}
                         className={`${selectedGender === "Ladies" ? "text-pink-500" : "text-gray-400"}`}
                     />
-                    <span className={`${selectedGender === "Ladies" ? "text-pink-600" : "text-gray-500"} font-medium`}>
+                    <span className={`${selectedGender === "Ladies" ? "text-pink-600" : "text-gray-500"} font-medium text-sm sm:text-base`}>
                         Ladies
                     </span>
                 </button>

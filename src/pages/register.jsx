@@ -144,7 +144,7 @@ export default function Register() {
 
                             <button
                                 type="submit"
-                                className="w-full py-3 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition"
+                                className="w-full py-3 bg-black cursor-pointer text-white font-medium rounded-md hover:bg-gray-800 transition"
                             >
                                 Create account
                             </button>
@@ -154,7 +154,7 @@ export default function Register() {
                                 Already have an account?{" "}
                                 <Link
                                     to="/login"
-                                    className="text-black font-medium hover:underline"
+                                    className="text-black font-medium hover:underline cursor-pointer"
                                 >
                                     Login
                                 </Link>
