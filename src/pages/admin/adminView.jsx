@@ -140,48 +140,51 @@ export default function AdminView() {
                 </div>
             </div>
 
-            {/* Stats */}
             {loading ? (
-                <div className="flex justify-center items-center py-12">
-                    <span className="w-10 h-10 border-3 border-red-600 border-t-transparent rounded-full animate-spin"></span>
+                <div className="flex justify-center items-center py-16">
+                    <span className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></span>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    {stats.map((stat, idx) => {
-                        const Icon = stat.icon;
-                        const classes = colorClasses[stat.color];
-                        return (
-                            <div
-                                key={idx}
-                                className={`${classes.bg} p-6 shadow-md hover:shadow-xl transition flex flex-col items-start rounded-lg`}
-                            >
-                                <Icon className={`${classes.icon} text-3xl mb-3`} />
-                                <h3 className={`${classes.title} font-semibold text-lg`}>{stat.title}</h3>
-                                <p className={`${classes.text} mt-1 text-sm`}>{stat.description}</p>
-                                <p className={`${classes.text} mt-2 text-xl font-bold`}>{stat.value}</p>
-                            </div>
-                        );
-                    })}
-                </div>
+                <>
+                    {/* Stats */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        {stats.map((stat, idx) => {
+                            const Icon = stat.icon;
+                            const classes = colorClasses[stat.color];
+                            return (
+                                <div
+                                    key={idx}
+                                    className={`${classes.bg} p-6 shadow-md hover:shadow-xl transition flex flex-col items-start rounded-lg`}
+                                >
+                                    <Icon className={`${classes.icon} text-3xl mb-3`} />
+                                    <h3 className={`${classes.title} font-semibold text-lg`}>{stat.title}</h3>
+                                    <p className={`${classes.text} mt-1 text-sm`}>{stat.description}</p>
+                                    <p className={`${classes.text} mt-2 text-xl font-bold`}>{stat.value}</p>
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    {/* Quick Links */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {quickLinks.map((link, idx) => {
+                            const Icon = link.icon;
+                            const classes = colorClasses[link.color];
+                            return (
+                                <div
+                                    key={idx}
+                                    className={`${classes.bg} p-6 shadow-md hover:shadow-lg transition flex items-center gap-4 cursor-pointer rounded-lg`}
+                                    onClick={() => navigate(link.path)}
+                                >
+                                    <Icon className={`${classes.icon} text-3xl`} />
+                                    <span className={`${classes.title} font-semibold`}>{link.title}</span>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </>
             )}
 
-            {/* Quick Links */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {quickLinks.map((link, idx) => {
-                    const Icon = link.icon;
-                    const classes = colorClasses[link.color];
-                    return (
-                        <div
-                            key={idx}
-                            className={`${classes.bg} p-6 shadow-md hover:shadow-lg transition flex items-center gap-4 cursor-pointer rounded-lg`}
-                            onClick={() => navigate(link.path)}
-                        >
-                            <Icon className={`${classes.icon} text-3xl`} />
-                            <span className={`${classes.title} font-semibold`}>{link.title}</span>
-                        </div>
-                    );
-                })}
-            </div>
         </div>
     );
 }
