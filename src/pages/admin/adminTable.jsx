@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { TiEdit } from "react-icons/ti";
+import { FiEdit } from "react-icons/fi";
 import { CiCirclePlus } from "react-icons/ci";
 import { FaTimes, FaExclamationTriangle } from "react-icons/fa";
 import AdminAdd from "./adminAdd";
@@ -60,14 +60,9 @@ export default function AdminTable() {
     const [isUpdateOpen, setIsUpdateOpen] = useState(false);
     const [adminToUpdate, setAdminToUpdate] = useState(null);
 
-    const [currentUserRole, setCurrentUserRole] = useState("");
-    const [isClient, setIsClient] = useState(false);
 
-    useEffect(() => {
-        const role = localStorage.getItem("role") || "";
-        setCurrentUserRole(role);
-        setIsClient(true); // mark that we're running on client
-    }, []);
+
+
 
 
     // Fetch admins
@@ -233,16 +228,16 @@ export default function AdminTable() {
                                                 setIsDeleteConfirmVisible(true);
                                             }}
                                         />
-                                        {isClient && currentUserRole === "admin" && (
-                                            <TiEdit
-                                                size={20}
-                                                className="cursor-pointer text-gray-500 hover:text-blue-600 transition"
-                                                onClick={() => {
-                                                    setAdminToUpdate(c);
-                                                    setIsUpdateOpen(true);
-                                                }}
-                                            />
-                                        )}
+
+                                        <FiEdit
+                                            size={20}
+                                            className="cursor-pointer text-gray-500 hover:text-blue-600 transition"
+                                            onClick={() => {
+                                                setAdminToUpdate(c);
+                                                setIsUpdateOpen(true);
+                                            }}
+                                        />
+
 
 
 
