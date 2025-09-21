@@ -1,20 +1,30 @@
 import { useState, useEffect } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
-import { ShowToast, LustreToaster } from "../../components/lustreToaster";
+import { ShowToast } from "../../components/lustreToaster";
 
+// Loader Component
+function PageLoader() {
+    return (
+        <div className="absolute inset-0 flex items-center justify-center bg-white/70 z-50">
+            <span className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></span>
+        </div>
+    );
+}
+
+// Delete Confirmation Modal
 function AppointmentDeleteConfirm({ appointmentID, close, confirmDelete, loading }) {
     return (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex justify-center items-center px-4">
-            <div className="bg-white shadow-xl max-w-sm w-full p-5 rounded-md animate-fadeIn relative">
+            <div className="bg-white shadow-xl max-w-sm w-full p-6 rounded-lg animate-scaleIn relative">
                 <button
                     onClick={close}
                     disabled={loading}
-                    className="absolute -top-4 -right-4 w-8 h-8 bg-red-600 text-white rounded-full hover:bg-white hover:text-red-600 border border-red-600 flex items-center justify-center transition disabled:opacity-50"
+                    className="absolute -top-3 -right-3 w-8 h-8 bg-red-600 text-white rounded-full hover:bg-white hover:text-red-600 border border-red-600 flex items-center justify-center transition disabled:opacity-50"
                 >
                     ✕
                 </button>
-                <p className="text-center text-sm text-gray-700 mb-4">
+                <p className="text-center text-gray-700 text-sm mb-4">
                     Are you sure you want to delete appointment:
                     <span className="block font-semibold mt-1 text-gray-900">{appointmentID}</span>
                 </p>
@@ -22,17 +32,17 @@ function AppointmentDeleteConfirm({ appointmentID, close, confirmDelete, loading
                     <button
                         onClick={close}
                         disabled={loading}
-                        className="px-4 py-1.5 text-sm bg-gray-200 hover:bg-gray-300 rounded-md disabled:opacity-50"
+                        className="px-5 py-2 text-sm bg-gray-200 hover:bg-gray-300 rounded-md disabled:opacity-50"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={() => confirmDelete(appointmentID)}
                         disabled={loading}
-                        className="px-4 py-1.5 text-sm bg-red-600 hover:bg-red-700 text-white rounded-md disabled:opacity-50"
+                        className="px-5 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded-md flex items-center justify-center gap-2 disabled:opacity-50"
                     >
                         {loading ? (
-                            <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin inline-block"></span>
+                            <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                         ) : (
                             "Delete"
                         )}
@@ -47,13 +57,14 @@ export default function AdminAppointment() {
     const [appointments, setAppointments] = useState([]);
     const [search, setSearch] = useState("");
     const [paymentFilter, setPaymentFilter] = useState("All");
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false); // for delete action
+    const [fetching, setFetching] = useState(true); // for data fetching
     const [confirmVisible, setConfirmVisible] = useState(false);
     const [appointmentToDelete, setAppointmentToDelete] = useState(null);
 
     const fetchAppointments = async () => {
         try {
-            setLoading(true);
+            setFetching(true);
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/appointments`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
@@ -79,9 +90,8 @@ export default function AdminAppointment() {
                 "Failed to load appointments",
                 "Please try again or contact support."
             );
-
         } finally {
-            setLoading(false);
+            setFetching(false);
         }
     };
 
@@ -93,20 +103,11 @@ export default function AdminAppointment() {
             await axios.delete(`${import.meta.env.VITE_API_URL}/api/appointments/${id}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
-            ShowToast(
-                "success",
-                "Appointment deleted"
-            );
-
+            ShowToast("success", "Appointment deleted");
             setAppointments(prev => prev.filter(a => a._id !== id));
             setConfirmVisible(false);
         } catch {
-            ShowToast(
-                "error",
-                "Delete failed",
-                "Please try again or contact support."
-            );
-
+            ShowToast("error", "Delete failed", "Please try again or contact support.");
         } finally {
             setLoading(false);
         }
@@ -131,7 +132,7 @@ export default function AdminAppointment() {
             payment === "Book Only" ? `Rs. ${price.toLocaleString()}` : "—";
 
     return (
-        <div className="w-full min-h-screen bg-white p-4 text-sm">
+        <div className="w-full min-h-screen bg-white p-4 text-sm relative">
             {confirmVisible && (
                 <AppointmentDeleteConfirm
                     appointmentID={appointmentToDelete}
@@ -141,11 +142,7 @@ export default function AdminAppointment() {
                 />
             )}
 
-            {loading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-white/60 z-50">
-                    <span className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></span>
-                </div>
-            )}
+            {fetching && <PageLoader />}
 
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
@@ -181,7 +178,7 @@ export default function AdminAppointment() {
             </div>
 
             {/* Table */}
-            <div className="overflow-x-auto border rounded-md">
+            <div className={`overflow-x-auto border rounded-md transition-opacity ${fetching ? "opacity-50" : "opacity-100"}`}>
                 <table className="w-full min-w-[950px] text-left">
                     <thead className="bg-gray-800 text-white">
                         <tr>
