@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { FiEdit } from "react-icons/fi";
+import { TiEdit } from "react-icons/ti";
 import { CiCirclePlus } from "react-icons/ci";
 import { FaTimes, FaExclamationTriangle } from "react-icons/fa";
 import AdminAdd from "./adminAdd";
@@ -234,7 +234,7 @@ export default function AdminTable() {
                                             }}
                                         />
                                         {isClient && currentUserRole === "admin" && (
-                                            <FiEdit
+                                            <TiEdit
                                                 size={20}
                                                 className="cursor-pointer text-gray-500 hover:text-blue-600 transition"
                                                 onClick={() => {
