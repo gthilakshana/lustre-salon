@@ -22,7 +22,7 @@ function App() {
       <BrowserRouter>
         <div className="w-full h-[100vh]">
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/*" element={<HomePage />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />

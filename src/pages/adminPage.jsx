@@ -177,7 +177,7 @@ export default function AdminPage() {
             <div className="w-full md:w-[calc(100%-20%)] bg-gray-50 min-h-screen ml-0 md:ml-[20%] flex flex-col">
                 <div className="overflow-y-auto p-6">
                     <Routes>
-                        <Route path="/" element={<AdminView />} />
+                        <Route path="/*" element={<AdminView />} />
                         <Route path="/dashboard" element={<AdminView />} />
                         <Route path="/customers" element={<AdminCustomer />} />
                         <Route path="/admins" element={<AdminTable />} />
