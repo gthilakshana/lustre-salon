@@ -62,6 +62,7 @@ export default function AdminTable() {
 
     const currentUserRole = localStorage.getItem("role");
 
+    // Fetch admins
     const fetchAdmins = async () => {
         try {
             setFetching(true);
@@ -83,14 +84,12 @@ export default function AdminTable() {
         fetchAdmins();
     }, []);
 
+    // Delete admin
     const handleDelete = async (id) => {
         try {
             setLoading(true);
             await axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${id}`);
-            ShowToast(
-                "success",
-                "Admin deleted successfully"
-            );
+            ShowToast("success", "Admin deleted successfully");
             setAdmins(admins.filter((a) => a._id !== id));
             setIsDeleteConfirmVisible(false);
         } catch (err) {
@@ -116,6 +115,7 @@ export default function AdminTable() {
 
     return (
         <div className="w-full min-h-screen bg-white p-4 text-sm relative">
+            {/* Delete Modal */}
             {isDeleteConfirmVisible && (
                 <AdminDeleteConfirm
                     adminID={adminToDelete}
@@ -125,6 +125,7 @@ export default function AdminTable() {
                 />
             )}
 
+            {/* Update Modal */}
             {isUpdateOpen && adminToUpdate && (
                 <AdminUpdate
                     isOpen={isUpdateOpen}
@@ -135,6 +136,7 @@ export default function AdminTable() {
                 />
             )}
 
+            {/* Loader */}
             {fetching && (
                 <div className="absolute inset-0 flex items-center justify-center bg-white/60 z-50">
                     <span className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></span>
@@ -142,12 +144,23 @@ export default function AdminTable() {
             )}
 
             {/* Header */}
+
             <div className="flex items-center justify-between mb-4">
                 <h1 className="text-lg font-bold text-gray-800 uppercase">Admins</h1>
-                <span className="px-2 py-1 text-xs font-medium bg-red-500 text-white rounded-full">
-                    {filteredAdmins.length} records
-                </span>
+                <div className="flex items-center gap-2">
+                    <span className="px-2 py-1 text-xs font-medium bg-red-500 text-white rounded-full">
+                        {filteredAdmins.length} records
+                    </span>
+                    <button
+                        onClick={fetchAdmins}
+                        disabled={fetching}
+                        className="px-3 py-1.5 text-xs bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition disabled:opacity-50"
+                    >
+                        {fetching ? "Refreshing..." : "Refresh"}
+                    </button>
+                </div>
             </div>
+
 
             {/* Search */}
             <div className="mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
@@ -193,15 +206,15 @@ export default function AdminTable() {
                                     <td className="px-3 py-2">
                                         <span
                                             className={`px-2 py-1 text-xs rounded-md ${c.status === "active"
-                                                ? "bg-blue-300 text-gray-700"
-                                                : "bg-red-300 text-red-700"
+                                                ? "bg-green-100 text-gray-700"
+                                                : "bg-red-100 text-red-700"
                                                 }`}
                                         >
                                             {c.status}
                                         </span>
                                     </td>
-                                    <td className="px-3 py-2 text-center">
-                                        <div className="flex items-center justify-center gap-2">
+                                    <td className="px-3 py-2  text-center">
+                                        <div className="flex  items-center justify-start gap-1">
                                             <RiDeleteBin6Line
                                                 size={20}
                                                 className="cursor-pointer text-gray-500 hover:text-red-600 transition"
@@ -226,10 +239,7 @@ export default function AdminTable() {
                             ))
                         ) : (
                             <tr>
-                                <td
-                                    colSpan={7}
-                                    className="px-3 py-8 text-center text-gray-500"
-                                >
+                                <td colSpan={7} className="px-3 py-8 text-center text-gray-500">
                                     No admins found.
                                 </td>
                             </tr>
@@ -246,11 +256,8 @@ export default function AdminTable() {
                 <CiCirclePlus />
             </button>
 
-            <AdminAdd
-                isOpen={isAddOpen}
-                onClose={() => setIsAddOpen(false)}
-                refresh={fetchAdmins}
-            />
+            {/* Add Modal */}
+            <AdminAdd isOpen={isAddOpen} onClose={() => setIsAddOpen(false)} refresh={fetchAdmins} />
         </div>
     );
 }

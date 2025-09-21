@@ -69,7 +69,6 @@ export default function AdminCustomer() {
                 "Failed to load customers",
                 "Please try again or contact support."
             );
-
         } finally {
             setFetching(false);
         }
@@ -83,20 +82,11 @@ export default function AdminCustomer() {
         try {
             setLoading(true);
             await axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${id}`);
-            ShowToast(
-                "success",
-                "Customer deleted"
-            );
-
+            ShowToast("success", "Customer deleted");
             setCustomers(prev => prev.filter(c => c._id !== id));
             setConfirmVisible(false);
         } catch {
-            ShowToast(
-                "error",
-                "Delete failed",
-                "Please try again or contact support."
-            );
-
+            ShowToast("error", "Delete failed", "Please try again or contact support.");
         } finally {
             setLoading(false);
         }
@@ -129,9 +119,19 @@ export default function AdminCustomer() {
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
                 <h1 className="text-lg font-bold text-gray-800 uppercase">Customers</h1>
-                <span className="px-2 py-1 text-xs font-medium bg-red-500 text-white rounded-full">
-                    {filtered.length} records
-                </span>
+                <div className="flex items-center gap-2">
+                    <span className="px-2 py-1 text-xs font-medium bg-red-500 text-white rounded-full">
+                        {filtered.length} records
+                    </span>
+                    {/* Refresh Button */}
+                    <button
+                        onClick={fetchCustomers}
+                        disabled={fetching}
+                        className="px-3 py-1.5 text-xs bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition"
+                    >
+                        {fetching ? "Refreshing..." : "Refresh"}
+                    </button>
+                </div>
             </div>
 
             {/* Search */}
@@ -169,7 +169,7 @@ export default function AdminCustomer() {
                                         {c.status}
                                     </span>
                                 </td>
-                                <td className="px-3 py-2 text-center">
+                                <td className="px-3 py-2 flex  text-center">
                                     <RiDeleteBin6Line
                                         size={20}
                                         className="cursor-pointer text-gray-500 hover:text-red-600 transition"

@@ -62,6 +62,7 @@ export default function AdminAppointment() {
     const [confirmVisible, setConfirmVisible] = useState(false);
     const [appointmentToDelete, setAppointmentToDelete] = useState(null);
 
+    // Fetch appointments
     const fetchAppointments = async () => {
         try {
             setFetching(true);
@@ -85,11 +86,7 @@ export default function AdminAppointment() {
             setAppointments(mapped);
         } catch (err) {
             console.error(err);
-            ShowToast(
-                "error",
-                "Failed to load appointments",
-                "Please try again or contact support."
-            );
+            ShowToast("error", "Failed to load appointments", "Please try again or contact support.");
         } finally {
             setFetching(false);
         }
@@ -97,6 +94,7 @@ export default function AdminAppointment() {
 
     useEffect(() => { fetchAppointments(); }, []);
 
+    // Delete appointment
     const handleDelete = async (id) => {
         try {
             setLoading(true);
@@ -113,6 +111,7 @@ export default function AdminAppointment() {
         }
     };
 
+    // Filtered appointments
     const filtered = appointments.filter(a => {
         const term = search.toLowerCase();
         const matchSearch =
@@ -147,9 +146,18 @@ export default function AdminAppointment() {
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
                 <h1 className="text-lg font-bold text-gray-800 uppercase">Appointments</h1>
-                <span className="px-2 py-1 text-xs font-medium bg-red-500 text-white rounded-full">
-                    {filtered.length} records
-                </span>
+                <div className="flex items-center gap-2">
+                    <span className="px-2 py-1 text-xs font-medium bg-red-500 text-white rounded-full">
+                        {filtered.length} records
+                    </span>
+                    <button
+                        onClick={fetchAppointments}
+                        disabled={fetching}
+                        className="px-3 py-1.5 text-xs bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition"
+                    >
+                        {fetching ? "Refreshing..." : "Refresh"}
+                    </button>
+                </div>
             </div>
 
             {/* Search & Filters */}
@@ -167,7 +175,7 @@ export default function AdminAppointment() {
                             key={type}
                             onClick={() => setPaymentFilter(type)}
                             className={`px-3 py-1.5 rounded-md border text-xs font-medium transition
-                ${paymentFilter === type
+                                ${paymentFilter === type
                                     ? "bg-black text-white"
                                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
                         >
@@ -199,8 +207,7 @@ export default function AdminAppointment() {
                                     <td className="px-3 py-2">{a.date}</td>
                                     <td className="px-3 py-2">{a.time}</td>
                                     <td className={`px-3 py-2 font-medium ${a.payment === "Full Payment" ? "text-green-600" :
-                                        a.payment === "Half Payment" ? "text-blue-600" :
-                                            "text-yellow-600"}`}>
+                                        a.payment === "Half Payment" ? "text-blue-600" : "text-yellow-600"}`}>
                                         {a.payment}
                                     </td>
                                     <td className="px-3 py-2">{paid(a.payment, a.price)}</td>

@@ -3,9 +3,18 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { CiCirclePlus } from "react-icons/ci";
 import axios from "axios";
-import { ShowToast, LustreToaster } from "../../components/lustreToaster";
+import { ShowToast } from "../../components/lustreToaster";
 import AdminServiceAdd from "./adminServiceAdd";
 import AdminServiceUpdate from "./adminServiceUpdate";
+
+// Loader Component
+function PageLoader() {
+    return (
+        <div className="absolute inset-0 flex items-center justify-center bg-white/70 z-50">
+            <span className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></span>
+        </div>
+    );
+}
 
 // Delete confirm modal
 function ServiceDeleteConfirm({ serviceID, close, confirmDelete, loading }) {
@@ -68,44 +77,30 @@ export default function AdminService() {
             setServices(res.data);
         } catch (err) {
             console.error(err);
-            ShowToast(
-                "error",
-                "Failed to load services",
-                "Please try again or contact support."
-            );
-
+            ShowToast("error", "Failed to load services", "Please try again or contact support.");
         } finally {
             setFetching(false);
         }
     };
 
-    useEffect(() => {
-        fetchServices();
-    }, []);
+    useEffect(() => { fetchServices(); }, []);
 
     // Delete service
     const handleDelete = async (id) => {
         try {
             setLoading(true);
             await axios.delete(`${import.meta.env.VITE_API_URL}/api/services/${id}`);
-            ShowToast(
-                "success",
-                "Service deleted"
-            );
-
+            ShowToast("success", "Service deleted");
             setServices(prev => prev.filter(s => s._id !== id));
             setConfirmVisible(false);
         } catch {
-            ShowToast(
-                "error",
-                "Delete failed",
-                "Please try again or contact support."
-            );
+            ShowToast("error", "Delete failed", "Please try again or contact support.");
         } finally {
             setLoading(false);
         }
     };
 
+    // Filtered services
     const filtered = services.filter(s => {
         const term = search.toLowerCase();
         const matchSearch =
@@ -140,18 +135,23 @@ export default function AdminService() {
                 />
             )}
 
-            {fetching && (
-                <div className="absolute inset-0 flex items-center justify-center bg-white/60 z-50">
-                    <span className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></span>
-                </div>
-            )}
+            {fetching && <PageLoader />}
 
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
                 <h1 className="text-lg font-bold text-gray-800 uppercase">Services</h1>
-                <span className="px-2 py-1 text-xs font-medium bg-red-500 text-white rounded-full">
-                    {filtered.length} records
-                </span>
+                <div className="flex items-center gap-2">
+                    <span className="px-2 py-1 text-xs font-medium bg-red-500 text-white rounded-full">
+                        {filtered.length} records
+                    </span>
+                    <button
+                        onClick={fetchServices}
+                        disabled={fetching}
+                        className="px-3 py-1.5 text-xs bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition"
+                    >
+                        {fetching ? "Refreshing..." : "Refresh"}
+                    </button>
+                </div>
             </div>
 
             {/* Search & Filter */}
@@ -169,7 +169,7 @@ export default function AdminService() {
                             key={status}
                             onClick={() => setStatusFilter(status)}
                             className={`px-3 py-1.5 rounded-md border text-xs font-medium transition
-                ${statusFilter === status
+                                ${statusFilter === status
                                     ? status === "Active"
                                         ? "bg-green-600 text-white"
                                         : status === "Inactive"
@@ -201,7 +201,7 @@ export default function AdminService() {
                                 <td className="px-3 py-2">Rs. {s.price || "-"}</td>
                                 <td className="px-3 py-2">{s.description || "-"}</td>
                                 <td className={`px-3 py-2 font-medium ${statusColor(s.status)}`}>{s.status || "-"}</td>
-                                <td className="px-3 py-2 text-center flex items-center justify-center gap-3">
+                                <td className="px-3 py-2 text-center flex items-center justify-center gap-1">
                                     <RiDeleteBin6Line
                                         size={20}
                                         className="cursor-pointer text-gray-500 hover:text-red-600 transition"
@@ -234,7 +234,7 @@ export default function AdminService() {
             {/* Add Button */}
             <button
                 onClick={() => setIsAddOpen(true)}
-                className="fixed right-12 bottom-12 text-5xl text-black hover:text-gray-800 cursor-pointer transition-colors duration-200"
+                className="fixed right-[50px] bottom-[50px] text-4xl text-black hover:text-gray-800 cursor-pointer transition-colors duration-200"
             >
                 <CiCirclePlus />
             </button>

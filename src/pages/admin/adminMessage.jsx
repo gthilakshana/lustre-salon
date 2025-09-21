@@ -2,7 +2,16 @@ import { useState, useEffect } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaTimes, FaExclamationTriangle } from "react-icons/fa";
 import axios from "axios";
-import { ShowToast, LustreToaster } from "../../components/lustreToaster";
+import { ShowToast } from "../../components/lustreToaster";
+
+// Loader Component
+function PageLoader() {
+    return (
+        <div className="absolute inset-0 flex items-center justify-center bg-white/70 z-50">
+            <span className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></span>
+        </div>
+    );
+}
 
 // Delete confirmation modal
 function MessageDeleteConfirm({ messageID, close, confirmDelete, loading }) {
@@ -64,12 +73,7 @@ export default function AdminMessage() {
             setMessages(res.data);
         } catch (err) {
             console.error(err);
-            ShowToast(
-                "error",
-                "Failed to load messages",
-                "Please try again or contact support."
-            );
-
+            ShowToast("error", "Failed to load messages", "Please try again or contact support.");
         } finally {
             setFetching(false);
         }
@@ -83,20 +87,11 @@ export default function AdminMessage() {
         try {
             setLoading(true);
             await axios.delete(`${import.meta.env.VITE_API_URL}/api/messages/${id}`);
-            ShowToast(
-                "success",
-                "Message deleted"
-            );
-
+            ShowToast("success", "Message deleted");
             setMessages(prev => prev.filter(m => m._id !== id));
             setConfirmVisible(false);
         } catch {
-            ShowToast(
-                "error",
-                "Delete failed",
-                "Please try again or contact support."
-            );
-
+            ShowToast("error", "Delete failed", "Please try again or contact support.");
         } finally {
             setLoading(false);
         }
@@ -120,18 +115,23 @@ export default function AdminMessage() {
                 />
             )}
 
-            {fetching && (
-                <div className="absolute inset-0 flex items-center justify-center bg-white/60 z-50">
-                    <span className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></span>
-                </div>
-            )}
+            {fetching && <PageLoader />}
 
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
                 <h1 className="text-lg font-bold text-gray-800 uppercase">Messages</h1>
-                <span className="px-2 py-1 text-xs font-medium bg-red-500 text-white rounded-full">
-                    {filtered.length} records
-                </span>
+                <div className="flex items-center gap-2">
+                    <span className="px-2 py-1 text-xs font-medium bg-red-500 text-white rounded-full">
+                        {filtered.length} records
+                    </span>
+                    <button
+                        onClick={fetchMessages}
+                        disabled={fetching}
+                        className="px-3 py-1.5 text-xs bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition"
+                    >
+                        {fetching ? "Refreshing..." : "Refresh"}
+                    </button>
+                </div>
             </div>
 
             {/* Search */}
@@ -164,7 +164,7 @@ export default function AdminMessage() {
                                 </td>
                                 <td className="px-3 py-2">{m.name}</td>
                                 <td className="px-3 py-2">{m.email}</td>
-                                <td className="px-3 py-2">{m.contactNumber}</td>
+                                <td className="px-3 py-2">{m.contactNumber || "-"}</td>
                                 <td className="px-3 py-2">{m.subject}</td>
                                 <td className="px-3 py-2">{m.message}</td>
                                 <td className="px-3 py-2 text-center">
