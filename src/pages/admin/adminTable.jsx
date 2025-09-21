@@ -60,7 +60,15 @@ export default function AdminTable() {
     const [isUpdateOpen, setIsUpdateOpen] = useState(false);
     const [adminToUpdate, setAdminToUpdate] = useState(null);
 
-    const [currentUserRole, setCurrentUserRole] = useState(null);
+    const [currentUserRole, setCurrentUserRole] = useState("");
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        const role = localStorage.getItem("role") || "";
+        setCurrentUserRole(role);
+        setIsClient(true); // mark that we're running on client
+    }, []);
+
 
     // Fetch admins
     const fetchAdmins = async () => {
@@ -80,9 +88,7 @@ export default function AdminTable() {
         }
     };
 
-    useEffect(() => {
-        setCurrentUserRole(localStorage.getItem("role"));
-    }, []);
+
 
     useEffect(() => {
         fetchAdmins();
@@ -227,7 +233,7 @@ export default function AdminTable() {
                                                 setIsDeleteConfirmVisible(true);
                                             }}
                                         />
-                                        {currentUserRole && currentUserRole === "admin" && (
+                                        {isClient && currentUserRole === "admin" && (
                                             <FiEdit
                                                 size={20}
                                                 className="cursor-pointer text-gray-500 hover:text-blue-600 transition"
@@ -237,6 +243,7 @@ export default function AdminTable() {
                                                 }}
                                             />
                                         )}
+
 
 
                                     </td>
