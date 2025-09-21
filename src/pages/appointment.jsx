@@ -67,23 +67,27 @@ export default function Appointment() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
-                        <h2 className="text-3xl font-bold mb-4">
+                        <h2 className="text-2xl md:text-3xl font-bold mb-4 uppercase">
                             Select LusTre Haircut Appointment or Salon Services
                         </h2>
                         <p className="text-gray-600 leading-relaxed max-w-6xl mx-auto mb-10">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                         </p>
 
                         {/* Choose Stylist */}
                         <motion.div
-                            className="flex flex-col md:flex-row items-start justify-center gap-12"
+                            className="flex flex-col items-center justify-center gap-12"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.2 }}
                         >
-                            <div className="flex flex-col items-center space-y-6">
-                                <h2 className="text-xl font-semibold text-black uppercase">Choose Your Stylist</h2>
-                                <div className="grid md:grid-cols-4 sm:grid-cols-2 gap-8 cursor-pointer">
+                            <div className="flex flex-col items-center space-y-6 w-full px-4 md:px-0">
+                                <h2 className="text-xl font-semibold text-black uppercase text-center">
+                                    Choose Your Stylist
+                                </h2>
+
+                                {/* grid */}
+                                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-4 gap-8 justify-items-center">
                                     <ServiceCard image="/founder.jpg" name="Gavrawa Thialkshana" />
                                     <ServiceCard image="/founder.jpg" name="Thilakshana" />
                                     <ServiceCard image="/founder.jpg" name="Kaveen" />
@@ -92,28 +96,34 @@ export default function Appointment() {
                             </div>
                         </motion.div>
 
+
+
                         {/* Choose Service */}
                         <motion.div
-                            className="flex flex-col md:flex-row items-start justify-center mt-[50px] gap-12"
+                            className="flex flex-col items-center justify-center mt-[50px] gap-12"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.4 }}
                         >
-                            <div className="flex flex-col items-center space-y-8">
-                                <h2 className="text-xl font-semibold text-black uppercase">Choose a Service</h2>
-                                <div className="flex flex-col items-center justify-center">
-                                    <div className="grid md:grid-cols-3 sm:grid-cols-3 items-center justify-items-center gap-6 p-4">
-                                        <ServiceCard image="/founder.jpg" title="LusTre Haircut" comingSoon />
-                                        <div className="flex flex-col items-center justify-center h-full space-y-2">
-                                            <div className="w-px h-8 bg-gray-300"></div>
-                                            <span className="text-sm font-medium text-gray-500">OR</span>
-                                            <div className="w-px h-8 bg-gray-300"></div>
-                                        </div>
-                                        <ServiceCard image="/founder.jpg" title="Wedding Appointment" comingSoon />
+                            <div className="flex flex-col items-center space-y-8 w-full px-4 md:px-0">
+                                <h2 className="text-xl md:text-xl font-semibold text-black uppercase text-center">
+                                    Choose a Service
+                                </h2>
+                                <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 items-center justify-items-center gap-6 p-4 md:p-0 w-full md:w-auto">
+                                    <ServiceCard image="/founder.jpg" title="LusTre Haircut" comingSoon />
+
+                                    {/* OR Divider */}
+                                    <div className="hidden sm:grid items-center justify-center h-full space-y-2">
+                                        <div className="w-px h-8 bg-gray-300 mx-auto"></div>
+                                        <span className="text-sm font-medium text-gray-500 text-center">OR</span>
+                                        <div className="w-px h-8 bg-gray-300 mx-auto"></div>
                                     </div>
+
+                                    <ServiceCard image="/founder.jpg" title="Wedding Appointment" comingSoon />
                                 </div>
                             </div>
                         </motion.div>
+
                     </motion.div>
                 </div>
             </div>
