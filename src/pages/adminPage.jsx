@@ -22,6 +22,7 @@ import AdminTable from "./admin/adminTable";
 import AdminAppoinment from "./admin/adminAppoinment";
 import AdminService from "./admin/adminService";
 import AdminServiceUpdate from "./admin/adminServiceUpdate";
+
 import AdminServiceAdd from "./admin/adminServiceAdd";
 
 export default function AdminPage() {
@@ -186,6 +187,7 @@ export default function AdminPage() {
                         <Route path="/add-service" element={<AdminServiceAdd />} />
                         <Route path="/orders" element={<AdminAppoinment />} />
                         <Route path="/update-service/:id" element={<AdminServiceUpdate />} />
+
                         <Route path="/update-admin/:id" element={<AdminUpdate />} />
                         {/* <Route path="/admin-records" element={<div>Admin Records Page</div>} /> */}
                     </Routes>
