@@ -1,5 +1,6 @@
 import { toast, Toaster } from "react-hot-toast";
 import { CheckCircle, Info, AlertTriangle, XCircle, X } from "lucide-react";
+import SalonLogo from "/LUSTRE.png";
 
 const iconMap = {
     success: <CheckCircle size={20} className="text-green-500" />,
@@ -28,8 +29,10 @@ export const ShowToast = (type = "info", message = "", description = "", actions
             <div className={`${t.visible ? "animate-enter" : "animate-leave"} flex flex-col gap-1 w-80 p-4 rounded-md shadow-lg bg-black text-white`}>
                 <div className="flex justify-between items-start">
                     <div className="flex items-center gap-2">
+                        {/* Salon logo */}
+                        <img src={SalonLogo} alt="Lustre Salon" className="w-6 h-6 rounded-full" />
                         {Icon}
-                        <span className="font-semibold">{type.toUpperCase()}</span>
+                        <span className="font-semibold">Lustre Salon</span>
                     </div>
                     <button onClick={() => toast.dismiss(t.id)} className="text-gray-400 hover:text-gray-200">
                         <X size={16} />
