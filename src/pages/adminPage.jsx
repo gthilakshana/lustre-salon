@@ -78,7 +78,7 @@ export default function AdminPage() {
         { name: "Customers", icon: <FiUsers />, path: "/admin/customers" },
         { name: "Appointments", icon: <MdBorderColor />, path: "/admin/orders" },
         { name: "Admins", icon: <RiAdminLine />, path: "/admin/admins" },
-        { name: "Admin Records", icon: <RiAdminLine />, path: "/admin/admin-records" },
+        // { name: "Admin Records", icon: <RiAdminLine />, path: "/admin/admin-records" },
         { name: "Services", icon: <MdHomeRepairService />, path: "/admin/services" },
         { name: "Messages", icon: <BiMessageAdd />, path: "/admin/messages" },
     ];
@@ -187,7 +187,7 @@ export default function AdminPage() {
                         <Route path="/orders" element={<AdminAppoinment />} />
                         <Route path="/update-service/:id" element={<AdminServiceUpdate />} />
                         <Route path="/update-admin/:id" element={<AdminUpdate />} />
-                        <Route path="/admin-records" element={<div>Admin Records Page</div>} />
+                        {/* <Route path="/admin-records" element={<div>Admin Records Page</div>} /> */}
                     </Routes>
                 </div>
             </div>
