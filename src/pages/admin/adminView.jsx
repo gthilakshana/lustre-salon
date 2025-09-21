@@ -125,27 +125,28 @@ export default function AdminView() {
                 Welcome to the admin panel! Here you can monitor system stats, manage users, view messages, and oversee appointments. All updates happen in real-time for your convenience.
             </p>
 
-            {/* Admin Profile */}
-            <div className="flex items-center gap-4 mb-8 p-4 bg-white shadow-md hover:shadow-lg transition rounded-lg">
-                <img
-                    src={currentAdmin.image}
-                    alt={currentAdmin.fullName}
-                    className="w-16 h-16 rounded-full object-cover border-2 border-blue-500"
-                />
-                <div>
-                    <h2 className="text-xl font-semibold uppercase text-gray-900">{currentAdmin.fullName}</h2>
-                    <p className="text-gray-600 text-sm">
-                        {currentAdmin.role === "admin" ? "Administrator" : currentAdmin.role}
-                    </p>
-                </div>
-            </div>
-
             {loading ? (
-                <div className="flex justify-center items-center py-16">
-                    <span className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></span>
+                <div className="flex justify-center  items-center h-[500px]">
+                    <span className="w-8 h-8 border-2 border-gray-600 border-t-transparent rounded-full animate-spin"></span>
                 </div>
             ) : (
                 <>
+                    {/* Admin Profile */}
+                    <div className="flex items-center gap-4 mb-8 p-4 bg-white shadow-md hover:shadow-lg transition rounded-lg">
+                        <img
+                            src={currentAdmin.image}
+                            alt={currentAdmin.fullName}
+                            className="w-16 h-16 rounded-full object-cover border-2 border-blue-500"
+                        />
+                        <div>
+                            <h2 className="text-xl font-semibold uppercase text-gray-900">{currentAdmin.fullName}</h2>
+                            <p className="text-gray-600 text-sm">
+                                {currentAdmin.role === "admin" ? "Administrator" : currentAdmin.role}
+                            </p>
+                        </div>
+                    </div>
+
+
                     {/* Stats */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                         {stats.map((stat, idx) => {
