@@ -3,92 +3,81 @@ import { FaFacebookF, FaInstagram, FaTiktok, FaPhoneAlt, FaClock, FaHome } from 
 
 export default function Footer() {
     return (
-        <footer className="bg-black text-white py-10 px-6">
-            <div className="max-w-8xl mx-auto grid grid-cols-1 md:grid-cols-4  py-6 px-6">
+        <footer className="bg-black text-white py-10 px-4 md:px-6">
+            <div className="max-w-8xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-10 py-6">
 
-
-                <div className="flex w-[250px] flex-col items-center text-left p-4">
-                    <div className="flex items-start">
-                        <Link to="/">
-                            <img
-                                src="/LUSTRE.png"
-                                alt="Salon Logo"
-                                className="h-16 md:h-35 w-[200px] object-cover cursor-pointer hover:scale-105 transition-transform duration-300"
-                            />
-                        </Link>
-                    </div>
-                    <p className="text-sm text-gray-400 mt-2">Hair & Beauty</p>
-                    <div className="flex gap-4 mt-4 text-2xl">
-                        <a href="#" className="hover:text-red-600"><FaFacebookF /></a>
+                {/* Logo & Social */}
+                <div className="flex flex-col items-center md:items-center text-center md:text-left">
+                    <Link to="/" className="flex justify-center md:justify-start">
+                        <img
+                            src="/LUSTRE.png"
+                            alt="Salon Logo"
+                            className="h-16 w-[200px] md:h-35 md:w-[280px] object-cover cursor-pointer hover:scale-105 transition-transform duration-300"
+                        />
+                    </Link>
+                    <p className="text-xs mt-2 tracking-wide">
+                        HAIR & BEAUTY <span className="text-red-500"></span>
+                    </p>
+                    <div className="flex gap-5 mt-4 text-2xl justify-center md:justify-start">
+                        <a href="/" className="hover:text-red-600"><FaFacebookF /></a>
                         <a href="#" className="hover:text-red-600"><FaInstagram /></a>
                         <a href="#" className="hover:text-red-600"><FaTiktok /></a>
                     </div>
                 </div>
 
-
-                <div className="flex flex-col items-center md:items-start">
-                    <h2 className="text-red-500 mb-4">QUICK LINKS</h2>
+                {/* Quick Links */}
+                <div className="flex flex-col items-center md:items-start text-center md:text-left">
+                    <h2 className="text-red-500 mb-4 font-semibold">QUICK LINKS</h2>
                     <ul className="space-y-2 text-sm">
-                        <li><a href="#" className="hover:text-red-500">HOME</a></li>
-                        <li><a href="#" className="hover:text-red-500">ABOUT</a></li>
-                        <li><a href="#" className="hover:text-red-500">PRICING</a></li>
-                        <li><a href="#" className="hover:text-red-500">SERVICES</a></li>
-                        <li><a href="#" className="hover:text-red-500">PRODUCTS</a></li>
-                        <li><a href="#" className="hover:text-red-500">FAQ</a></li>
+                        {["HOME", "ABOUT", "TERMS & CONDITIONS", "CONTACT"].map((link) => (
+                            <li key={link}>
+                                <a href="#" className="hover:text-red-500">{link}</a>
+                            </li>
+                        ))}
                     </ul>
                 </div>
 
+                {/* Contact Info */}
+                <div className="flex flex-col items-center md:items-start text-center md:text-left">
+                    <h2 className="text-red-500 mb-4 font-semibold">CONTACT US</h2>
 
-                <div className="flex flex-col items-center md:items-start">
-                    <h2 className="text-red-500 mb-4">CONTACT US</h2>
-                    <div className="flex items-start gap-3 mb-3">
-                        <FaClock className="text-red-600 mt-1" />
+                    {/* Opening Times */}
+                    <div className="flex items-center gap-3 mb-4">
+                        <FaClock className="w-5 h-5 hidden md:block text-red-600 mt-1" />
                         <div>
                             <p className="text-gray-400 text-sm">OPENING TIMES</p>
                             <p className="font-semibold">Tuesday - Sunday: 9:00am - 7:00pm</p>
                         </div>
                     </div>
-                    <div className="flex items-start gap-3 mb-3">
-                        <FaHome className="text-red-600 mt-1" />
+
+                    {/* Location */}
+                    <div className="flex items-center gap-3 mb-4">
+                        <FaHome className="w-6 h-6 hidden md:block text-red-600 mt-1" />
                         <div>
                             <p className="text-gray-400 text-sm">OUR LOCATION</p>
-                            <p className="font-semibold">No.7, Galle Road, Colombo Sri Lanka.</p>
-                        </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                        <FaPhoneAlt className="text-red-600 mt-1" />
-                        <div>
-                            <p className="text-gray-400 text-sm">OUR PHONE</p>
-                            <p className="font-semibold">+94 77 000 000</p>
+                            <p className="font-semibold">
+                                No.7, Galle Road, Colombo 04
+                            </p>
                         </div>
                     </div>
                 </div>
 
 
-                <div className="flex flex-col items-center md:items-start">
-                    <h2 className="text-red-500 mb-4">SUBSCRIBE TO OUR NEWSLETTER</h2>
-                    <p className="text-gray-400 text-sm mb-8">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis impedit ducimus rerum eum voluptas, sequi suscipit expedita obcaecati consectetur facilis tenetur ratione perspiciatis quas, illo mollitia alias eaque et consequuntur.</p>
-                    <form className="flex items-center w-full max-w-md bg-white border border-gray-300  shadow-md overflow-hidden">
-                        <input
-                            type="email"
-                            placeholder="Enter your email"
-                            className="flex-grow px-4 py-3 text-sm text-gray-700 focus:outline-none"
-                        />
-                        <button
-                            type="submit"
-                            className="px-6 py-3 bg-red-500 text-white hover:bg-red-600 transition-all duration-300 cursor-pointer"
-                        >
-                            Subscribe
-                        </button>
-                    </form>
 
-
+                <div className="flex md:mt-10 flex-col items-center md:items-start text-center md:text-left">
+                    <div className="flex items-start gap-3">
+                        <FaPhoneAlt className="w-6 h-6 hidden md:block text-red-600 mt-1" />
+                        <div>
+                            <p className="text-gray-400 text-sm">OUR PHONE</p>
+                            <p className="font-semibold">+94 77 344 555</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
 
-            <div className="border-t border-gray-100 mt-10 pt-4 text-center text-sm text-gray-400">
-                © 2025 All Rights Reserved @ Lustre Salon | Designed & Developed by Thilakshana
+            <div className="border-t border-gray-700 mt-8 pt-4 text-center text-xs md:text-sm text-gray-400">
+                © 2025 All Rights Reserved @ LUSTRE Salon | Designed & Developed by MIV Tech
             </div>
         </footer>
     );
