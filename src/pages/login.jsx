@@ -136,7 +136,7 @@ export default function Login() {
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Password"
                                 className="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
-                                required
+
                             />
 
 
