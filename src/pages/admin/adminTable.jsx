@@ -213,27 +213,27 @@ export default function AdminTable() {
                                             {c.status}
                                         </span>
                                     </td>
-                                    <td className="px-3 py-2  text-center">
-                                        <div className="flex  items-center justify-start gap-1">
-                                            <RiDeleteBin6Line
+                                    <td className="px-3 py-2 text-center flex items-center justify-start gap-1">
+
+                                        <RiDeleteBin6Line
+                                            size={20}
+                                            className="cursor-pointer text-gray-500 hover:text-red-600 transition"
+                                            onClick={() => {
+                                                setAdminToDelete(c._id);
+                                                setIsDeleteConfirmVisible(true);
+                                            }}
+                                        />
+                                        {currentUserRole === "admin" && (
+                                            <FiEdit
                                                 size={20}
-                                                className="cursor-pointer text-gray-500 hover:text-red-600 transition"
+                                                className="cursor-pointer text-gray-500 hover:text-blue-600 transition"
                                                 onClick={() => {
-                                                    setAdminToDelete(c._id);
-                                                    setIsDeleteConfirmVisible(true);
+                                                    setAdminToUpdate(c);
+                                                    setIsUpdateOpen(true);
                                                 }}
                                             />
-                                            {currentUserRole === "admin" && (
-                                                <FiEdit
-                                                    size={20}
-                                                    className="cursor-pointer text-gray-500 hover:text-blue-600 transition"
-                                                    onClick={() => {
-                                                        setAdminToUpdate(c);
-                                                        setIsUpdateOpen(true);
-                                                    }}
-                                                />
-                                            )}
-                                        </div>
+                                        )}
+
                                     </td>
                                 </tr>
                             ))
