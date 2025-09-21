@@ -60,7 +60,7 @@ export default function AdminTable() {
     const [isUpdateOpen, setIsUpdateOpen] = useState(false);
     const [adminToUpdate, setAdminToUpdate] = useState(null);
 
-    const currentUserRole = localStorage.getItem("role");
+    const [currentUserRole, setCurrentUserRole] = useState(null);
 
     // Fetch admins
     const fetchAdmins = async () => {
@@ -79,6 +79,10 @@ export default function AdminTable() {
             setFetching(false);
         }
     };
+
+    useEffect(() => {
+        setCurrentUserRole(localStorage.getItem("role"));
+    }, []);
 
     useEffect(() => {
         fetchAdmins();
@@ -223,7 +227,7 @@ export default function AdminTable() {
                                                 setIsDeleteConfirmVisible(true);
                                             }}
                                         />
-                                        {currentUserRole === "admin" && (
+                                        {currentUserRole && currentUserRole === "admin" && (
                                             <FiEdit
                                                 size={20}
                                                 className="cursor-pointer text-gray-500 hover:text-blue-600 transition"
@@ -233,6 +237,7 @@ export default function AdminTable() {
                                                 }}
                                             />
                                         )}
+
 
                                     </td>
                                 </tr>
