@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { ShowToast, LustreToaster } from "../components/lustreToaster";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaClock } from "react-icons/fa";
@@ -14,6 +14,15 @@ export default function Contact() {
     const [yourMessage, setYourMessage] = useState("");
 
     const [loading, setLoading] = useState(false);
+
+
+    // Scroll to top on page load
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+    //-----//
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -55,6 +64,7 @@ export default function Contact() {
             setLoading(false);
         }
     };
+
 
     return (
         <>

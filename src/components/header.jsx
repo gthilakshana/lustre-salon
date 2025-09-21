@@ -3,11 +3,10 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export default function Header({ currentUser }) {
-    const sections = ["home", "pricing", "services", "products"];
+    const sections = ["home", "pricing", "services", "products"]; // team & reviews removed
     const navigate = useNavigate();
     const location = useLocation();
     const [user, setUser] = useState(currentUser || null);
-
 
     useEffect(() => {
         if (!currentUser) {
@@ -17,19 +16,17 @@ export default function Header({ currentUser }) {
     }, [currentUser]);
 
     const handleScroll = (id) => {
-        if (location.pathname !== "/") {
-            navigate("/#" + id);
+        if (location.pathname === `/${id}` || (id === "home" && location.pathname === "/")) {
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: "smooth" });
         } else {
-            const section = document.getElementById(id);
-            if (section) section.scrollIntoView({ behavior: "smooth" });
-            window.history.pushState(null, "", `#${id}`);
+            navigate(id === "home" ? "/" : `/${id}`);
         }
     };
 
     return (
         <header className="fixed top-0 w-full z-50 bg-black text-white">
             <div className="w-full mx-auto flex items-center justify-between px-8 py-1">
-
                 <div className="flex justify-start">
                     <Link to="/">
                         <img
@@ -40,26 +37,40 @@ export default function Header({ currentUser }) {
                     </Link>
                 </div>
 
-
                 <div className="flex-grow flex justify-center">
                     <nav className="hidden md:flex space-x-10 font-semibold text-sm">
-                        <button onClick={() => handleScroll("home")} className="hover:text-red-600 cursor-pointer">
+                        <button
+                            onClick={() => handleScroll("home")}
+                            className="hover:text-red-600 cursor-pointer"
+                        >
                             HOME
                         </button>
-                        <button onClick={() => navigate("/about")} className="hover:text-red-600 cursor-pointer">
+
+                        <button
+                            onClick={() => navigate("/about")}
+                            className="hover:text-red-600 cursor-pointer"
+                        >
                             ABOUT
                         </button>
+
                         {sections.slice(1).map((sec) => (
-                            <button key={sec} onClick={() => handleScroll(sec)} className="hover:text-red-600 cursor-pointer">
+                            <button
+                                key={sec}
+                                onClick={() => handleScroll(sec)}
+                                className="hover:text-red-600 cursor-pointer"
+                            >
                                 {sec.toUpperCase()}
                             </button>
                         ))}
-                        <button onClick={() => navigate("/contact")} className="hover:text-red-600 cursor-pointer">
+
+                        <button
+                            onClick={() => navigate("/contact")}
+                            className="hover:text-red-600 cursor-pointer"
+                        >
                             CONTACT
                         </button>
                     </nav>
                 </div>
-
 
                 <div className="flex items-center space-x-3">
                     <Link
@@ -68,7 +79,6 @@ export default function Header({ currentUser }) {
                     >
                         BOOK NOW
                     </Link>
-
 
                     {user && user.fullName && user.role === "user" ? (
                         <span
@@ -82,7 +92,7 @@ export default function Header({ currentUser }) {
                     ) : (
                         <Link
                             to="/login"
-                            className="border border-white p-2 cursor-pointer hover:bg-white hover:text-black transition-colors duration-500 inline-flex items-center justify-center "
+                            className="border border-white p-2 cursor-pointer hover:bg-white hover:text-black transition-colors duration-500 inline-flex items-center justify-center"
                         >
                             <UserIcon size={20} />
                         </Link>

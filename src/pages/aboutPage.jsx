@@ -8,6 +8,12 @@ import Reviews from "../components/reviews";
 export default function About() {
     const [showScrollButton, setShowScrollButton] = useState(false);
 
+    // Scroll to top on page load
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+    // ---- //
+
     useEffect(() => {
         const handleScroll = () => setShowScrollButton(window.scrollY > 200);
         window.addEventListener("scroll", handleScroll);
