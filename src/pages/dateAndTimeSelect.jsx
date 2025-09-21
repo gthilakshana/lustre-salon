@@ -4,8 +4,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { HiArrowRight, HiCheck } from "react-icons/hi";
 import { motion } from "framer-motion";
 import axios from "axios";
-
-import toast from "react-hot-toast";
+import { ShowToast, LustreToaster } from "../components/lustreToaster";
 import Header from "../components/header";
 import ServiceGrid from "../components/serviceGrid";
 import Calendar from "../components/calender";
@@ -65,7 +64,7 @@ export default function DateAndTimeSelect() {
             setServices(res.data);
         } catch (err) {
             console.error("Failed to fetch services:", err);
-            toast.error("Failed to load services");
+            ShowToast("error", "Failed to load services");
         } finally {
             setFetching(false);
         }
@@ -86,13 +85,12 @@ export default function DateAndTimeSelect() {
 
 
     const handleAddToCart = () => {
-        if (
-            !selectedServices.length ||
-            !selectedDate ||
-            !selectedTime ||
-            !selectedGender
-        ) {
-            toast.error("Please select at least one service, date/time, and gender.");
+        if (!selectedServices.length || !selectedDate || !selectedTime || !selectedGender) {
+            ShowToast(
+                "error",
+                "Incomplete Selection",
+                "Please select at least one service, date/time, and gender."
+            );
             return;
         }
 
@@ -118,11 +116,14 @@ export default function DateAndTimeSelect() {
         );
 
         if (!filtered.length) {
-            toast.error(
+            ShowToast(
+                "error",
+                "Duplicate Services",
                 "These services are already in the cart for the selected date/time, gender, and stylist."
             );
             return;
         }
+
 
         setCartItems([...cartItems, ...filtered]);
         setStep("cart");
@@ -248,7 +249,9 @@ export default function DateAndTimeSelect() {
 
                                     {/* Service Grid */}
                                     {fetching ? (
-                                        <p>Loading services...</p>
+                                        <div className="flex items-center justify-center h-64">
+                                            <p className="text-gray-500">Loading services...</p>
+                                        </div>
                                     ) : (
                                         <ServiceGrid
                                             services={
@@ -260,6 +263,7 @@ export default function DateAndTimeSelect() {
                                             setSelectedServices={setSelectedServices}
                                         />
                                     )}
+
 
                                     {/* Confirm Button */}
                                     {selectedServices.length > 0 && (

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { ShowToast, LustreToaster } from "../../components/lustreToaster";
 import { FaTimes } from "react-icons/fa";
 
 export default function AdminUpdate({ isOpen, onClose, admin, refresh }) {
@@ -25,7 +25,14 @@ export default function AdminUpdate({ isOpen, onClose, admin, refresh }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem("token");
-        if (!token) return toast.error("Session expired");
+        if (!token) {
+            ShowToast(
+                "error",
+                "Session expired",
+                "Please login again."
+            );
+            return;
+        }
 
         try {
             setLoading(true);
@@ -36,14 +43,21 @@ export default function AdminUpdate({ isOpen, onClose, admin, refresh }) {
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
-            toast.success("Admin updated successfully");
+            ShowToast(
+                "success",
+                "Admin updated successfully"
+            );
             onClose();
 
 
             if (typeof refresh === "function") refresh();
         } catch (err) {
             console.error(err);
-            toast.error(err.response?.data?.message || "Failed to update admin");
+            ShowToast(
+                "error",
+                "Failed to update admin",
+                err.response?.data?.message || "Please try again or contact support."
+            );
         } finally {
             setLoading(false);
         }

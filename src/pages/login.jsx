@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { PhoneInput } from "react-international-phone";
+// import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
+import { ShowToast, LustreToaster } from "../components/lustreToaster";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
 import Header from "../components/header";
 import Footer from "../components/footer";
+// import { s } from "framer-motion/client";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -17,10 +18,13 @@ export default function Login() {
         e.preventDefault();
 
         if (!email && !mobile) {
-            return toast.error("Enter email or mobile number", {
-                style: { background: "#fcd0d0", color: "#000" },
-            });
+            return ShowToast(
+                "error",
+                "Invalid input",
+                "Please enter either your email or mobile number."
+            );
         }
+
 
         try {
             const response = await axios.post(
@@ -32,14 +36,18 @@ export default function Login() {
 
 
             if (user?.status === "blocked") {
-                return toast.error("Your account is blocked. Please contact admin.", {
-                    style: { background: "#fcd0d0", color: "#000" },
-                });
+                return ShowToast(
+                    "error",
+                    "Account Blocked",
+                    "Your account is blocked. Please contact Lustre Salon admin for assistance."
+                );
             }
 
-            toast.success(message, {
-                style: { background: "#d0f0fd", color: "#000" },
-            });
+            ShowToast(
+                "success",
+                "Login Successful",
+                message || "Welcome back to Lustre Salon!"
+            );
 
             if (token) {
                 localStorage.setItem("token", token);
@@ -57,10 +65,14 @@ export default function Login() {
             }, 2000);
         } catch (error) {
             const errorMsg = error?.response?.data?.message || "Login failed.";
-            toast.error(errorMsg, {
-                style: { background: "#fcd0d0", color: "#000" },
-            });
-        }
+            ShowToast(
+                "error",
+                "Login Failed",
+                errorMsg || "Please try again or contact Lustre Salon support."
+            );
+
+        };
+
     };
 
     return (
@@ -155,3 +167,4 @@ export default function Login() {
         </>
     );
 }
+

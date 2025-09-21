@@ -1,5 +1,5 @@
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import { ShowToast, LustreToaster } from "../components/lustreToaster";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/header";
@@ -18,6 +18,45 @@ export default function Register() {
     async function handleRegister(e) {
         e.preventDefault();
 
+
+        if (!fullName || !email || !mobile || !gender || !password || !confirmPassword) {
+            return ShowToast(
+                "error",
+                "Invalid input",
+                "Please fill in all the required fields."
+            );
+        }
+
+
+        const emailRegex = /\S+@\S+\.\S+/;
+        if (!emailRegex.test(email)) {
+            return ShowToast(
+                "error",
+                "Invalid input",
+                "Please enter a valid email address."
+            );
+        }
+
+
+        if (password !== confirmPassword) {
+            return ShowToast(
+                "error",
+                "Invalid input",
+                "Passwords do not match."
+            );
+        }
+
+        // Password strength validation (6 characters minimum)
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+        if (!passwordRegex.test(password)) {
+            return ShowToast(
+                "error",
+                "Weak password",
+                "Password must be at least 6 characters, include uppercase, lowercase, number, and special character."
+            );
+        }
+
+
         try {
             const response = await axios.post(
                 import.meta.env.VITE_API_URL + "/api/users/register",
@@ -25,18 +64,25 @@ export default function Register() {
             );
 
 
-            toast.success(response.data.message, {
-                style: { background: "#d0f0fd", color: "#000" },
-            });
+            ShowToast(
+                "success",
+                "Registration Successful",
+                response.data.message || "Welcome to Lustre Salon! Please login to continue."
+            );
 
             setTimeout(() => navigate("/login"), 2000);
 
         } catch (error) {
             const errorMsg = error?.response?.data?.message || "Signup failed.";
-            toast.error(errorMsg, {
-                style: { background: "#fcd0d0", color: "#000" },
-            });
+
+
+            ShowToast(
+                "error",
+                "Registration Failed",
+                errorMsg || "Please check your details and try again."
+            );
         }
+
     }
 
     return (
@@ -59,7 +105,7 @@ export default function Register() {
                                 onChange={(e) => setFullName(e.target.value)}
                                 placeholder="First Name & Last Name"
                                 className="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
-                                required
+
                             />
 
 
@@ -70,7 +116,7 @@ export default function Register() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="Email address"
                                 className="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
-                                required
+
                             />
 
 
@@ -85,7 +131,7 @@ export default function Register() {
                                     onChange={(e) => setMobile(e.target.value)}
                                     placeholder="Mobile Number"
                                     className="w-full px-4 py-3 border-t border-b focus:outline-none"
-                                    required
+
                                 />
                                 <button
                                     type="button"
@@ -127,7 +173,7 @@ export default function Register() {
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Password"
                                 className="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
-                                required
+
                             />
 
 
@@ -138,7 +184,7 @@ export default function Register() {
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 placeholder="Confirm Password"
                                 className="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
-                                required
+
                             />
 
 

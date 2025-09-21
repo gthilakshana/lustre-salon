@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaUsers, FaUserShield, FaEnvelope, FaCalendarAlt, FaSyncAlt } from "react-icons/fa";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { ShowToast, LustreToaster } from "../../components/lustreToaster";
 import jwt_decode from "jwt-decode";
 
 export default function AdminView() {
@@ -42,9 +42,14 @@ export default function AdminView() {
             });
         } catch (err) {
             console.error("Invalid token:", err);
-            toast.error("Invalid session. Please login again.");
+            ShowToast(
+                "error",
+                "Invalid session",
+                "Please login again."
+            );
             navigate("/login");
         }
+
     }, [navigate]);
 
     const fetchStats = async () => {
@@ -75,10 +80,14 @@ export default function AdminView() {
             ]);
         } catch (err) {
             console.error("Failed to fetch dashboard stats:", err);
-            toast.error("Failed to load dashboard stats");
+            ShowToast(
+                "error",
+                "Failed to load dashboard stats"
+            );
         } finally {
             setLoading(false);
         }
+
     };
 
     useEffect(() => {

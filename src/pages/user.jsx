@@ -5,7 +5,7 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import AppointmentCard from "../components/appointmentCard";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { ShowToast, LustreToaster } from "../components/lustreToaster";
 
 export default function User() {
     const navigate = useNavigate();
@@ -48,7 +48,12 @@ export default function User() {
             setAppointments(mapped);
         } catch (err) {
             console.error("Failed to fetch appointments:", err);
-            toast.error("Failed to load your appointments");
+            ShowToast(
+                "error",
+                "Failed to load your appointments",
+                "Please try again or contact support."
+            );
+
         } finally {
             setLoading(false);
         }

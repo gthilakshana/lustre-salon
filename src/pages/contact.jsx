@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { ShowToast, LustreToaster } from "../components/lustreToaster";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaClock } from "react-icons/fa";
 import Header from "../components/header";
 import LocationMap from "../components/locationMap";
@@ -31,9 +31,11 @@ export default function Contact() {
                 }
             );
 
-            toast.success(response.data.msg || "Message sent successfully!", {
-                style: { background: "#d0f0fd", color: "#000" },
-            });
+            ShowToast(
+                "success",
+                "Message sent successfully",
+                response.data.msg || "Your message has been sent!"
+            );
 
             // reset form
             setYourName("");
@@ -44,9 +46,11 @@ export default function Contact() {
         } catch (error) {
             const errorMsg =
                 error?.response?.data?.message || "Failed to send message.";
-            toast.error(errorMsg, {
-                style: { background: "#fcd0d0", color: "#000" },
-            });
+            ShowToast(
+                "error",
+                "Message sending failed",
+                errorMsg
+            );
         } finally {
             setLoading(false);
         }
@@ -182,9 +186,17 @@ export default function Contact() {
                 </div>
 
                 {/* Map */}
-                <div className="w-full min-h-[500px] bg-gray-100 overflow-hidden shadow-md">
-                    {/* <LocationMap /> */}
+                {/* Map */}
+                <div className="w-full h-[600px] bg-gray-100 shadow-md">
+
+                    <LocationMap
+                        lat={6.9271}
+                        lng={79.8612}
+                        address="123 Main Street, Colombo, Sri Lanka"
+                    />
+
                 </div>
+
             </div>
 
             <Footer />

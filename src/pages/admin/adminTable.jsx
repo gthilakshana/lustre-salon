@@ -6,7 +6,7 @@ import { FaTimes, FaExclamationTriangle } from "react-icons/fa";
 import AdminAdd from "./adminAdd";
 import AdminUpdate from "./adminUpdate";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { ShowToast, LustreToaster } from "../../components/lustreToaster";
 
 function AdminDeleteConfirm({ adminID, close, confirmDelete, loading }) {
     return (
@@ -69,7 +69,11 @@ export default function AdminTable() {
             setAdmins(res.data.filter((u) => u.role === "admin"));
         } catch (err) {
             console.error(err);
-            toast.error("Failed to load admins");
+            ShowToast(
+                "error",
+                "Failed to load admins",
+                err.response?.data?.message || "Please try again or contact support."
+            );
         } finally {
             setFetching(false);
         }
@@ -83,12 +87,19 @@ export default function AdminTable() {
         try {
             setLoading(true);
             await axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${id}`);
-            toast.success("Admin deleted successfully");
+            ShowToast(
+                "success",
+                "Admin deleted successfully"
+            );
             setAdmins(admins.filter((a) => a._id !== id));
             setIsDeleteConfirmVisible(false);
         } catch (err) {
             console.error(err);
-            toast.error("Failed to delete admin");
+            ShowToast(
+                "error",
+                "Failed to delete admin",
+                err.response?.data?.message || "Please try again or contact support."
+            );
         } finally {
             setLoading(false);
         }
@@ -182,8 +193,8 @@ export default function AdminTable() {
                                     <td className="px-3 py-2">
                                         <span
                                             className={`px-2 py-1 text-xs rounded-md ${c.status === "active"
-                                                    ? "bg-blue-300 text-gray-700"
-                                                    : "bg-red-300 text-red-700"
+                                                ? "bg-blue-300 text-gray-700"
+                                                : "bg-red-300 text-red-700"
                                                 }`}
                                         >
                                             {c.status}

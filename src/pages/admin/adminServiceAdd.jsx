@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { ShowToast, LustreToaster } from "../../components/lustreToaster";
 
 export default function AdminServiceAdd({ isOpen, onClose, refresh }) {
     const [serviceName, setServiceName] = useState("");
@@ -24,7 +24,10 @@ export default function AdminServiceAdd({ isOpen, onClose, refresh }) {
                 description,
                 status,
             });
-            toast.success("Service added successfully");
+            ShowToast(
+                "success",
+                "Service added successfully"
+            );
             refresh();
             onClose();
             setServiceName("");
@@ -34,7 +37,12 @@ export default function AdminServiceAdd({ isOpen, onClose, refresh }) {
             setStatus("Active");
         } catch (err) {
             console.error("Add service error:", err);
-            toast.error("Failed to add service");
+            ShowToast(
+                "error",
+                "Failed to add service",
+                "Please try again or contact support."
+            );
+
         } finally {
             setLoading(false);
         }

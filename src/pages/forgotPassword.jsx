@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { ShowToast, LustreToaster } from "../components/lustreToaster";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
@@ -15,15 +15,19 @@ export default function ForgotPassword() {
         e.preventDefault();
 
         if (!email && !mobile) {
-            return toast.error("Enter email or mobile number", {
-                style: { background: "#fcd0d0", color: "#000" },
-            });
+            return ShowToast(
+                "error",
+                "Input Required",
+                "Please enter either your email or mobile number."
+            );
         }
 
         if (email && !/\S+@\S+\.\S+/.test(email)) {
-            return toast.error("Enter a valid email address", {
-                style: { background: "#fcd0d0", color: "#000" },
-            });
+            return ShowToast(
+                "error",
+                "Invalid Email",
+                "Please enter a valid email address."
+            );
         }
 
         setLoading(true);
@@ -33,23 +37,28 @@ export default function ForgotPassword() {
                 { email, mobile }
             );
 
-            toast.success(response.data.message, {
-                style: { background: "#d0f0fd", color: "#000" },
-            });
+            ShowToast(
+                "success",
+                "Request Sent",
+                response.data.message || "Check your email or SMS for further instructions."
+            );
 
-            // Navigate to login page after success
+
             setTimeout(() => {
                 navigate("/login");
-            }, 2000); // 2 seconds delay to show the toast
+            }, 2000);
         } catch (error) {
             const errorMsg = error?.response?.data?.message || "Request failed.";
-            toast.error(errorMsg, {
-                style: { background: "#fcd0d0", color: "#000" },
-            });
+            ShowToast(
+                "error",
+                "Request Failed",
+                errorMsg
+            );
         } finally {
             setLoading(false);
         }
     };
+
 
     return (
         <>

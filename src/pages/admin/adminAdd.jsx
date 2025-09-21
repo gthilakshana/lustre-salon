@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { ShowToast, LustreToaster } from "../../components/lustreToaster";
 
 export default function AdminAdd({ isOpen, onClose, refresh }) {
     const [formData, setFormData] = useState({
@@ -30,7 +30,11 @@ export default function AdminAdd({ isOpen, onClose, refresh }) {
         try {
             const token = localStorage.getItem("token");
             if (!token) {
-                toast.error("No token found. Please login again.");
+                ShowToast(
+                    "error",
+                    "No token found",
+                    "Please login again."
+                );
                 setIsLoading(false);
                 return;
             }
@@ -52,7 +56,11 @@ export default function AdminAdd({ isOpen, onClose, refresh }) {
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
-            toast.success("Admin added successfully");
+            ShowToast(
+                "success",
+                "Admin added successfully"
+            );
+
             setFormData({
                 fullName: "",
                 email: "",
@@ -67,7 +75,11 @@ export default function AdminAdd({ isOpen, onClose, refresh }) {
             if (refresh) refresh();
         } catch (error) {
             console.error("Error adding admin:", error.response?.data || error);
-            toast.error(error?.response?.data?.message || "Failed to add admin");
+            ShowToast(
+                "error",
+                "Failed to add admin",
+                error?.response?.data?.message || "Please try again or contact support."
+            );
         } finally {
             setIsLoading(false);
         }

@@ -3,7 +3,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { motion } from "framer-motion";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { ShowToast, LustreToaster } from "../components/lustreToaster";
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -46,8 +46,8 @@ export default function Cart({ cartItems, setCartItems }) {
 
                 return {
                     stylistName: item.stylist || "Unnamed Stylist",
-                    serviceName: item.serviceName, // directly use string
-                    subName: item.subName,         // directly use string
+                    serviceName: item.serviceName,
+                    subName: item.subName,
                     date: item.date,
                     time: item.time,
                     type: item.gender,
@@ -73,7 +73,13 @@ export default function Cart({ cartItems, setCartItems }) {
                     { appointments: appointmentsPayload },
                     { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
                 );
-                toast.success("Booking successful!");
+                ShowToast(
+                    "success",
+                    "Booking successful!",
+                    "Thank you for choosing Lustre Salon. Your appointment has been confirmed."
+                );
+
+
                 setCartItems([]);
                 navigate("/");
                 return;
@@ -96,8 +102,15 @@ export default function Cart({ cartItems, setCartItems }) {
             await stripe.redirectToCheckout({ sessionId: data.id });
         } catch (err) {
             console.error("Checkout error:", err);
-            toast.error(err.response?.data?.message || "Failed to process appointment.");
+
+            ShowToast(
+                "error",
+                "Failed to process appointment.",
+                err.response?.data?.message || "Please try again or contact Lustre Salon support."
+            );
+
         }
+
     };
 
     const getDescription = () => {

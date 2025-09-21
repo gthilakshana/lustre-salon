@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { ShowToast, LustreToaster } from "../../components/lustreToaster";
 
 export default function AdminServiceUpdate({ isOpen, onClose, service, refresh }) {
     const [serviceName, setServiceName] = useState("");
@@ -34,12 +34,19 @@ export default function AdminServiceUpdate({ isOpen, onClose, service, refresh }
                 description,
                 status,
             });
-            toast.success("Service updated successfully");
+            ShowToast(
+                "success",
+                "Service updated successfully"
+            );
             refresh();
             onClose();
         } catch (err) {
             console.error("Update service error:", err);
-            toast.error("Failed to update service");
+            ShowToast(
+                "error",
+                "Failed to update service",
+                err.response?.data?.message || "Please try again or contact support."
+            );
         } finally {
             setLoading(false);
         }

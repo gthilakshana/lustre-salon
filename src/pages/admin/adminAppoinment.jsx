@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { ShowToast, LustreToaster } from "../../components/lustreToaster";
 
 function AppointmentDeleteConfirm({ appointmentID, close, confirmDelete, loading }) {
     return (
@@ -74,7 +74,12 @@ export default function AdminAppointment() {
             setAppointments(mapped);
         } catch (err) {
             console.error(err);
-            toast.error("Failed to load appointments");
+            ShowToast(
+                "error",
+                "Failed to load appointments",
+                "Please try again or contact support."
+            );
+
         } finally {
             setLoading(false);
         }
@@ -88,11 +93,20 @@ export default function AdminAppointment() {
             await axios.delete(`${import.meta.env.VITE_API_URL}/api/appointments/${id}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
-            toast.success("Appointment deleted");
+            ShowToast(
+                "success",
+                "Appointment deleted"
+            );
+
             setAppointments(prev => prev.filter(a => a._id !== id));
             setConfirmVisible(false);
         } catch {
-            toast.error("Delete failed");
+            ShowToast(
+                "error",
+                "Delete failed",
+                "Please try again or contact support."
+            );
+
         } finally {
             setLoading(false);
         }
@@ -188,8 +202,8 @@ export default function AdminAppointment() {
                                     <td className="px-3 py-2">{a.date}</td>
                                     <td className="px-3 py-2">{a.time}</td>
                                     <td className={`px-3 py-2 font-medium ${a.payment === "Full Payment" ? "text-green-600" :
-                                            a.payment === "Half Payment" ? "text-blue-600" :
-                                                "text-yellow-600"}`}>
+                                        a.payment === "Half Payment" ? "text-blue-600" :
+                                            "text-yellow-600"}`}>
                                         {a.payment}
                                     </td>
                                     <td className="px-3 py-2">{paid(a.payment, a.price)}</td>

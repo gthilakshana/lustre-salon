@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaTimes, FaExclamationTriangle } from "react-icons/fa";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { ShowToast, LustreToaster } from "../../components/lustreToaster";
 
 // Delete confirmation modal
 function CustomerDeleteConfirm({ customerID, close, confirmDelete, loading }) {
@@ -64,7 +64,12 @@ export default function AdminCustomer() {
             setCustomers(userList);
         } catch (err) {
             console.error(err);
-            toast.error("Failed to load customers");
+            ShowToast(
+                "error",
+                "Failed to load customers",
+                "Please try again or contact support."
+            );
+
         } finally {
             setFetching(false);
         }
@@ -78,11 +83,20 @@ export default function AdminCustomer() {
         try {
             setLoading(true);
             await axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${id}`);
-            toast.success("Customer deleted");
+            ShowToast(
+                "success",
+                "Customer deleted"
+            );
+
             setCustomers(prev => prev.filter(c => c._id !== id));
             setConfirmVisible(false);
         } catch {
-            toast.error("Delete failed");
+            ShowToast(
+                "error",
+                "Delete failed",
+                "Please try again or contact support."
+            );
+
         } finally {
             setLoading(false);
         }

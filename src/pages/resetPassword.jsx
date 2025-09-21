@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { ShowToast, LustreToaster } from "../components/lustreToaster";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
@@ -16,15 +16,19 @@ export default function ResetPassword() {
         e.preventDefault();
 
         if (!password || !confirmPassword) {
-            return toast.error("All fields are required", {
-                style: { background: "#fcd0d0", color: "#000" },
-            });
+            return ShowToast(
+                "error",
+                "All fields are required",
+                "Please fill out both password fields."
+            );
         }
 
         if (password !== confirmPassword) {
-            return toast.error("Passwords do not match", {
-                style: { background: "#fcd0d0", color: "#000" },
-            });
+            return ShowToast(
+                "error",
+                "Passwords do not match",
+                "Please make sure both passwords are identical."
+            );
         }
 
         setLoading(true);
@@ -34,22 +38,27 @@ export default function ResetPassword() {
                 { password, confirmPassword }
             );
 
-            toast.success(response.data.message, {
-                style: { background: "#d0f0fd", color: "#000" },
-            });
+            ShowToast(
+                "success",
+                "Password reset successful",
+                response.data.message || "Your password has been updated."
+            );
 
             setTimeout(() => {
                 navigate("/login");
             }, 2000);
         } catch (error) {
             const errorMsg = error?.response?.data?.message || "Password reset failed";
-            toast.error(errorMsg, {
-                style: { background: "#fcd0d0", color: "#000" },
-            });
+            ShowToast(
+                "error",
+                "Reset Failed",
+                errorMsg
+            );
         } finally {
             setLoading(false);
         }
     };
+
 
     return (
         <>

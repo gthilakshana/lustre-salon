@@ -3,7 +3,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { CiCirclePlus } from "react-icons/ci";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { ShowToast, LustreToaster } from "../../components/lustreToaster";
 import AdminServiceAdd from "./adminServiceAdd";
 import AdminServiceUpdate from "./adminServiceUpdate";
 
@@ -68,7 +68,12 @@ export default function AdminService() {
             setServices(res.data);
         } catch (err) {
             console.error(err);
-            toast.error("Failed to load services");
+            ShowToast(
+                "error",
+                "Failed to load services",
+                "Please try again or contact support."
+            );
+
         } finally {
             setFetching(false);
         }
@@ -83,11 +88,19 @@ export default function AdminService() {
         try {
             setLoading(true);
             await axios.delete(`${import.meta.env.VITE_API_URL}/api/services/${id}`);
-            toast.success("Service deleted");
+            ShowToast(
+                "success",
+                "Service deleted"
+            );
+
             setServices(prev => prev.filter(s => s._id !== id));
             setConfirmVisible(false);
         } catch {
-            toast.error("Delete failed");
+            ShowToast(
+                "error",
+                "Delete failed",
+                "Please try again or contact support."
+            );
         } finally {
             setLoading(false);
         }

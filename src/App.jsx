@@ -1,5 +1,6 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { LustreToaster } from './components/lustreToaster'
 import HomePage from './pages/homePage'
 import About from './pages/aboutPage'
 import Contact from './pages/contact'
@@ -12,7 +13,8 @@ import ForgotPassword from './pages/forgotPassword'
 import NotFoundPage from './pages/notFoundPage'
 import AdminPage from './pages/adminPage'
 import User from './pages/user'
-import { Toaster } from "react-hot-toast";
+
+
 
 function App() {
   return (
@@ -38,17 +40,13 @@ function App() {
       </BrowserRouter>
 
 
-      <Toaster
-        position="down-right"
-        toastOptions={{
-          success: {
-            style: { background: "#10b981", color: "white" },
-          },
-          error: {
-            style: { background: "#ef4444", color: "white" },
-          },
-        }}
-      />
+
+
+
+      {/* Custom Toaster */}
+      <LustreToaster />
+
+
     </>
   )
 }
