@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ShowToast, LustreToaster } from "../components/lustreToaster";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import Footer from "../components/footer";
@@ -14,6 +14,12 @@ export default function Register() {
     const [gender, setGender] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+
+    // Scroll to top on page load
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+    //-----//
 
     async function handleRegister(e) {
         e.preventDefault();

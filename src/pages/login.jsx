@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
@@ -14,6 +14,12 @@ export default function Login() {
     const [mobile, setMobile] = useState("");
     const [password, setPassword] = useState("");
 
+    // Scroll to top on page load
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+    //-----//
+
     const handleLogin = async (e) => {
         e.preventDefault();
 
@@ -24,6 +30,7 @@ export default function Login() {
                 "Please enter either your email or mobile number."
             );
         }
+
 
 
         try {

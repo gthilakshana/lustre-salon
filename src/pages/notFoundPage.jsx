@@ -19,7 +19,7 @@ export default function NotFoundPage() {
                     transition={{ duration: 0.6 }}
                     className="mb-6"
                 >
-                    <FaExclamationTriangle className="text-red-600 text-6xl md:text-7xl" />
+                    <FaExclamationTriangle className="text-red-600  text-6xl md:text-7xl" />
                 </motion.div>
 
 
@@ -48,7 +48,7 @@ export default function NotFoundPage() {
                 {/* Button */}
                 <motion.button
                     onClick={() => navigate("/")}
-                    className="mt-8 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold shadow-lg transition"
+                    className="mt-8 px-6 py-3 bg-red-600 cursor-pointer animate-bounce rounded-full hover:bg-red-700 text-white font-semibold shadow-lg transition"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, delay: 0.6 }}
