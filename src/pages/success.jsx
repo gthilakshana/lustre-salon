@@ -12,7 +12,8 @@ export default function Success() {
     useEffect(() => {
         if (!sessionId) {
             ShowToast("error", "No payment session found.");
-            navigate("/", { replace: true });
+            // Delay redirect so toast can show
+            setTimeout(() => navigate("/", { replace: true }), 2500);
             return;
         }
 
@@ -21,23 +22,25 @@ export default function Success() {
                 const { data } = await axios.post(
                     `${import.meta.env.VITE_API_URL}/api/appointments/confirm-payment`,
                     { sessionId },
-                    { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`,
+                        },
+                    }
                 );
 
                 console.log("Confirm payment success:", data);
 
-                ShowToast("success", "Payment successful! Appointments booked.");
-
-
-                setTimeout(() => navigate("/", { replace: true }), 1500);
-
+                ShowToast("success", "💳 Payment successful! Appointments booked.");
+                // Give user 2.5s to see toast before redirect
+                setTimeout(() => navigate("/", { replace: true }), 2500);
             } catch (err) {
                 console.error("Confirm payment failed:", err);
                 ShowToast(
                     "error",
                     err.response?.data?.message || "Payment confirmation failed."
                 );
-                setTimeout(() => navigate("/dateAndTimeSelect", { replace: true }), 1500);
+                setTimeout(() => navigate("/dateAndTimeSelect", { replace: true }), 2500);
             } finally {
                 setLoading(false);
             }
@@ -51,12 +54,18 @@ export default function Success() {
             {loading ? (
                 <div className="text-center">
                     <h1 className="text-2xl font-semibold mb-2">Processing Payment...</h1>
-                    <p className="text-gray-600">Please wait while we confirm your appointment.</p>
+                    <p className="text-gray-600">
+                        Please wait while we confirm your appointment.
+                    </p>
                 </div>
             ) : (
                 <div className="text-center">
-                    <h1 className="text-2xl font-semibold text-green-600 mb-2">Payment Complete!</h1>
-                    <p className="text-gray-600">You will be redirected to the homepage shortly.</p>
+                    <h1 className="text-2xl font-semibold text-green-600 mb-2">
+                        Payment Complete!
+                    </h1>
+                    <p className="text-gray-600">
+                        You will be redirected to the homepage shortly.
+                    </p>
                 </div>
             )}
         </div>
