@@ -10,11 +10,12 @@ export default function Success() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        let timer;
+
         if (!sessionId) {
             ShowToast("error", "No payment session found.");
-            // Delay redirect so toast can show
-            setTimeout(() => navigate("/", { replace: true }), 2500);
-            return;
+            timer = setTimeout(() => navigate("/"), 2500);
+            return () => clearTimeout(timer);
         }
 
         const confirmPayment = async () => {
@@ -23,30 +24,30 @@ export default function Success() {
                     `${import.meta.env.VITE_API_URL}/api/appointments/confirm-payment`,
                     { sessionId },
                     {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem("token")}`,
-                        },
+                        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                     }
                 );
 
                 console.log("Confirm payment success:", data);
-
                 ShowToast("success", "💳 Payment successful! Appointments booked.");
-                // Give user 2.5s to see toast before redirect
-                setTimeout(() => navigate("/", { replace: true }), 2500);
+
+                timer = setTimeout(() => navigate("/"), 2500);
             } catch (err) {
                 console.error("Confirm payment failed:", err);
                 ShowToast(
                     "error",
                     err.response?.data?.message || "Payment confirmation failed."
                 );
-                setTimeout(() => navigate("/dateAndTimeSelect", { replace: true }), 2500);
+
+                timer = setTimeout(() => navigate("/dateAndTimeSelect"), 2500);
             } finally {
                 setLoading(false);
             }
         };
 
         confirmPayment();
+
+        return () => clearTimeout(timer);
     }, [sessionId, navigate]);
 
     return (
