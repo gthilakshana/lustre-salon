@@ -3,7 +3,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import axios from "axios";
 import { ShowToast } from "../../components/lustreToaster";
 
-// Loader Component
+
 function PageLoader() {
     return (
         <div className="absolute inset-0 flex items-center justify-center bg-white/70 z-50">
@@ -12,7 +12,7 @@ function PageLoader() {
     );
 }
 
-// Delete Confirmation Modal
+
 function AppointmentDeleteConfirm({ appointmentID, close, confirmDelete, loading }) {
     return (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[100] flex justify-center items-center px-4">
@@ -57,18 +57,19 @@ export default function AdminAppointment() {
     const [appointments, setAppointments] = useState([]);
     const [search, setSearch] = useState("");
     const [paymentFilter, setPaymentFilter] = useState("All");
-    const [loading, setLoading] = useState(false); // for delete action
-    const [fetching, setFetching] = useState(true); // for data fetching
+    const [loading, setLoading] = useState(false);
+    const [fetching, setFetching] = useState(true);
     const [confirmVisible, setConfirmVisible] = useState(false);
     const [appointmentToDelete, setAppointmentToDelete] = useState(null);
 
-    // Fetch appointments
+
     const fetchAppointments = async () => {
         try {
             setFetching(true);
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/appointments`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
+
 
             const mapped = res.data.map(a => ({
                 _id: a._id,
@@ -81,6 +82,7 @@ export default function AdminAppointment() {
                 payment: a.paymentType === "Full" ? "Full Payment" :
                     a.paymentType === "Half" ? "Half Payment" : "Book Only",
                 price: (a.fullPayment || 0) + (a.duePayment || 0),
+                status: a.status || "Pending",
             }));
 
             setAppointments(mapped);
@@ -92,9 +94,15 @@ export default function AdminAppointment() {
         }
     };
 
-    useEffect(() => { fetchAppointments(); }, []);
+    useEffect(() => {
+        fetchAppointments();
 
-    // Delete appointment
+
+        const interval = setInterval(fetchAppointments, 60000);
+        return () => clearInterval(interval);
+    }, []);
+
+
     const handleDelete = async (id) => {
         try {
             setLoading(true);
@@ -111,7 +119,7 @@ export default function AdminAppointment() {
         }
     };
 
-    // Filtered appointments
+
     const filtered = appointments.filter(a => {
         const term = search.toLowerCase();
         const matchSearch =
@@ -121,6 +129,7 @@ export default function AdminAppointment() {
         const matchPayment = paymentFilter === "All" || a.payment === paymentFilter;
         return matchSearch && matchPayment;
     });
+
 
     const paid = (payment, price) =>
         payment === "Full Payment" ? `Rs. ${price.toLocaleString()}` :
@@ -143,7 +152,7 @@ export default function AdminAppointment() {
 
             {fetching && <PageLoader />}
 
-            {/* Header */}
+
             <div className="flex items-center justify-between mb-4">
                 <h1 className="text-lg font-bold text-gray-800 uppercase">Appointments</h1>
                 <div className="flex items-center gap-2">
@@ -160,7 +169,7 @@ export default function AdminAppointment() {
                 </div>
             </div>
 
-            {/* Search & Filters */}
+
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
                 <input
                     type="text"
@@ -175,7 +184,7 @@ export default function AdminAppointment() {
                             key={type}
                             onClick={() => setPaymentFilter(type)}
                             className={`px-3 py-1.5 rounded-md border text-xs font-medium transition
-                                ${paymentFilter === type
+                ${paymentFilter === type
                                     ? "bg-black text-white"
                                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"}`}
                         >
@@ -191,7 +200,7 @@ export default function AdminAppointment() {
                     <thead className="bg-gray-800 text-white">
                         <tr>
                             {["Customer", "Category", "Service", "Stylist", "Date", "Time",
-                                "Payment", "Paid", "Due", "Actions"].map(h => (
+                                "Payment", "Paid", "Due", "Status", "Actions"].map(h => (
                                     <th key={h} className="px-3 py-2 uppercase text-xs">{h}</th>
                                 ))}
                         </tr>
@@ -212,6 +221,9 @@ export default function AdminAppointment() {
                                     </td>
                                     <td className="px-3 py-2">{paid(a.payment, a.price)}</td>
                                     <td className="px-3 py-2 text-red-600">{due(a.payment, a.price)}</td>
+                                    <td className={`px-3 py-2 font-medium ${a.status === "Completed" ? "text-green-600" : "text-red-600"}`}>
+                                        {a.status}
+                                    </td>
                                     <td className="px-3 py-2 text-center">
                                         <RiDeleteBin6Line
                                             size={20}
@@ -226,7 +238,7 @@ export default function AdminAppointment() {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan={10} className="px-3 py-8 text-center text-gray-500">
+                                <td colSpan={11} className="px-3 py-8 text-center text-gray-500">
                                     No appointments found.
                                 </td>
                             </tr>

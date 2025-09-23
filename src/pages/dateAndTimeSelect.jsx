@@ -129,6 +129,9 @@ export default function DateAndTimeSelect() {
         setStep("cart");
     };
 
+
+
+
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
         if (title) {
@@ -136,6 +139,9 @@ export default function DateAndTimeSelect() {
             setStep("select");
         }
     }, [title, price]);
+
+
+
 
 
     return (
@@ -404,6 +410,7 @@ export default function DateAndTimeSelect() {
                                         >
                                             <FaArrowLeft size={16} sm={20} />
                                         </button>
+
                                     </motion.div>
                                 </motion.div>
                             )}

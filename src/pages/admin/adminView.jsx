@@ -110,7 +110,7 @@ export default function AdminView() {
     return (
         <div className="p-6 min-h-screen bg-gray-50">
             <div className="flex items-center justify-between mb-2">
-                <h1 className="text-3xl font-bold text-gray-900 uppercase">Admin Dashboard</h1>
+                <h1 className="text-2xl font-bold text-gray-900 uppercase">Admin Dashboard</h1>
                 {/* Refresh Button */}
                 <button
                     onClick={fetchStats}

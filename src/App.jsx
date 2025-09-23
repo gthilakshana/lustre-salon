@@ -10,6 +10,7 @@ import DateAndTimeSelect from './pages/dateAndTimeSelect'
 import Login from './pages/login'
 import ResetPassword from './pages/resetPassword'
 import ForgotPassword from './pages/forgotPassword'
+import Success from './pages/success'
 import NotFoundPage from './pages/notFoundPage'
 import AdminPage from './pages/adminPage'
 import User from './pages/user'
@@ -37,6 +38,7 @@ function App() {
             <Route path="/resetPassword" element={<ResetPassword />} />
             <Route path="/user" element={<User />} />
             <Route path="/appointment" element={<Appointment />} />
+            <Route path="/success" element={<Success />} />
             <Route path="/dateAndTimeSelect" element={<DateAndTimeSelect />} />
 
 
