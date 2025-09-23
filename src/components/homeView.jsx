@@ -1,5 +1,7 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
+import { ShowToast } from "../components/lustreToaster";
 import Brand from "./brand";
 
 
@@ -7,6 +9,18 @@ export default function HomeView() {
 
     const [isPlaying, setIsPlaying] = useState(false);
     const videoRef = useRef(null);
+    const { search } = useLocation();
+
+    useEffect(() => {
+        const params = new URLSearchParams(search);
+        const paymentStatus = params.get("payment");
+
+        if (paymentStatus === "success") {
+            ShowToast("success", "💳 Payment successful! Your appointments are booked.");
+            // Optional: remove query param from URL after showing toast
+            window.history.replaceState({}, document.title, "/");
+        }
+    }, [search]);
 
     const handlePlay = () => {
         if (videoRef.current) {
