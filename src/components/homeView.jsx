@@ -16,7 +16,7 @@ export default function HomeView() {
         const paymentStatus = params.get("payment");
 
         if (paymentStatus === "success") {
-            ShowToast("success", "💳 Payment successful! Your appointments are booked.");
+            ShowToast("success", "Payment successful! Your appointments are booked.");
             // Optional: remove query param from URL after showing toast
             window.history.replaceState({}, document.title, "/");
         }
