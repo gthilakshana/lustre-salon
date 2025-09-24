@@ -46,17 +46,17 @@ export default function Reviews() {
     };
 
     return (
-        <section className="w-full py-16 bg-gray-100 border-t-2 border-gray-200">
+        <section className="w-full py-8 bg-gray-100 border-t-2 border-gray-200">
             <div className="max-w-6xl mx-auto text-center px-6">
                 <Slider {...settings}>
                     {reviews.map((review, index) => (
                         <div key={index}>
-                            <FaQuoteRight className="text-4xl text-gray-700 mx-auto mb-6" />
-                            <p className="text-lg text-gray-800 mb-6">{review.text}</p>
-                            <h3 className="font-bold text-xl mb-2">{review.name}</h3>
+                            <FaQuoteRight className="text-2xl md:text-3xl text-gray-700 mx-auto mb-6" />
+                            <p className="text-base md:text-lg leading-relaxed text-gray-800 mb-6">{review.text}</p>
+                            <h3 className="font-bold text-md md:text-lg mb-2 uppercase">{review.name}</h3>
                             <div className="flex justify-center mb-6">
                                 {Array.from({ length: review.rating }).map((_, i) => (
-                                    <FaStar key={i} className="text-yellow-500 text-lg" />
+                                    <FaStar key={i} className="text-yellow-500 text-md md:text-lg" />
                                 ))}
                             </div>
                         </div>

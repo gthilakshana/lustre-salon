@@ -51,16 +51,16 @@ export default function Pricing() {
 
     const tabs = [
         { id: "haircuts", label: "Haircuts & Styling" },
-        { id: "color", label: "Hair Color Services" },
-        { id: "chemical", label: "Ladies hair chemical services" },
-        { id: "extensions", label: "Hair extension services" },
+        { id: "color", label: "Hair Color" },
+        { id: "chemical", label: "Ladies hair chemical" },
+        { id: "extensions", label: "Hair extension" },
     ];
 
     return (
-        <section id="pricing" className="bg-black text-white py-16 px-6 md:px-20">
+        <section id="pricing" className="bg-black text-white py-16 px-8 md:px-20">
 
             <motion.h1
-                className="text-4xl font-bold text-center mb-10 uppercase"
+                className="text-3xl md:text-4xl font-bold text-center mb-10 uppercase"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}

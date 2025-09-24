@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 
 export default function Product() {
     return (
-        <section id="products" className="w-full py-16 bg-gray-50 border-t-2 border-gray-200">
-            <div className="max-w-7xl mx-auto md:flex flex-col md:flex-row items-center gap-12">
+        <section id="products" className="w-full py-5 bg-gray-50 border-t-2 border-gray-200">
+            <div className="px-4 py-4 max-w-7xl mx-auto md:flex flex-col md:flex-row items-center gap-12">
 
                 <motion.div
                     initial={{ opacity: 0, x: 100 }}

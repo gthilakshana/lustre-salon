@@ -1,10 +1,16 @@
-
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import ServiceCard from "../components/serviceCard";
 
 export default function Appointment() {
+
+    // Scroll to top on page load
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+    //-----//
 
 
     return (

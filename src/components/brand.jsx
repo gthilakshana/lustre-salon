@@ -13,7 +13,7 @@ export default function Brand() {
   ];
 
   return (
-    <section className="relative bg-gray-100 py-10 px-4 w-full h-[200px] overflow-hidden flex items-center">
+    <section className="relative bg-gray-100 py-10 px-4 w-full h-[150px] md:h-[180px] overflow-hidden flex items-center">
 
 
       <div className="absolute top-0 left-0 h-full w-20 bg-gradient-to-r from-gray-200 to-transparent z-10 pointer-events-none" />
@@ -32,7 +32,7 @@ export default function Brand() {
               key={idx}
               src={logo}
               alt="Brand Logo"
-              className="h-45 object-contain opacity-80 hover:opacity-100 transition-transform duration-300" />))}
+              className="h-32 md:h-40 object-contain opacity-80 hover:opacity-100 transition-transform duration-300" />))}
         </div>
       </motion.div>
 

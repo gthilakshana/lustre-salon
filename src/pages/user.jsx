@@ -76,9 +76,10 @@ export default function User() {
         <>
             <Header />
             <div className="w-full min-h-screen pt-30 bg-gray-50 flex justify-center p-6">
-                <div className="w-full max-w-6xl flex gap-6">
+                <div className="w-full max-w-6xl flex gap-6 md:flex-row flex-col">
 
-                    <div className="w-full h-[600px] max-w-sm bg-white shadow-xl overflow-hidden rounded-md">
+                    <div className="w-full h-[400px] md:h-[600px] md:max-w-sm bg-white shadow-xl overflow-hidden  order-1 md:order-2">
+                        {/* Sidebar start */}
                         <div className="flex flex-col items-center p-8 bg-black text-gray-50">
                             <img
                                 src={user.image || "/user.png"}
@@ -116,8 +117,10 @@ export default function User() {
                         </div>
                     </div>
 
+                    {/* Sidebar end */}
+
                     {/* Content Area */}
-                    <div className="flex-1 p-8">
+                    <div className="flex-1 p-8 order-2 md:order-2 bg-white shadow-xl ">
                         {activeTab === "dashboard" && (
                             <div>
                                 <h2 className="text-xl font-bold text-gray-800 mb-4 uppercase">Dashboard</h2>

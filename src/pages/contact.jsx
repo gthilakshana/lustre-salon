@@ -79,13 +79,15 @@ export default function Contact() {
                             alt="About Us"
                             className="w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 flex flex-col justify-start items-center bg-black/40 pt-16">
-                            <div className="bg-black/50 rounded-2xl px-6 md:px-10 py-6 shadow-lg max-w-3xl text-center">
+                        <div className="absolute inset-0 flex flex-col justify-start items-center bg-black/40 pt-5 md:pt-16">
+                            <div className="bg-black/50  px-6 md:px-10 py-6 shadow-lg max-w-3xl text-center">
                                 <h2 className="text-white text-3xl md:text-5xl font-bold">
                                     Contact
                                 </h2>
                                 <p className="text-white mt-4 text-base md:text-lg leading-relaxed">
                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                    when an unknown printer took.
                                 </p>
                             </div>
                         </div>
@@ -97,30 +99,30 @@ export default function Contact() {
                     <div className="w-full max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-stretch justify-between gap-12">
 
                         <div className="flex-1 p-6 flex flex-col justify-between">
-                            <h2 className="text-3xl font-bold mb-3 text-gray-900 uppercase">Get in Touch</h2>
-                            <span className="block text-gray-500 mb-6">
+                            <h2 className="text-2xl md:text-3xl font-bold mb-3 text-gray-900 uppercase">Get in Touch</h2>
+                            <span className="block text-gray-500 mb-6 text-base md:text-lg leading-relaxed">
                                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                             </span>
 
-                            <div className="space-y-4 flex-1 flex flex-col ">
+                            <div className="space-y-4 flex-1 flex flex-col  ">
                                 <div className="flex items-center gap-4">
-                                    <FaPhoneAlt className="text-gray-700 text-xl" />
-                                    <p className="text-lg text-gray-800">+94 77 133 456</p>
+                                    <FaPhoneAlt className="text-gray-700 text-md md:text-xl" />
+                                    <p className="text-md md:text-lg text-gray-800">+94 77 133 456</p>
                                 </div>
 
                                 <div className="flex items-center gap-4">
-                                    <FaEnvelope className="text-gray-700 text-xl" />
-                                    <p className="text-lg text-gray-800">info@lustresalon.com</p>
+                                    <FaEnvelope className="text-gray-700 text-md md:text-xl" />
+                                    <p className="text-md md:text-lg text-gray-800">info@lustresalon.com</p>
                                 </div>
 
                                 <div className="flex items-center gap-4">
-                                    <FaClock className="text-gray-700 text-xl" />
-                                    <p className="text-lg text-gray-800">Open 24/7</p>
+                                    <FaClock className="text-gray-700 text-md md:text-xl" />
+                                    <p className="text-md md:text-lg text-gray-800">Open 24/7</p>
                                 </div>
 
                                 <div className="flex items-start gap-4">
-                                    <FaMapMarkerAlt className="text-gray-700 text-xl mt-1" />
-                                    <p className="text-lg text-gray-800">
+                                    <FaMapMarkerAlt className="text-gray-700 text-md md:text-xl mt-1" />
+                                    <p className="text-md md:text-lg text-gray-800">
                                         123 Main Street,
                                         <br /> Colombo, Sri Lanka
                                     </p>
@@ -130,8 +132,8 @@ export default function Contact() {
 
 
                         <div className="flex-1 p-6  flex flex-col justify-between">
-                            <h2 className="text-3xl font-bold mb-3 text-gray-900 uppercase">Send a Message</h2>
-                            <span className="block text-gray-500 mb-6">
+                            <h2 className="text-2xl md:text-3xl font-bold mb-3 text-gray-900 uppercase">Send a Message</h2>
+                            <span className="block text-gray-500 mb-6 text-base md:text-lg leading-relaxed">
                                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                             </span>
 
@@ -195,15 +197,15 @@ export default function Contact() {
                     </div>
                 </div>
 
-                {/* Map */}
+
                 {/* Map */}
                 <div className="w-full h-[600px] bg-gray-100 shadow-md">
 
-                    <LocationMap
+                    {/* <LocationMap
                         lat={6.9271}
                         lng={79.8612}
                         address="123 Main Street, Colombo, Sri Lanka"
-                    />
+                    /> */}
 
                 </div>
 
