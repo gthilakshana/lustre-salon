@@ -44,7 +44,11 @@ export default function DateAndTimeSelect() {
             : null;
 
 
-
+    // Scroll to top on page load
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+    //-----//
 
     // Tabs
     const tabs = [
