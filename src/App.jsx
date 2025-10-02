@@ -1,6 +1,7 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { LustreToaster } from './components/lustreToaster'
+
 import Appointment from './pages/appointment'
 import HomePage from './pages/homePage'
 import About from './pages/aboutPage'
@@ -44,6 +45,7 @@ function App() {
 
             {/* Admin */}
             <Route path="/admin/*" element={<AdminPage />} />
+
 
             {/* Catch-all 404 */}
             <Route path="*" element={<NotFoundPage />} />

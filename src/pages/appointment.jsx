@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import ServiceCard from "../components/serviceCard";
 
 export default function Appointment() {
+    const navigate = useNavigate();
 
     // Scroll to top on page load
     useEffect(() => {
@@ -12,6 +14,15 @@ export default function Appointment() {
     }, []);
     //-----//
 
+
+    const handleStylistSelect = (stylistName) => {
+
+        navigate(`/dateAndTimeSelect`, {
+            state: {
+                employee: stylistName,
+            },
+        });
+    };
 
     return (
         <>
@@ -25,37 +36,43 @@ export default function Appointment() {
 
                 <div className="relative z-10 w-full flex flex-col items-center">
 
-
                     <div className="w-full flex justify-center py-12">
                         <div className="flex bg-white shadow-lg overflow-hidden">
 
                             <button className="px-8 py-4 text-sm font-semibold border-r bg-black text-white transition-colors duration-300 flex items-center justify-center">
-
                                 <span className="sm:hidden w-8 h-8 flex items-center justify-center rounded-full bg-black text-white text-sm font-bold">
                                     1
                                 </span>
-
                                 <span className="hidden sm:inline">Select Barber</span>
                             </button>
 
-                            {/* Step 2 */}
-                            <button className="px-8 py-4 text-sm font-semibold border-r hover:bg-black hover:text-white transition-colors duration-300 flex items-center justify-center">
+
+                            <button
+                                onClick={() => navigate("/date-time-select")}
+                                className="px-8 py-4 text-sm font-semibold border-r hover:bg-black hover:text-white transition-colors duration-300 flex items-center justify-center"
+                            >
                                 <span className="sm:hidden w-8 h-8 flex items-center justify-center rounded-full bg-black text-white text-sm font-bold">
                                     2
                                 </span>
                                 <span className="hidden sm:inline">Select Service</span>
                             </button>
 
-                            {/* Step 3 */}
-                            <button className="px-8 py-4 text-sm font-semibold border-r hover:bg-black hover:text-white transition-colors duration-300 flex items-center justify-center">
+
+                            <button
+                                onClick={() => navigate("/date-time-select")}
+                                className="px-8 py-4 text-sm font-semibold border-r hover:bg-black hover:text-white transition-colors duration-300 flex items-center justify-center"
+                            >
                                 <span className="sm:hidden w-8 h-8 flex items-center justify-center rounded-full bg-black text-white text-sm font-bold">
                                     3
                                 </span>
                                 <span className="hidden sm:inline">Pick Date &amp; Time</span>
                             </button>
 
-                            {/* Step 4 */}
-                            <button className="px-8 py-4 text-sm font-semibold hover:bg-black hover:text-white transition-colors duration-300 flex items-center justify-center">
+
+                            <button
+                                onClick={() => navigate("/date-time-select")}
+                                className="px-8 py-4 text-sm font-semibold hover:bg-black hover:text-white transition-colors duration-300 flex items-center justify-center"
+                            >
                                 <span className="sm:hidden w-8 h-8 flex items-center justify-center rounded-full bg-black text-white text-sm font-bold">
                                     4
                                 </span>
@@ -65,8 +82,6 @@ export default function Appointment() {
                     </div>
 
 
-
-                    {/* Main Content */}
                     <motion.div
                         className="w-full p-10 bg-white/90 backdrop-blur-md shadow-xl text-center"
                         initial={{ opacity: 0, y: 30 }}
@@ -80,7 +95,7 @@ export default function Appointment() {
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                         </p>
 
-                        {/* Choose Stylist */}
+
                         <motion.div
                             className="flex flex-col items-center justify-center gap-12"
                             initial={{ opacity: 0, y: 20 }}
@@ -92,19 +107,26 @@ export default function Appointment() {
                                     Choose Your Stylist
                                 </h2>
 
-                                {/* grid */}
+
                                 <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-4 gap-8 justify-items-center">
-                                    <ServiceCard image="/founder.jpg" name="Gavrawa Thialkshana" />
-                                    <ServiceCard image="/founder.jpg" name="Thilakshana" />
-                                    <ServiceCard image="/founder.jpg" name="Kaveen" />
-                                    <ServiceCard image="/founder.jpg" name="Nuvan" />
+
+                                    <div onClick={() => handleStylistSelect("Gavrawa Thialkshana")} className="cursor-pointer">
+                                        <ServiceCard image="/founder.jpg" name="Gavrawa Thialkshana" />
+                                    </div>
+                                    <div onClick={() => handleStylistSelect("Thilakshana")} className="cursor-pointer">
+                                        <ServiceCard image="/founder.jpg" name="Thilakshana" />
+                                    </div>
+                                    <div onClick={() => handleStylistSelect("Kaveen")} className="cursor-pointer">
+                                        <ServiceCard image="/founder.jpg" name="Kaveen" />
+                                    </div>
+                                    <div onClick={() => handleStylistSelect("Nuvan")} className="cursor-pointer">
+                                        <ServiceCard image="/founder.jpg" name="Nuvan" />
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>
 
 
-
-                        {/* Choose Service */}
                         <motion.div
                             className="flex flex-col items-center justify-center mt-[50px] gap-12"
                             initial={{ opacity: 0, y: 20 }}
@@ -116,15 +138,13 @@ export default function Appointment() {
                                     Choose a Service
                                 </h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 items-center justify-items-center gap-6 p-4 md:p-0 w-full md:w-auto">
-                                    <ServiceCard image="/founder.jpg" title="LusTre Haircut" comingSoon />
 
-                                    {/* OR Divider */}
+                                    <ServiceCard image="/founder.jpg" title="LusTre Haircut" comingSoon />
                                     <div className="hidden sm:grid items-center justify-center h-full space-y-2">
                                         <div className="w-px h-8 bg-gray-300 mx-auto"></div>
                                         <span className="text-sm font-medium text-gray-500 text-center">OR</span>
                                         <div className="w-px h-8 bg-gray-300 mx-auto"></div>
                                     </div>
-
                                     <ServiceCard image="/founder.jpg" title="Wedding Appointment" comingSoon />
                                 </div>
                             </div>

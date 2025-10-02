@@ -6,7 +6,11 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import AppointmentCard from "../components/appointmentCard";
 import axios from "axios";
-import { ShowToast, LustreToaster } from "../components/lustreToaster";
+import dayjs from "dayjs";
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { ShowToast } from "../components/lustreToaster";
+
+dayjs.extend(customParseFormat);
 
 export default function User() {
     const navigate = useNavigate();
@@ -15,7 +19,7 @@ export default function User() {
     const [appointments, setAppointments] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    // Load user from localStorage
+
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
@@ -25,28 +29,79 @@ export default function User() {
         }
     }, [navigate]);
 
-    // Fetch appointments from backend
+
     const fetchAppointments = async () => {
         if (!user) return;
         try {
             setLoading(true);
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/appointments/my`, {
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            const res = await axios.get(
+                `${import.meta.env.VITE_API_URL}/api/appointments/my`,
+                { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+            );
+
+            const now = dayjs();
+            let upcomingAppointments = [];
+            let completedAppointments = [];
+
+            res.data.forEach(a => {
+
+                const dateStr = a.date
+                    ? dayjs(a.date).format("MM/DD/YYYY")
+                    : "-";
+                const timeStr = a.time || "-";
+
+
+                const appointmentDateTime = dayjs(
+                    `${dayjs(a.date).format("YYYY-MM-DD")} ${a.time}`,
+                    "YYYY-MM-DD h:mm A"
+                );
+
+
+                const isCompleted = appointmentDateTime.isBefore(now);
+
+                const appointmentData = {
+                    service: a.serviceName || "-",
+                    subName: a.subName || "-",
+                    stylist: a.stylistName || "-",
+                    date: dateStr,
+                    time: timeStr,
+                    payment:
+                        a.paymentType === "Full"
+                            ? "Full Payment"
+                            : a.paymentType === "Half"
+                                ? "Half Payment"
+                                : "Book Only",
+                    due: (a.duePayment || 0).toString(),
+                    cost: ((a.fullPayment || 0) + (a.duePayment || 0)).toString(),
+                    isCompleted: isCompleted,
+                    rawDate: a.date,
+                    rawTime: a.time,
+                };
+
+                if (isCompleted) {
+                    completedAppointments.push(appointmentData);
+                } else {
+                    upcomingAppointments.push(appointmentData);
+                }
             });
 
-            const mapped = res.data.map(a => ({
-                serviceName: a.serviceName || "-",
-                subName: a.subName || "-",
-                stylist: a.stylistName || "-",
-                date: a.date ? new Date(a.date).toLocaleDateString() : "-",
-                time: a.time || "-",
-                payment: a.paymentType === "Full" ? "Full Payment" :
-                    a.paymentType === "Half" ? "Half Payment" : "Book Only",
-                due: (a.duePayment || 0).toString(),
-                cost: ((a.fullPayment || 0) + (a.duePayment || 0)).toString()
-            }));
 
-            setAppointments(mapped);
+            completedAppointments.sort((a, b) =>
+                dayjs(b.rawDate).diff(dayjs(a.rawDate))
+            );
+
+
+            const limitedCompleted = completedAppointments.slice(0, 2);
+
+
+            upcomingAppointments.sort((a, b) =>
+                dayjs(a.rawDate).diff(dayjs(b.rawDate))
+            );
+
+
+            const finalAppointments = [...upcomingAppointments, ...limitedCompleted];
+
+            setAppointments(finalAppointments);
         } catch (err) {
             console.error("Failed to fetch appointments:", err);
             ShowToast(
@@ -54,7 +109,6 @@ export default function User() {
                 "Failed to load your appointments",
                 "Please try again or contact support."
             );
-
         } finally {
             setLoading(false);
         }
@@ -72,28 +126,34 @@ export default function User() {
         navigate("/login");
     };
 
+
+    const pendingAppointmentsCount = appointments.filter(apt => !apt.isCompleted).length;
+
     return (
         <>
             <Header />
             <div className="w-full min-h-screen pt-30 bg-gray-50 flex justify-center p-6">
                 <div className="w-full max-w-6xl flex gap-6 md:flex-row flex-col">
 
-                    <div className="w-full h-[400px] md:h-[600px] md:max-w-sm bg-white shadow-xl overflow-hidden  order-1 md:order-2">
-                        {/* Sidebar start */}
+                    {/* Sidebar */}
+                    <div className="w-full h-[400px] md:h-[600px] md:max-w-sm bg-white shadow-xl overflow-hidden order-1 md:order-2">
                         <div className="flex flex-col items-center p-8 bg-black text-gray-50">
                             <img
                                 src={user.image || "/user.png"}
                                 alt="User Avatar"
                                 className="w-18 h-18 rounded-full border-4 object-cover border-white shadow-lg mb-4"
                             />
-                            <h2 className="text-2xl font-bold uppercase">{user.fullName}</h2>
+                            <h2 className="text-lg uppercase">{user.fullName}</h2>
                             <p className="text-sm opacity-90">+94 {user.mobileNumber}</p>
                         </div>
 
                         <div className="flex flex-col divide-y divide-gray-200">
                             <button
                                 onClick={() => setActiveTab("dashboard")}
-                                className={`flex items-center cursor-pointer gap-4 px-6 py-4 transition ${activeTab === "dashboard" ? "bg-gray-50" : "hover:bg-gray-200"}`}
+                                className={`flex items-center cursor-pointer gap-4 px-6 py-4 transition ${activeTab === "dashboard"
+                                    ? "bg-gray-50"
+                                    : "hover:bg-gray-200"
+                                    }`}
                             >
                                 <FaTachometerAlt className="text-black" size={20} />
                                 <span className="font-medium text-gray-800">Dashboard</span>
@@ -101,7 +161,10 @@ export default function User() {
 
                             <button
                                 onClick={() => setActiveTab("appointments")}
-                                className={`flex items-center cursor-pointer gap-4 px-6 py-4 transition ${activeTab === "appointments" ? "bg-gray-50" : "hover:bg-gray-200"}`}
+                                className={`flex items-center cursor-pointer gap-4 px-6 py-4 transition ${activeTab === "appointments"
+                                    ? "bg-gray-50"
+                                    : "hover:bg-gray-200"
+                                    }`}
                             >
                                 <FaCalendarAlt className="text-black" size={20} />
                                 <span className="font-medium text-gray-800">My Appointments</span>
@@ -117,17 +180,19 @@ export default function User() {
                         </div>
                     </div>
 
-                    {/* Sidebar end */}
-
-                    {/* Content Area */}
+                    {/* Content */}
                     <div className="flex-1 p-8 order-2 md:order-2 bg-white shadow-xl ">
                         {activeTab === "dashboard" && (
                             <div>
-                                <h2 className="text-xl font-bold text-gray-800 mb-4 uppercase">Dashboard</h2>
+                                <h2 className="text-xl font-bold text-gray-800 mb-4 uppercase">
+                                    Dashboard
+                                </h2>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="p-6 bg-gray-100 shadow-md">
-                                        <h3 className="font-semibold text-gray-700">Appointments</h3>
-                                        <p className="text-3xl font-bold text-red-500">{appointments.length}</p>
+                                        <h3 className="font-semibold text-gray-700">Upcoming Appointments</h3>
+                                        <p className="text-3xl font-bold text-red-500">
+                                            {pendingAppointmentsCount}
+                                        </p>
                                         <button
                                             onClick={() => setActiveTab("appointments")}
                                             className="mt-3 px-4 py-2 rounded-full cursor-pointer bg-black text-white hover:bg-red-600 transition"
@@ -136,7 +201,9 @@ export default function User() {
                                         </button>
                                     </div>
                                     <div className="p-6 bg-gray-100 shadow-md">
-                                        <h3 className="font-semibold text-gray-700">Profile Status</h3>
+                                        <h3 className="font-semibold text-gray-700">
+                                            Profile Status
+                                        </h3>
                                         <p className="text-sm text-gray-600 mt-2">
                                             Your profile is active and visible to stylists.
                                         </p>
@@ -153,7 +220,6 @@ export default function User() {
 
                                 {loading ? (
                                     <div className="flex justify-center items-center min-h-[200px]">
-
                                         <span className="w-8 h-8 border-2 border-gray-600 border-t-transparent rounded-full animate-spin"></span>
                                     </div>
                                 ) : appointments.length > 0 ? (
@@ -164,11 +230,10 @@ export default function User() {
                                     </div>
                                 ) : (
                                     <div className="mt-6 p-6 bg-gray-100 rounded-xl shadow-md">
-                                        <p className="text-sm text-gray-500">No appointments yet.</p>
+                                        <p className="text-sm text-gray-500">You have no upcoming or recent past appointments.</p>
                                     </div>
                                 )}
                             </div>
-
                         )}
                     </div>
                 </div>

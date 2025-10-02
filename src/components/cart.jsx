@@ -9,7 +9,7 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-function addMinutesToTimeStr(timeStr, minutesToAdd = 60) {
+function addMinutesToTimeStr(timeStr, minutesToAdd = 45) {
     if (!timeStr) return "1:00 PM";
     const trimmed = timeStr.trim();
     const ampmMatch = trimmed.match(/(AM|PM|am|pm)$/);
@@ -38,14 +38,14 @@ function addMinutesToTimeStr(timeStr, minutesToAdd = 60) {
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export default function Cart({ cartItems, setCartItems, user }) {
+
     const [paymentOption, setPaymentOption] = useState("full");
     const navigate = useNavigate();
 
-    if (!cartItems.length) {
-        return <p className="text-gray-500 mt-6">Please select a service, date/time, and gender.</p>;
-    }
+    const handleDelete = (id) => {
+        setCartItems((prev) => prev.filter((item) => (item.id || item._id) !== id));
+    };
 
-    const handleDelete = (id) => setCartItems(cartItems.filter(item => item.id !== id));
 
     const amounts = useMemo(() => {
         const total = cartItems.reduce((sum, item) => sum + Number(item.price || 0), 0);
@@ -53,6 +53,12 @@ export default function Cart({ cartItems, setCartItems, user }) {
         if (paymentOption === "book-only") return { payNow: 0, due: total };
         return { payNow: total, due: 0 };
     }, [cartItems, paymentOption]);
+
+
+    if (!cartItems.length) {
+        return <p className="text-gray-500 mt-6">Please select a service, date/time, and gender.</p>;
+    }
+
 
     const handleCheckout = async () => {
         try {
@@ -69,7 +75,8 @@ export default function Cart({ cartItems, setCartItems, user }) {
                     duePayment = totalCost;
                 }
 
-                const endTime = item.endTime || addMinutesToTimeStr(item.time || "9:00 AM", 60);
+                // Using 45 minutes duration
+                const endTime = item.endTime || addMinutesToTimeStr(item.time || "9:00 AM", 45);
 
                 return {
                     id: item.id,
@@ -79,7 +86,7 @@ export default function Cart({ cartItems, setCartItems, user }) {
                     date: item.date,
                     time: item.time,
                     endTime,
-                    type: item.gender || item.type || "Gents",
+                    type: item.gender,
                     price: totalCost,
                     fullPayment,
                     duePayment,
@@ -138,12 +145,18 @@ export default function Cart({ cartItems, setCartItems, user }) {
                     <div className="flex flex-col">
                         <h3 className="font-semibold text-lg">{item.title || item.serviceName || "Service"}</h3>
                         <p className="text-gray-600">{Number(item.price || 0).toLocaleString()} LKR</p>
-                        <p className="text-gray-500">{item.date} at {item.time} - {item.endTime || addMinutesToTimeStr(item.time || "9:00 AM", 60)}</p>
+                        <p className="text-gray-500">
+                            {item.date} at {item.time} -
+                            {item.endTime || addMinutesToTimeStr(item.time || "9:00 AM", 45)}
+                        </p>
                         <p className="text-gray-500">For: {item.gender}</p>
                         <p className="text-gray-500">Stylist: {item.stylist || "Unnamed Stylist"}</p>
                         <p className="text-gray-500">Payment Type: {item.paymentType || (paymentOption === "book-only" ? "Book Only" : paymentOption === "half" ? "Half" : "Full")}</p>
                     </div>
-                    <button onClick={() => handleDelete(item.id)} className="text-red-500 hover:text-red-700 transition cursor-pointer"><RiDeleteBin6Line size={20} /></button>
+                    <button onClick={() => handleDelete(item.id || item._id)} className="text-red-500 hover:text-red-700 transition cursor-pointer">
+                        <RiDeleteBin6Line size={20} />
+                    </button>
+
                 </motion.div>
             ))}
 

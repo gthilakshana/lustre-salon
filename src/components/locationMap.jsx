@@ -1,13 +1,13 @@
-// src/components/LocationMap.jsx
+
 export default function LocationMap({
-    lat = 6.9271,     // Default: Colombo latitude
-    lng = 79.8612,    // Default: Colombo longitude
+    lat = 6.9271,
+    lng = 79.8612,
     address
 }) {
-    // Make sure the query is URL safe (replace spaces with +)
+
     const query = address
         ? encodeURIComponent(address)
-        : `${lat},${lng}`; // fallback to coordinates if no address
+        : `${lat},${lng}`;
 
     return (
         <div className="w-full h-full">
@@ -19,7 +19,7 @@ export default function LocationMap({
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade" // ✅ good practice
+                referrerPolicy="no-referrer-when-downgrade"
             />
 
             {address && (
