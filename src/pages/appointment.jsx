@@ -17,11 +17,20 @@ export default function Appointment() {
 
     const handleStylistSelect = (stylistName) => {
 
-        navigate(`/dateAndTimeSelect`, {
-            state: {
-                employee: stylistName,
-            },
-        });
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+
+            navigate(`/dateAndTimeSelect`, {
+                state: {
+                    employee: stylistName,
+                },
+            });
+        } else {
+
+            navigate("/login");
+
+        }
+
     };
 
     return (
