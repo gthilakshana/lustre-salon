@@ -60,7 +60,7 @@ export default function Pricing() {
         <section id="pricing" className="bg-black text-white py-16 px-8 md:px-20">
 
             <motion.h1
-                className="text-3xl md:text-4xl font-bold text-center mb-10 uppercase"
+                className="text-3xl md:text-4xl font-serif font-bold text-center mb-10 uppercase"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
@@ -110,16 +110,7 @@ export default function Pricing() {
                 </motion.div>
             </AnimatePresence>
 
-            <div className="text-center mt-10">
-                <motion.a
-                    href="#"
-                    className="text-sm font-medium text-gray-400 hover:text-white transition"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                >
-                    See all prices
-                </motion.a>
-            </div>
+
         </section>
     );
 }

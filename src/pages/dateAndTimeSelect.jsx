@@ -304,7 +304,7 @@ export default function DateAndTimeSelect() {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.8, ease: "easeOut" }}
                                 >
-                                    <motion.h2 className="text-3xl font-bold mb-4 uppercase">Select Service</motion.h2>
+                                    <motion.h2 className="text-3xl font-serif font-bold mb-4 uppercase">Select Service</motion.h2>
 
                                     <p className="mb-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
 
@@ -359,7 +359,7 @@ export default function DateAndTimeSelect() {
                                     transition={{ duration: 0.8, ease: "easeOut" }}
                                 >
                                     <motion.h2
-                                        className="text-2xl sm:text-3xl font-bold mb-4 uppercase"
+                                        className="text-2xl sm:text-3xl font-serif font-bold mb-4 uppercase"
                                         initial={{ opacity: 0, y: -20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.8, delay: 0.1 }}
@@ -422,7 +422,7 @@ export default function DateAndTimeSelect() {
                                     transition={{ duration: 0.8, ease: "easeOut" }}
                                 >
                                     <motion.h2
-                                        className="text-2xl sm:text-3xl font-bold mb-4 uppercase"
+                                        className="text-2xl sm:text-3xl font-serif font-bold mb-4 uppercase"
                                         initial={{ opacity: 0, y: -20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.8, delay: 0.1 }}

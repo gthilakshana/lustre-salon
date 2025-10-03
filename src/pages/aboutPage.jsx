@@ -34,25 +34,31 @@ export default function About() {
             <div className="w-full min-h-screen  pt-16 flex flex-col items-center justify-start">
 
 
-                <div className="w-full   flex flex-col items-center justify-start ">
-                    <div className="w-full h-64 md:h-80 relative">
+
+                <div className="w-full flex flex-col items-center justify-start ">
+                    <div className="w-full h-80 md:h-96 relative">
                         <img
                             src="/banner.jpg"
                             alt="About Us"
                             className="w-full h-full object-cover"
                         />
 
-                        <div className="absolute inset-0 flex flex-col justify-start items-center bg-black/40 pt-5 md:pt-16">
-                            <div className="bg-black/50  px-6 md:px-10 py-6 shadow-lg max-w-3xl text-center">
-                                <h2 className="text-white text-3xl md:text-5xl font-bold">
-                                    About
+                        <div className="absolute inset-0 flex flex-col justify-center items-center bg-black/60 p-4">
+                            <motion.div
+                                initial={{ opacity: 0, y: -20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8 }}
+
+                                className="bg-white/10 backdrop-blur-sm px-6 md:px-12 py-8 shadow-2xl max-w-4xl text-center border-t-4 border-red-600"
+                            >
+                                <h2 className={`text-white text-4xl md:text-6xl font-serif tracking-wider font-bold uppercase`}>
+                                    Our Story
                                 </h2>
-                                <p className="text-white mt-1 md:mt-4 text-base md:text-lg leading-relaxed">
+                                <p className={`text-white mt-3 md:mt-5 text-base md:text-xl font-light leading-snug max-w-2xl mx-auto`}>
                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                    when an unknown printer took.
+                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
                                 </p>
-                            </div>
+                            </motion.div>
                         </div>
                     </div>
                 </div>
@@ -65,41 +71,41 @@ export default function About() {
                     transition={{ duration: 1, delay: 0.3 }}
                 >
                     <div className="w-full max-w-6xl mt-12 px-4 md:px-8">
-                        <h2 className="text-4xl font-bold text-center mb-12 uppercase">
+                        <h2 className={`text-gray-900 text-3xl md:text-4xl font-serif font-bold text-center mb-16 uppercase relative after:content-[''] after:absolute after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-red-600`}>
                             Our Journey
                         </h2>
 
 
-                        <div className="flex flex-col md:flex-row items-center md:items-start mb-12 gap-8">
 
-                            <div className="flex flex-col md:flex-row gap-4 md:w-1/2">
-
+                        <div className="flex flex-col md:flex-row items-center md:items-stretch mb-16 gap-10">
+                            <div className="md:w-1/2 self-center">
                                 <img
                                     src="/salon.jpg"
                                     alt="Ribbon cutting"
-                                    className="rounded-lg shadow-md w-full object-cover"
+                                    className="rounded-xl shadow-xl w-full object-cover aspect-[4/3] transition duration-300 hover:shadow-2xl"
                                 />
                             </div>
 
+                            <div className={`md:w-1/2 text-gray-600 text-base md:text-lg leading-relaxed self-center`}>
 
-                            <div className="md:w-1/2 text-gray-700 text-base md:text-lg leading-relaxed">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                <h3 className={`text-red-600 text-2xl font-serif font-bold mb-3`}>The Beginning</h3>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                             </div>
                         </div>
 
 
-                        <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
+                        <div className="flex flex-col md:flex-row items-center md:items-stretch gap-10">
+                            <div className={`md:w-1/2 text-gray-600 text-base md:text-lg leading-relaxed order-2 md:order-1 self-center`}>
 
-                            <div className="md:w-1/2 text-gray-700 text-base md:text-lg leading-relaxed order-2 md:order-1">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                <h3 className={`text-red-600 text-2xl font-serif font-bold mb-3`}>Our Growth</h3>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                             </div>
 
-
-                            <div className="md:w-1/2 order-1 md:order-2">
+                            <div className="md:w-1/2 order-1 md:order-2 self-center">
                                 <img
                                     src="/haircut.jpg"
                                     alt="New salon"
-                                    className="rounded-lg shadow-md w-full object-cover"
+                                    className="rounded-xl shadow-xl w-full object-cover aspect-[4/3] transition duration-300 hover:shadow-2xl"
                                 />
                             </div>
                         </div>
@@ -107,7 +113,7 @@ export default function About() {
                 </motion.div>
 
 
-                <div className="w-full mt-12 bg-gray-100 flex items-center py-16">
+                <div className={`w-full mt-12 bg-gray-50 flex items-center py-20`}>
                     <div className="w-full max-w-6xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-12">
 
 
@@ -118,11 +124,14 @@ export default function About() {
                             transition={{ duration: 1, delay: 0.3 }}
                             className="md:w-1/2 flex justify-center order-1 md:order-2"
                         >
-                            <img
-                                src="/founder.jpg"
-                                alt="Founder"
-                                className="w-full max-w-md h-auto object-cover shadow-lg"
-                            />
+
+                            <div className="p-2 border-4 border-white shadow-2xl">
+                                <img
+                                    src="/founder.jpg"
+                                    alt="Founder"
+                                    className="w-full max-w-sm h-auto object-cover aspect-[3/4]"
+                                />
+                            </div>
                         </motion.div>
 
 
@@ -134,14 +143,16 @@ export default function About() {
                             className="md:w-1/2 order-2 md:order-1"
                         >
                             <div className="text-center md:text-left">
-                                <h2 className="text-4xl font-bold mb-4">Meet Our Founder</h2>
-                                <p className="text-gray-700 text-base md:text-lg leading-relaxed mb-6">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                <h2 className={`text-gray-900 text-4xl font-serif font-bold mb-4`}>Meet Our Founder</h2>
+
+                                <p className={`text-gray-600 text-base md:text-lg leading-relaxed mb-6 border-l-4 border-red-600 pl-4`}>
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                                     <br /><br />
-                                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable
+                                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words.
                                 </p>
-                                <h3 className="text-xl font-semibold">Gavrawa Thilakshana</h3>
-                                <p className="text-gray-600">Founder & CEO</p>
+
+                                <h3 className={`text-red-600 text-2xl font-serif font-semibold`}>Gavrawa Thilakshana</h3>
+                                <p className="text-gray-500 italic">Founder & CEO, LusTre Salon</p>
                             </div>
                         </motion.div>
                     </div>
@@ -166,8 +177,9 @@ export default function About() {
                             <img
                                 src="/salon.jpg"
                                 alt="Vision and Mission"
-                                className="w-full h-full object-cover shadow-lg rounded-lg"
+                                className="w-full h-full object-cover shadow-xl rounded-lg aspect-[4/3] border-2 border-red-600/50"
                             />
+
                         </motion.div>
 
 
@@ -178,17 +190,20 @@ export default function About() {
                             transition={{ duration: 0.8, delay: 0.4 }}
                             className="md:w-1/2 text-center md:text-left order-1 md:order-2"
                         >
-                            <h2 className="text-4xl font-bold text-white mb-6">
-                                Our Vision and Mission
+                            <h2 className={`text-4xl font-serif font-bold text-white mb-8 relative after:content-[''] after:absolute after:bottom-[-10px] after:left-1/2 md:after:left-0 after:w-20 after:h-1 after:bg-red-600`}>
+                                Our Vision & Mission
                             </h2>
 
-                            <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-6">
-                                <span className="font-semibold text-white">Our vision</span> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.
-                            </p>
+                            <div className="space-y-6">
+                                <p className={`text-white text-base md:text-lg leading-relaxed`}>
 
-                            <p className="text-gray-300 text-base md:text-lg leading-relaxed">
-                                <span className="font-semibold text-white">Our mission</span> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.
-                            </p>
+                                    <span className={`font-serif font-bold text-2xl block text-red-600 mb-1`}>Vision:</span> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                </p>
+                                <p className={`text-white text-base md:text-lg leading-relaxed`}>
+
+                                    <span className={`font-serif font-bold text-2xl block text-red-600 mb-1`}>Mission:</span> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                </p>
+                            </div>
                         </motion.div>
 
                     </div>
@@ -196,8 +211,8 @@ export default function About() {
 
 
 
-                <div className="w-full bg-gray-100 py-8 mb-8">
-                    <div className="w-full max-w-4xl mx-auto px-4 md:px-8 text-center">
+                <div className={`w-full bg-white py-16`}>
+                    <div className="w-full max-w-5xl mx-auto px-4 md:px-8 text-center">
 
 
                         <motion.div
@@ -206,36 +221,38 @@ export default function About() {
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.8 }}
                         >
-                            <h2 className="text-4xl font-bold text-black mb-6">
-                                Our Commitment
+
+                            <h2 className={`text-gray-900 text-4xl font-serif font-bold mb-10 relative after:content-[''] after:absolute after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-red-600`}>
+                                Our Commitment to You
                             </h2>
-                            <p className="text-gray-700 text-base md:text-lg leading-relaxed mb-4">
-                                At <span className="font-semibold">LusTre Salon</span>, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.
+                            <p className={`text-gray-600 text-base md:text-xl leading-relaxed mb-6`}>
+
+                                At <span className={`font-semibold text-red-600 italic`}>LusTre Salon</span>, our commitment goes beyond beautiful hair. We aim to create a **luxurious and serene experience** from the moment you step inside.
                             </p>
-                            <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                            <p className={`text-gray-600 text-base md:text-lg leading-relaxed max-w-3xl mx-auto`}>
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.
                             </p>
                         </motion.div>
-                    </div>
 
 
-                    <div className="w-full flex justify-center mt-10">
-                        <motion.div
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.8, delay: 0.2 }}
-                            className="w-full flex justify-center"
-                        >
-                            <img
-                                src="/haircut1.jpg"
-                                alt="Our Commitment"
-                                className="w-full  md:w-full h-[200px] md:h-[500px]  object-cover shadow-lg "
-                            />
-                        </motion.div>
+                        <div className="w-full flex justify-center mt-12">
+                            <motion.div
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, amount: 0.3 }}
+                                transition={{ duration: 0.8, delay: 0.2 }}
+                                className="w-full flex justify-center"
+                            >
+
+                                <img
+                                    src="/haircut1.jpg"
+                                    alt="Our Commitment"
+                                    className="w-full max-w-4xl h-[250px] md:h-[550px] object-cover shadow-2xl rounded-xl"
+                                />
+                            </motion.div>
+                        </div>
                     </div>
                 </div>
-
 
 
                 <Reviews />

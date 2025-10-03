@@ -50,7 +50,7 @@ export default function HomeView() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.8 }}
-                            className="text-white text-2xl md:text-5xl font-bold leading-tight drop-shadow-lg"
+                            className="text-white text-2xl md:text-5xl font-serif font-bold leading-tight drop-shadow-lg"
                         >
                             Experience the Elegance of <br /> LusTre Salon
                         </motion.h1>
@@ -88,7 +88,7 @@ export default function HomeView() {
                         transition={{ duration: 0.8 }}
                         className="md:w-1/2 w-full flex justify-center items-center p-5"
                     >
-                        <h1 className="text-black text-3xl md:text-5xl font-bold leading-tight text-center md:text-left">
+                        <h1 className="text-black text-3xl md:text-5xl font-serif font-bold leading-tight text-center md:text-left">
                             The Pinnacle of Beauty and Luxury
                         </h1>
                     </motion.div>

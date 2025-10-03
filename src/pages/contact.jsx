@@ -71,23 +71,23 @@ export default function Contact() {
             <Header />
 
             <div className="w-full min-h-screen  pt-16 flex flex-col items-center justify-start">
-                {/* Banner */}
+
                 <div className="w-full flex flex-col items-center justify-start">
                     <div className="w-full h-64 md:h-80 relative">
                         <img
                             src="/banner.jpg"
-                            alt="About Us"
+                            alt="Contact Banner"
                             className="w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 flex flex-col justify-start items-center bg-black/40 pt-5 md:pt-16">
-                            <div className="bg-black/50  px-6 md:px-10 py-6 shadow-lg max-w-3xl text-center">
-                                <h2 className="text-white text-3xl md:text-5xl font-bold">
-                                    Contact
+
+                        <div className="absolute inset-0 flex flex-col justify-center items-center bg-black/70 p-4">
+
+                            <div className="bg-white/10 backdrop-blur-sm px-6 md:px-12 py-8 shadow-2xl max-w-4xl text-center border-t-4 border-red-600 rounded-lg">
+                                <h2 className="text-white text-4xl md:text-6xl font-serif tracking-wider font-bold uppercase">
+                                    Contact Us
                                 </h2>
-                                <p className="text-white mt-4 text-base md:text-lg leading-relaxed">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                    when an unknown printer took.
+                                <p className="text-gray-200 mt-3 text-base md:text-xl font-light leading-snug max-w-2xl mx-auto">
+                                    Ready to experience the ultimate in beauty and style? Get in touch with our team.
                                 </p>
                             </div>
                         </div>
@@ -99,7 +99,9 @@ export default function Contact() {
                     <div className="w-full max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-stretch justify-between gap-12">
 
                         <div className="flex-1 p-6 flex flex-col justify-between">
-                            <h2 className="text-2xl md:text-3xl font-bold mb-3 text-gray-900 uppercase">Get in Touch</h2>
+                            <h2 className={`text-gray-900 text-3xl font-serif font-bold mb-3 uppercase relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-16 after:h-0.5 after:bg-red-600`}>
+                                Get in Touch
+                            </h2>
                             <span className="block text-gray-500 mb-6 text-base md:text-lg leading-relaxed">
                                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                             </span>
@@ -132,7 +134,9 @@ export default function Contact() {
 
 
                         <div className="flex-1 p-6  flex flex-col justify-between">
-                            <h2 className="text-2xl md:text-3xl font-bold mb-3 text-gray-900 uppercase">Send a Message</h2>
+                            <h2 className={`text-gray-900 text-3xl font-serif font-bold mb-3 uppercase relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-16 after:h-0.5 after:bg-red-600`}>
+                                Send a Message
+                            </h2>
                             <span className="block text-gray-500 mb-6 text-base md:text-lg leading-relaxed">
                                 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                             </span>

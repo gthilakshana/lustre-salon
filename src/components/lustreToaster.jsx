@@ -11,6 +11,8 @@ const iconMap = {
     error: <XCircle size={20} className="text-red-500" />,
 };
 
+
+
 // --- Toaster Component ---
 
 export const LustreToaster = () => (
@@ -18,7 +20,7 @@ export const LustreToaster = () => (
 
         position="bottom-right"
         toastOptions={{
-            duration: 5000,
+            duration: 4000,
             style: {
 
                 fontFamily: "Inter, sans-serif, 'Helvetica Neue', Arial",
@@ -38,7 +40,7 @@ export const ShowToast = (type = "info", message = "", description = "", actions
             <div
                 className={`${t.visible ? "animate-enter" : "animate-leave"} 
                     flex flex-col gap-2 w-80 p-4 shadow-2xl bg-black text-white 
-                    border border-red-700/50 rounded-lg`}
+                    `}
                 style={{ backdropFilter: 'blur(5px)' }}
             >
 
@@ -58,12 +60,14 @@ export const ShowToast = (type = "info", message = "", description = "", actions
                         </span>
                     </div>
 
-                    <button
-                        onClick={() => toast.dismiss(t.id)}
-                        className="text-white hover:text-red-500 transition-colors duration-200 p-1 -mt-1 -mr-1"
-                    >
-                        <X size={16} />
-                    </button>
+                    <div className={`${t.visible ? 'animate-enter' : 'animate-leave'}`}>
+                        <button
+                            onClick={() => toast.dismiss(t.id)}
+                            className="text-white hover:text-red-500 transition-colors duration-200 p-1 -mt-1 -mr-1"
+                        >
+                            <X size={16} />
+                        </button>
+                    </div>
                 </div>
 
                 {/* Message Content */}

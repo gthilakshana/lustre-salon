@@ -28,7 +28,7 @@ export default function Team() {
                     transition={{ duration: 1, delay: 0.3 }}
                     className="md:w-1/2 w-full flex flex-col justify-center p-5"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold text-black mb-4 uppercase">
+                    <h2 className="text-3xl md:text-4xl font-serif font-bold text-black mb-4 uppercase">
                         Our Team
                     </h2>
                     <span className="text-gray-600 text-base md:text-lg leading-relaxed">
