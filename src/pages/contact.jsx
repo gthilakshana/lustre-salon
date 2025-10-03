@@ -202,16 +202,30 @@ export default function Contact() {
                 </div>
 
 
-                {/* Map */}
-                <div className="w-full h-[600px] bg-gray-100 shadow-md">
 
-                    {/* <LocationMap
-                        lat={6.9271}
-                        lng={79.8612}
-                        address="123 Main Street, Colombo, Sri Lanka"
-                    /> */}
+                <div className="w-full h-screen bg-gray-50 flex justify-center py-0">
 
+
+                    <div className="w-full h-full shadow-lg overflow-hidden">
+
+                        <iframe
+
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3520.4037466096197!2d-82.4589709!3d28.0732249!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2c7fc088a08ff%3A0x9accacaea19cb3b1!2sMake%20It%20Viral%20Media!5e0!3m2!1sen!2slk!4v1759506895403!5m2!1sen!2slk"
+
+
+                            className="w-full h-full"
+
+
+                            style={{ border: 0 }}
+                            allowFullScreen=""
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            title="Location Map"
+                        />
+
+                    </div>
                 </div>
+
 
             </div>
 
