@@ -73,21 +73,27 @@ export default function User() {
                                 ? "Half Payment"
                                 : "Book Only",
 
-
+                    // Due Amount logic
                     due:
-                        a.paymentType === "full"
+                        a.paymentType === "Full"
                             ? (a.fullPayment || 0)
                             : ((a.fullPayment || 0) + (a.duePayment || 0)),
 
+
+                    // Cost logic
                     cost:
-                        a.paymentType === "full"
-                            ? (a.fullPayment || 0)
-                            : ((a.fullPayment || 0) + (a.duePayment || 0)),
+                        a.paymentType === "Book Only"
+                            ? null
+                            : a.paymentType === "Full"
+                                ? (a.fullPayment || 0)
+                                : ((a.fullPayment || 0) + (a.duePayment || 0)) * 2,
 
                     isCompleted: isCompleted,
                     rawDate: a.date,
                     rawTime: a.time,
                 };
+
+
 
 
                 if (isCompleted) {

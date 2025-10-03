@@ -120,20 +120,25 @@ export default function AppointmentCard({
                 </div>
             </div>
 
-
             <div className="border-t border-gray-200 pt-3 mt-3 bg-gray-50 p-3 rounded-md">
-                <div className="flex justify-between items-center">
-                    <p className="font-bold text-sm text-gray-800">Total Cost:</p>
-                    <p className="font-semibold text-base text-black">LKR {cost}</p>
-                </div>
+                {/* Total Cost */}
+                {(payment === "Full Payment" || payment === "Half Payment") && (
+                    <div className="flex justify-between items-center">
+                        <p className="font-bold text-sm text-gray-800">Total Cost:</p>
+                        <p className="font-semibold text-base text-black">LKR {cost}</p>
+                    </div>
+                )}
 
-                {payment !== "Full Payment" && (
+                {/* Due Amount */}
+                {(payment === "Half Payment" || payment === "Book Only") && (
                     <div className="flex justify-between items-center mt-1">
                         <p className="font-semibold text-xs text-gray-600">Due Amount:</p>
                         <p className="font-semibold text-sm text-red-600">LKR {due}</p>
                     </div>
                 )}
             </div>
+
+
 
             <div className="text-xs text-gray-400 mt-2 text-center">
                 <p>Please arrive 10 minutes before your scheduled appointment time.</p>
