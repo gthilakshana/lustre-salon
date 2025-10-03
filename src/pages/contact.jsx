@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { FaArrowUp } from "react-icons/fa";
 import { ShowToast, LustreToaster } from "../components/lustreToaster";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaClock } from "react-icons/fa";
 import Header from "../components/header";
@@ -14,6 +15,8 @@ export default function Contact() {
     const [yourMessage, setYourMessage] = useState("");
 
     const [loading, setLoading] = useState(false);
+
+    const [showScrollButton, setShowScrollButton] = useState(false);
 
 
     // Scroll to top on page load
@@ -63,6 +66,17 @@ export default function Contact() {
         } finally {
             setLoading(false);
         }
+    };
+
+
+    useEffect(() => {
+        const handleScroll = () => setShowScrollButton(window.scrollY > 200);
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
 
@@ -228,6 +242,16 @@ export default function Contact() {
 
 
             </div>
+
+            {showScrollButton && (
+                <button
+                    onClick={scrollToTop}
+                    className="fixed bottom-0 right-6 z-50 cursor-pointer bg-black hover:bg-gray-900 text-white p-3 shadow-lg transition"
+                    aria-label="Scroll to top"
+                >
+                    <FaArrowUp />
+                </button>
+            )}
 
             <Footer />
         </>

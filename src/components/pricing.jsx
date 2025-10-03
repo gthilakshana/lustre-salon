@@ -76,7 +76,7 @@ export default function Pricing() {
                         onClick={() => setActiveTab(tab.id)}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className={`px-6 py-2 font-medium transition ${activeTab === tab.id
+                        className={`px-6 py-2 font-serif transition ${activeTab === tab.id
                             ? "bg-white text-black"
                             : "bg-gray-800 text-white hover:bg-gray-700"
                             }`}
@@ -98,7 +98,7 @@ export default function Pricing() {
                     {pricingData[activeTab].map((item, i) => (
                         <motion.div
                             key={i}
-                            className="flex justify-between border-b border-gray-700 pb-2"
+                            className="flex  justify-between border-b border-gray-700 pb-2"
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: i * 0.1, duration: 0.4 }}

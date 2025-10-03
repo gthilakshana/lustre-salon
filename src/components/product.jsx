@@ -3,14 +3,15 @@ import { motion } from "framer-motion";
 export default function Product() {
     return (
         <section id="products" className="w-full py-5 bg-gray-50 border-t-2 border-gray-200">
-            <div className="px-4 py-4 max-w-7xl mx-auto md:flex flex-col md:flex-row items-center gap-12">
+            <div className="px-4 py-4 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-5 md:items-stretch">
+
 
                 <motion.div
                     initial={{ opacity: 0, x: 100 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 1, delay: 0.3 }}
-                    className="md:w-1/2 w-full flex flex-col justify-center p-5"
+                    className="md:w-1/2 w-full justify-center p-5 order-2 md:order-1 "
                 >
                     <h2 className="text-3xl md:text-4xl font-serif font-bold text-black mb-4 uppercase">
                         Our Products
@@ -26,19 +27,16 @@ export default function Product() {
                     whileInView={{ opacity: 1, x: 0, scale: 1 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 1 }}
-                    className="md:w-1/2 w-full"
+                    className="md:w-1/2 order-1 md:order-2"
                 >
                     <img
                         src="/Product.jpg"
                         alt="Service Image"
-                        className="w-full h-full object-cover shadow-lg"
+                        className="w-full h-full object-cover shadow-lg rounded-md"
                     />
                 </motion.div>
-
-
-
-
             </div>
+
         </section>
     );
 }

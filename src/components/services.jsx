@@ -16,7 +16,7 @@ export default function Services() {
                     <img
                         src="/Service.jpeg"
                         alt="Service Image"
-                        className="w-full h-full object-cover shadow-lg"
+                        className="w-full h-full object-cover shadow-lg rounded-md"
                     />
                 </motion.div>
 
