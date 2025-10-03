@@ -37,6 +37,13 @@ export default function DateAndTimeSelect() {
     const [step, setStep] = useState(initialStep);
     const type = selectedGender === 'Male' ? 'Men' : 'Women';
 
+
+    // Scroll to top on page load
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+    }, []);
+    //-----//
+
     const stylistName = employeeName
         ? decodeURIComponent(employeeName)
         : "Unnamed Stylist";
@@ -318,6 +325,13 @@ export default function DateAndTimeSelect() {
                                             selectedServices={selectedServices}
                                             setSelectedServices={setSelectedServices}
                                         />
+                                    )}
+
+
+                                    {selectedServices.length > 1 && (
+                                        <p className="text-sm text-red-600 mt-4 mb-2 p-2 bg-red-50 border border-red-200 rounded-md w-full max-w-lg text-center">
+                                            Selecting **multiple services** will increase the **total time duration** of your booking.
+                                        </p>
                                     )}
 
 

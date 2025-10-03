@@ -151,7 +151,7 @@ export default function AdminAppointment() {
             return matchSearch && matchPayment;
         })
         .sort((a, b) => {
-            // ✅ Sort so Pending is always first, then Ongoing, then Completed
+
             const order = { Pending: 1, Ongoing: 2, Completed: 3 };
             const rankA = order[a.status] ?? 4;
             const rankB = order[b.status] ?? 4;

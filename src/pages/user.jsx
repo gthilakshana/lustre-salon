@@ -59,6 +59,7 @@ export default function User() {
 
                 const isCompleted = appointmentDateTime.isBefore(now);
 
+
                 const appointmentData = {
                     service: a.serviceName || "-",
                     subName: a.subName || "-",
@@ -68,11 +69,11 @@ export default function User() {
                     payment:
                         a.paymentType === "Full"
                             ? "Full Payment"
-                            : a.paymentType === "Half"
+                            : a.paymentType === "Half" // price: (a.fullPayment || 0) + (a.duePayment || 0),
                                 ? "Half Payment"
                                 : "Book Only",
-                    due: (a.duePayment || 0).toString(),
-                    cost: ((a.fullPayment || 0) + (a.duePayment || 0)).toString(),
+                    due: (a.duePayment || 0),
+                    cost: ((a.fullPayment || 0) + (a.duePayment || 0)),
                     isCompleted: isCompleted,
                     rawDate: a.date,
                     rawTime: a.time,
