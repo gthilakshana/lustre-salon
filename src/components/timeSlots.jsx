@@ -92,43 +92,65 @@ export default function TimeSlots({
 
     return (
         <div className="bg-white p-6 shadow-xl w-full">
-            <h3 className="text-lg font-semibold mb-6 text-left text-gray-800">
-                {selectedDate
-                    ? `Available Slots for ${new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}`
-                    : 'Select Date'}
+            <h3 className="text-xl font-bold  text-left text-gray-800 mb-4 border-b pb-4 ">
+                {selectedDate ? (
+                    <>
+
+                        {(() => {
+                            const date = new Date(selectedDate);
+                            const prefix = date.toLocaleDateString('en-US', { weekday: 'long', month: 'long' });
+                            const year = date.toLocaleDateString('en-US', { year: 'numeric' });
+
+                            return (
+
+                                <>
+                                    {prefix} ,
+                                    {year}
+                                </>
+                            );
+                        })()}
+                    </>
+                ) : (
+                    'Select Date'
+                )}
             </h3>
 
 
             <div className="mb-8">
-                <h4 className="text-md font-semibold mb-3 text-left">1. Select Service Type</h4>
+                <h4 className="text-md font-semibold mb-3 text-left">Select Service Type</h4>
                 <div className="flex gap-4">
 
                     <button
                         onClick={() => setSelectedGender("Gents")}
-                        className={`flex items-center justify-center gap-2 px-6 py-3 font-medium transition-colors rounded-lg 
-                            ${selectedGender === "Gents"
-                                ? "bg-blue-600 text-white shadow-lg"
-                                : "bg-white text-gray-700 border border-gray-300 hover:bg-blue-50 hover:border-blue-400"
-                            }`}
+                        className={`
+        flex items-center justify-center p-3 transition-all duration-200 ease-in-out rounded-lg // Use 'p-3' for square button
+        ${selectedGender === "Gents"
+                                ? "bg-blue-600 text-white "
+                                : "bg-white text-gray-700 border border-gray-200 hover:bg-blue-50  "
+                            }
+    `}
                     >
-                        <FaMale /> Gents
+                        <FaMale size={40} />
                     </button>
 
                     <button
                         onClick={() => setSelectedGender("Ladies")}
-                        className={`flex items-center justify-center gap-2 px-6 py-3 font-medium transition-colors rounded-lg 
-                            ${selectedGender === "Ladies"
-                                ? "bg-pink-600 text-white shadow-lg"
-                                : "bg-white text-gray-700 border border-gray-300 hover:bg-pink-50 hover:border-pink-400"
-                            }`}
+                        className={`
+        flex items-center justify-center p-3 transition-all duration-200 ease-in-out rounded-lg // Use 'p-3' for square button
+        ${selectedGender === "Ladies"
+                                ? "bg-pink-400 text-white "
+                                : "bg-white text-gray-700 border border-gray-200 hover:bg-pink-50   "
+                            }
+    `}
                     >
-                        <FaFemale /> Ladies
+                        <FaFemale size={40} />
                     </button>
+
                 </div>
             </div>
 
 
-            <h4 className="text-md font-semibold mb-4 text-left">2. Select Time Slot</h4>
+            <h4 className="text-md font-semibold mb-4 text-left">Select Time Slot</h4>
 
             {!isReady ? (
                 <p className="text-red-600 font-medium text-left bg-red-100 p-3 rounded-lg border border-red-300">
