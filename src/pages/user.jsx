@@ -69,15 +69,26 @@ export default function User() {
                     payment:
                         a.paymentType === "Full"
                             ? "Full Payment"
-                            : a.paymentType === "Half" // price: (a.fullPayment || 0) + (a.duePayment || 0),
+                            : a.paymentType === "Half"
                                 ? "Half Payment"
                                 : "Book Only",
-                    due: (a.duePayment || 0),
-                    cost: ((a.fullPayment || 0) + (a.duePayment || 0)),
+
+
+                    due:
+                        a.paymentType === "full"
+                            ? (a.fullPayment || 0)
+                            : ((a.fullPayment || 0) + (a.duePayment || 0)),
+
+                    cost:
+                        a.paymentType === "full"
+                            ? (a.fullPayment || 0)
+                            : ((a.fullPayment || 0) + (a.duePayment || 0)),
+
                     isCompleted: isCompleted,
                     rawDate: a.date,
                     rawTime: a.time,
                 };
+
 
                 if (isCompleted) {
                     completedAppointments.push(appointmentData);
