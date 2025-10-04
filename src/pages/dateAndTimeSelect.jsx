@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAutoScroll } from "../components/useAutoScroll";
 import { FaArrowLeft } from "react-icons/fa";
 import { HiArrowRight, HiCheck } from "react-icons/hi";
 import { motion } from "framer-motion";
@@ -38,11 +39,17 @@ export default function DateAndTimeSelect() {
     const type = selectedGender === 'Male' ? 'Men' : 'Women';
 
 
-    // Scroll to top on page load
-    useEffect(() => {
-        window.scrollTo({ top: 0, behavior: "auto" });
-    }, []);
-    //-----//
+    //---- Scroll to top on page load ----//
+
+    const selectRef = useRef(null);
+    const datetimeRef = useRef(null);
+    const cartRef = useRef(null);
+
+    useAutoScroll(selectRef, step);
+    useAutoScroll(datetimeRef, step);
+    useAutoScroll(cartRef, step);
+
+    //--------------------------//
 
     const stylistName = employeeName
         ? decodeURIComponent(employeeName)
@@ -299,6 +306,7 @@ export default function DateAndTimeSelect() {
                             {/* Step: Select Service (Unchanged) */}
                             {step === "select" && (
                                 <motion.div
+                                    ref={selectRef}
                                     className="w-full flex flex-col items-center"
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -353,6 +361,7 @@ export default function DateAndTimeSelect() {
                             {/* Step: Pick Date & Time */}
                             {step === "datetime" && (
                                 <motion.div
+                                    ref={datetimeRef}
                                     className="w-full sm:w-full md:w-[90%] mt-10 "
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -416,6 +425,7 @@ export default function DateAndTimeSelect() {
                             {/* Step: Cart (Unchanged) */}
                             {step === "cart" && (
                                 <motion.div
+                                    ref={cartRef}
                                     className="w-full sm:w-[90%] p-4 sm:p-6 mt-6"
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
