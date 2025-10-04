@@ -36,6 +36,7 @@ export default function DateAndTimeSelect() {
 
     const initialStep = employeeName ? "select" : "barber";
     const [step, setStep] = useState(initialStep);
+    const [loading, setLoading] = useState(true);
     const type = selectedGender === 'Male' ? 'Men' : 'Women';
 
 
@@ -65,7 +66,7 @@ export default function DateAndTimeSelect() {
 
     const fetchServices = async () => {
         try {
-            setFetching(true);
+            setLoading(true);
             const baseURL = import.meta.env.VITE_API_URL || "";
             const token = getAuthToken();
 
@@ -319,9 +320,15 @@ export default function DateAndTimeSelect() {
                                     <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
                                     {/* Service Grid */}
-                                    {fetching ? (
-                                        <div className="flex items-center justify-center h-64">
-                                            <p className="text-gray-500">Loading services...</p>
+                                    {loading ? (
+                                        <div className="flex flex-col justify-center items-center h-[500px] space-y-4">
+
+                                            <span className="w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin"></span>
+
+
+                                            <span className="text-sm tracking-wide text-gray-700 font-semibold">
+                                                Loading Services...
+                                            </span>
                                         </div>
                                     ) : (
                                         <ServiceGrid
