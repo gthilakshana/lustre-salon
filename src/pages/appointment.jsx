@@ -97,7 +97,7 @@ export default function Appointment() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
-                        <h2 className="text-2xl md:text-3xl font-serif font-bold mb-4 uppercase">
+                        <h2 className="text-2xl  font-bold mb-4 uppercase">
                             Select LusTre Haircut Appointment or Salon Services
                         </h2>
                         <p className="text-gray-600 leading-relaxed max-w-6xl mx-auto mb-10">
