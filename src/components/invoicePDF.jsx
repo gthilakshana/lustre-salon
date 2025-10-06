@@ -72,7 +72,7 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     doc.setTextColor(...DARK_GRAY_TEXT);
     doc.text(`Name: ${customer?.name || "Valued Customer"}`, marginX, currentY + 6);
     // Corrected mobile number prefix
-    doc.text(`Mobile: +94 ${customer?.mobileNumber || "Customer Number"}`, marginX, currentY + 12);
+    doc.text(`Mobile: +94 ${customer?.mobile || "Customer Number"}`, marginX, currentY + 12);
     doc.text(`Email: ${customer?.email || "Customer email"}`, marginX, currentY + 18);
 
     // Right Column: Invoice/Booking Details
