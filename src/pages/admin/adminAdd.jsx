@@ -125,9 +125,10 @@ export default function AdminAdd({ isOpen, onClose, refresh }) {
                         </label>
                         <input
                             type="email"
-                            name="email"
+                            name="adminEmail"
+                            autoComplete="off"
                             value={formData.email}
-                            onChange={handleChange}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             placeholder="Enter email"
                             className="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-gray-400 outline-none"
                             required

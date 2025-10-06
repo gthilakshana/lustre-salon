@@ -119,7 +119,7 @@ export default function AdminTable() {
     );
 
     return (
-        <div className="w-full min-h-screen bg-white p-4 text-sm relative">
+        <div className="w-full  text-sm relative">
             {/* Delete Modal */}
             {isDeleteConfirmVisible && (
                 <AdminDeleteConfirm
@@ -143,8 +143,9 @@ export default function AdminTable() {
 
             {/* Loader */}
             {fetching && (
-                <div className="absolute inset-0 flex items-center justify-center bg-white/60 z-50">
-                    <span className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></span>
+                <div className="fixed inset-0 flex flex-col md:left-1/5 items-center justify-center bg-white/70 z-50">
+                    <span className="w-8 h-8 border-4 border-gray-800 border-t-transparent rounded-full animate-spin"></span>
+                    <span className="mt-2 text-gray-700 text-sm font-medium">Loading Admins...</span>
                 </div>
             )}
 
@@ -180,7 +181,7 @@ export default function AdminTable() {
 
             {/* Table */}
             <div className="overflow-x-auto border rounded-md">
-                <table className="w-full min-w-[900px] text-left">
+                <table className="w-full  text-left">
                     <thead className="bg-gray-800 text-white">
                         <tr>
                             {["Name", "Email", "Mobile", "Gender", "Role", "Status", "Actions"].map(
@@ -258,10 +259,11 @@ export default function AdminTable() {
             {/* Add Button */}
             <button
                 onClick={() => setIsAddOpen(true)}
-                className="fixed right-[50px] bottom-[50px] text-4xl text-black hover:text-gray-800 cursor-pointer transition"
+                className="fixed right-[50px] bottom-[50px] flex items-center justify-center w-12 h-12 rounded-full bg-black text-white text-4xl shadow-lg hover:bg-white hover:text-black transition"
             >
                 <CiCirclePlus />
             </button>
+
 
             {/* Add Modal */}
             <AdminAdd isOpen={isAddOpen} onClose={() => setIsAddOpen(false)} refresh={fetchAdmins} />

@@ -9,6 +9,7 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 
+
 function addMinutesToTimeStr(timeStr, minutesToAdd = 45) {
     if (!timeStr) return "1:00 PM";
     const trimmed = timeStr.trim();
@@ -41,6 +42,8 @@ export default function Cart({ cartItems, setCartItems, user }) {
 
     const [paymentOption, setPaymentOption] = useState("full");
     const navigate = useNavigate();
+
+
 
     const handleDelete = (id) => {
         setCartItems((prev) => prev.filter((item) => (item.id || item._id) !== id));

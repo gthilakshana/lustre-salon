@@ -6,9 +6,11 @@ import dayjs from "dayjs";
 
 function PageLoader() {
     return (
-        <div className="absolute inset-0 flex items-center justify-center bg-white/70 z-50">
-            <span className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></span>
+        <div className="fixed inset-0 flex flex-col md:left-1/5 items-center justify-center bg-white/70 z-50">
+            <span className="w-8 h-8 border-4 border-gray-800 border-t-transparent rounded-full animate-spin"></span>
+            <span className="mt-2 text-gray-700 text-sm font-medium">Loading Appointment...</span>
         </div>
+
     );
 }
 
@@ -174,7 +176,7 @@ export default function AdminAppointment() {
                 : "—";
 
     return (
-        <div className="w-full min-h-screen bg-white p-4 text-sm relative">
+        <div className="w-full  text-sm relative">
             {confirmVisible && (
                 <AppointmentDeleteConfirm
                     appointmentID={appointmentToDelete}
@@ -233,7 +235,7 @@ export default function AdminAppointment() {
                 className={`overflow-x-auto border rounded-md transition-opacity ${fetching ? "opacity-50" : "opacity-100"
                     }`}
             >
-                <table className="w-full min-w-[950px] text-left">
+                <table className="w-full  text-left">
                     <thead className="bg-gray-800 text-white">
                         <tr>
                             {[

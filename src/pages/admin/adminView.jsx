@@ -126,8 +126,9 @@ export default function AdminView() {
             </p>
 
             {loading ? (
-                <div className="flex justify-center  items-center h-[500px]">
-                    <span className="w-8 h-8 border-2 border-gray-600 border-t-transparent rounded-full animate-spin"></span>
+                <div className="fixed inset-0 flex flex-col md:left-1/5 items-center justify-center bg-white/70 z-50">
+                    <span className="w-8 h-8 border-4 border-gray-800 border-t-transparent rounded-full animate-spin"></span>
+                    <span className="mt-2 text-gray-700 text-sm font-medium">Loading Dashboard...</span>
                 </div>
             ) : (
                 <>

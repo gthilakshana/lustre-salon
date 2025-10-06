@@ -100,7 +100,7 @@ export default function AdminCustomer() {
     );
 
     return (
-        <div className="w-full min-h-screen bg-white p-4 text-sm relative">
+        <div className="w-full  text-sm relative ">
             {confirmVisible && (
                 <CustomerDeleteConfirm
                     customerID={customerToDelete}
@@ -109,10 +109,10 @@ export default function AdminCustomer() {
                     loading={loading}
                 />
             )}
-
             {fetching && (
-                <div className="absolute inset-0 flex items-center justify-center bg-white/60 z-50">
-                    <span className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></span>
+                <div className="fixed inset-0 flex flex-col md:left-1/5 items-center justify-center bg-white/70 z-50">
+                    <span className="w-8 h-8 border-4 border-gray-800 border-t-transparent rounded-full animate-spin"></span>
+                    <span className="mt-2 text-gray-700 text-sm font-medium">Loading Customers...</span>
                 </div>
             )}
 
@@ -147,7 +147,7 @@ export default function AdminCustomer() {
 
             {/* Table */}
             <div className="overflow-x-auto border rounded-md">
-                <table className="w-full min-w-[900px] text-left">
+                <table className="w-full min-w-full text-left">
                     <thead className="bg-gray-800 text-white">
                         <tr>
                             {["Name", "Email", "Mobile", "Role", "Status", "Actions"].map(h => (

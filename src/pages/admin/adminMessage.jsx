@@ -7,8 +7,9 @@ import { ShowToast } from "../../components/lustreToaster";
 // Loader Component
 function PageLoader() {
     return (
-        <div className="absolute inset-0 flex items-center justify-center bg-white/70 z-50">
-            <span className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></span>
+        <div className="fixed inset-0 flex flex-col md:left-1/5 items-center justify-center bg-white/70 z-50">
+            <span className="w-8 h-8 border-4 border-gray-800 border-t-transparent rounded-full animate-spin"></span>
+            <span className="mt-2 text-gray-700 text-sm font-medium">Loading Massages...</span>
         </div>
     );
 }
@@ -105,7 +106,7 @@ export default function AdminMessage() {
     );
 
     return (
-        <div className="w-full min-h-screen bg-white p-4 text-sm relative">
+        <div className="w-full text-sm relative">
             {confirmVisible && (
                 <MessageDeleteConfirm
                     messageID={messageToDelete}
@@ -147,7 +148,7 @@ export default function AdminMessage() {
 
             {/* Table */}
             <div className="overflow-x-auto border rounded-md">
-                <table className="w-full min-w-[900px] text-left">
+                <table className="w-full  text-left">
                     <thead className="bg-gray-800 text-white">
                         <tr>
                             {["Date", "Name", "Email", "Contact", "Subject", "Message", "Actions"].map(h => (

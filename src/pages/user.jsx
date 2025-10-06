@@ -7,7 +7,7 @@ import Footer from "../components/footer";
 import AppointmentCard from "../components/appointmentCard";
 import axios from "axios";
 import dayjs from "dayjs";
-import customParseFormat from 'dayjs/plugin/customParseFormat';
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import { ShowToast } from "../components/lustreToaster";
 
 dayjs.extend(customParseFormat);
@@ -19,7 +19,7 @@ export default function User() {
     const [appointments, setAppointments] = useState([]);
     const [loading, setLoading] = useState(false);
 
-
+    // Load user from localStorage
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
@@ -29,7 +29,7 @@ export default function User() {
         }
     }, [navigate]);
 
-
+    // Fetch appointments
     const fetchAppointments = async () => {
         if (!user) return;
         try {
@@ -39,28 +39,26 @@ export default function User() {
                 { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
             );
 
+            const { appointments: fetchedAppointments, user: fetchedUser } = res.data;
+            const appointmentsArray = fetchedAppointments || [];
+
             const now = dayjs();
             let upcomingAppointments = [];
             let completedAppointments = [];
 
-            res.data.forEach(a => {
-
-                const dateStr = a.date
-                    ? dayjs(a.date).format("MM/DD/YYYY")
-                    : "-";
+            appointmentsArray.forEach(a => {
+                const dateStr = a.date ? dayjs(a.date).format("MM/DD/YYYY") : "-";
                 const timeStr = a.time || "-";
-
 
                 const appointmentDateTime = dayjs(
                     `${dayjs(a.date).format("YYYY-MM-DD")} ${a.time}`,
                     "YYYY-MM-DD h:mm A"
                 );
 
-
                 const isCompleted = appointmentDateTime.isBefore(now);
 
-
                 const appointmentData = {
+                    id: a._id,
                     service: a.serviceName || "-",
                     subName: a.subName || "-",
                     stylist: a.stylistName || "-",
@@ -72,29 +70,21 @@ export default function User() {
                             : a.paymentType === "Half"
                                 ? "Half Payment"
                                 : "Book Only",
-
-                    // Due Amount logic
                     due:
                         a.paymentType === "Full"
                             ? (a.fullPayment || 0)
                             : ((a.fullPayment || 0) + (a.duePayment || 0)),
-
-
-                    // Cost logic
                     cost:
                         a.paymentType === "Book Only"
                             ? null
                             : a.paymentType === "Full"
                                 ? (a.fullPayment || 0)
                                 : ((a.fullPayment || 0) + (a.duePayment || 0)) * 2,
-
                     isCompleted: isCompleted,
                     rawDate: a.date,
                     rawTime: a.time,
+                    userId: a.userId, // add userId for invoice generation
                 };
-
-
-
 
                 if (isCompleted) {
                     completedAppointments.push(appointmentData);
@@ -103,19 +93,15 @@ export default function User() {
                 }
             });
 
-
             completedAppointments.sort((a, b) =>
                 dayjs(b.rawDate).diff(dayjs(a.rawDate))
             );
 
-
             const limitedCompleted = completedAppointments.slice(0, 2);
-
 
             upcomingAppointments.sort((a, b) =>
                 dayjs(a.rawDate).diff(dayjs(b.rawDate))
             );
-
 
             const finalAppointments = [...upcomingAppointments, ...limitedCompleted];
 
@@ -144,8 +130,18 @@ export default function User() {
         navigate("/login");
     };
 
-
     const pendingAppointmentsCount = appointments.filter(apt => !apt.isCompleted).length;
+
+    // Group appointments by date & time
+    const groupAppointmentsByTime = (appointments) => {
+        const map = {};
+        appointments.forEach(a => {
+            const key = `${a.date}-${a.time}`;
+            if (!map[key]) map[key] = [];
+            map[key].push(a);
+        });
+        return Object.values(map);
+    };
 
     return (
         <>
@@ -242,15 +238,21 @@ export default function User() {
                                     </div>
                                 ) : appointments.length > 0 ? (
                                     <div className="grid gap-6 md:grid-cols">
-                                        {appointments.map((apt, index) => (
-                                            <AppointmentCard key={index} {...apt} />
+                                        {groupAppointmentsByTime(appointments).map((group, index) => (
+                                            <AppointmentCard
+                                                key={index}
+                                                appointmentGroup={group}
+                                            />
                                         ))}
                                     </div>
                                 ) : (
                                     <div className="mt-6 p-6 bg-gray-100 rounded-xl shadow-md">
-                                        <p className="text-sm text-gray-500">You have no upcoming or recent past appointments.</p>
+                                        <p className="text-sm text-gray-500">
+                                            You have no upcoming or recent past appointments.
+                                        </p>
                                     </div>
                                 )}
+
                             </div>
                         )}
                     </div>
