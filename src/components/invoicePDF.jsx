@@ -27,11 +27,12 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     const pageHeight = doc.internal.pageSize.getHeight();
     const marginX = 20;
 
-    // --- HEADER ---
-    const headerHeight = 42;
+    // --- HEADER (Premium Design) ---
+    const headerHeight = 45;
     doc.setFillColor(...BLACK);
     doc.rect(0, 0, pageWidth, headerHeight, "F");
 
+    // --- Salon Logo ---
     try {
         const logo = new Image();
         logo.src = "/LUSTRE.jpg";
@@ -39,26 +40,36 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
             logo.onload = res;
             logo.onerror = rej;
         });
-        doc.addImage(logo, "PNG", 14, 7, 35, 30);
+        // Smaller + centered vertically
+        doc.addImage(logo, "PNG", 15, 8, 30, 28);
     } catch {
         console.warn("Logo failed to load");
     }
 
+    // --- Text Styling ---
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(16);
+    doc.setFontSize(18);
     doc.setTextColor(...RED);
     doc.text("LUSTRE SALON", pageWidth - 15, 15, { align: "right" });
 
     doc.setFont("helvetica", "italic");
-    doc.setFontSize(8);
-    doc.setTextColor(...WHITE);
-    doc.text("Your Premium Grooming Partner", pageWidth - 15, 21, { align: "right" });
+    doc.setFontSize(9);
+    doc.setTextColor(230, 230, 230);
+    doc.text("Your Premium Grooming Partner", pageWidth - 15, 22, { align: "right" });
 
+    // "INVOICE" Label
+    doc.setFont("helvetica", "bolditalic");
+    doc.setFontSize(25);
+    doc.setTextColor(...GOLD);
+    doc.text("INVOICE", pageWidth - 15, 30, { align: "right" });
+
+    // --- Divider Line ---
     doc.setDrawColor(...GOLD);
-    doc.setLineWidth(0.5);
-    doc.line(0, headerHeight, pageWidth, headerHeight);
+    doc.setLineWidth(0.8);
+    doc.line(15, headerHeight, pageWidth - 15, headerHeight);
 
-    let currentY = headerHeight + 10;
+    let currentY = headerHeight + 12;
+
 
     // --- CUSTOMER + APPOINTMENT DETAILS BOX ---
     const boxWidth = pageWidth * 0.85;
