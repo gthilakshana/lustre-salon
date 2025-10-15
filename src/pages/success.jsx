@@ -22,6 +22,8 @@ export default function Success() {
         }
 
         const confirmPayment = async () => {
+            const token = localStorage.getItem("token");
+            console.log("Token status:", token ? "Token Found" : "Token MISSING!");
             try {
                 const { data } = await axios.post(
                     `${import.meta.env.VITE_API_URL}/api/stripe/confirm-payment`,
