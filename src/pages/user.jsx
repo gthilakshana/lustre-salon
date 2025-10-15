@@ -158,7 +158,7 @@ export default function User() {
                                 className="w-18 h-18 rounded-full border-4 object-cover border-white shadow-lg mb-4"
                             />
                             <h2 className="text-lg uppercase">{user.fullName}</h2>
-                            <p className="text-sm opacity-90">+94 {user.mobileNumber}</p>
+                            <p className="text-sm opacity-90">+1 {user.mobileNumber}</p>
                         </div>
 
                         <div className="flex flex-col divide-y divide-gray-200">

@@ -160,7 +160,7 @@ export default function AdminCustomer() {
                             <tr key={c._id} className="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition">
                                 <td className="px-3 py-2 font-medium">{c.fullName}</td>
                                 <td className="px-3 py-2">{c.email}</td>
-                                <td className="px-3 py-2">+94 {c.mobileNumber}</td>
+                                <td className="px-3 py-2">+1 {c.mobileNumber}</td>
                                 <td className="px-3 py-2">
                                     <span className="px-2 py-1 rounded-md text-xs bg-gray-100 text-gray-700">{c.role}</span>
                                 </td>

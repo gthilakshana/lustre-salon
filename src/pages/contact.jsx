@@ -123,7 +123,7 @@ export default function Contact() {
                             <div className="space-y-4 flex-1 flex flex-col  ">
                                 <div className="flex items-center gap-4">
                                     <FaPhoneAlt className="text-gray-700 text-md md:text-xl" />
-                                    <p className="text-md md:text-lg text-gray-800">+94 77 133 456</p>
+                                    <p className="text-md md:text-lg text-gray-800">+1-123 456-7890</p>
                                 </div>
 
                                 <div className="flex items-center gap-4">
@@ -139,8 +139,8 @@ export default function Contact() {
                                 <div className="flex items-start gap-4">
                                     <FaMapMarkerAlt className="text-gray-700 text-md md:text-xl mt-1" />
                                     <p className="text-md md:text-lg text-gray-800">
-                                        123 Main Street,
-                                        <br /> Colombo, Sri Lanka
+                                        13801 N Florida Ave C, Tampa, FL
+                                        <br /> 33613, United States
                                     </p>
                                 </div>
                             </div>

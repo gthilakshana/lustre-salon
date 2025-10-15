@@ -110,13 +110,14 @@ export default function AdminUpdate({ isOpen, onClose, admin, refresh }) {
                             <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
                             <div className="flex">
                                 <span className="flex items-center justify-center px-4 border-t border-b border-l rounded-l-md bg-gray-100 text-gray-700">
-                                    +94
+                                    +1
                                 </span>
                                 <input
                                     type="tel"
                                     value={mobileNumber}
                                     onChange={(e) => setMobileNumber(e.target.value)}
-                                    placeholder="77xxxxxxx"
+                                    placeholder="### ### ####"
+
                                     className="flex-1 h-[54px] w-full px-4 border-t border-b border-r rounded-r-md focus:outline-none"
                                     required
                                 />

@@ -5,7 +5,6 @@ export default function ServiceGrid({ services, selectedServices, setSelectedSer
     const getId = (service) => service._id || service.id;
     const getName = (service) => service.subName || service.name || service.title;
 
-
     const toggleService = (service) => {
         if (service.status?.toLowerCase() !== "active") return;
 
@@ -17,71 +16,113 @@ export default function ServiceGrid({ services, selectedServices, setSelectedSer
         }
     };
 
-
     const getStatusClasses = (status) => {
         switch (status?.toLowerCase()) {
             case "active":
-                return "bg-green-100 text-green-800";
+                return "bg-gray-100 text-gray-700 border-gray-300";
             case "inactive":
-                return "bg-red-100 text-red-800";
+                return "bg-white text-gray-400 border-gray-200";
             case "pending":
-                return "bg-yellow-100 text-yellow-800";
+                return "bg-gray-200 text-gray-600 border-gray-300";
             default:
-                return "bg-gray-200 text-gray-600";
+                return "bg-gray-200 text-gray-600 border-gray-300";
         }
     };
-
 
     const activeServices = services.filter(s => s.status?.toLowerCase() === "active");
     const otherServices = services.filter(s => s.status?.toLowerCase() !== "active");
     const sortedServices = [...activeServices, ...otherServices];
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-6xl p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl px-4 py-8 mx-auto">
             {sortedServices.map((service, index) => {
                 const serviceId = getId(service);
                 const isSelected = selectedServices.some((s) => getId(s) === serviceId);
+                const isActive = service.status?.toLowerCase() === "active";
+                const cursorClass = isActive ? "cursor-pointer" : "cursor-not-allowed";
 
-                const cursorClass = service.status?.toLowerCase() === "active"
-                    ? "cursor-pointer"
-                    : "cursor-not-allowed opacity-60";
+                // --- ASSUMED IMAGE URL PROPERTY ---
+                const imageUrl = service.imageUrl || '/Haircutsoon.jpg';
+                // ----------------------------------
 
                 return (
                     <motion.div
                         key={serviceId}
                         onClick={() => toggleService(service)}
-                        className={`relative flex flex-col justify-between p-5 border  shadow hover:shadow-lg transition-all 
-                            ${isSelected ? "bg-black text-white border-gray-800" : "bg-white text-gray-800 border-gray-200"}
+                        className={`
+                            relative flex flex-col p-6 rounded-xl transition-all duration-300 min-h-[250px] overflow-hidden 
+                            text-white 
+                            shadow-md border border-gray-900 
+                            hover:shadow-xl hover:border-gray-700
+                            ${!isActive && "opacity-60"} 
                             ${cursorClass}
                         `}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.05 }}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.4, delay: index * 0.08 }}
+                        whileHover={isActive ? { scale: 1.02, transition: { duration: 0.2 } } : {}}
                     >
-                        {isSelected && (
-                            <FaCheckCircle className="absolute top-3 right-3 text-white text-xl" />
-                        )}
 
-                        <div className="flex flex-col gap-2 h-[200px] justify-center">
-                            <h3 className="text-[20px] uppercase font-semibold">{getName(service)}</h3>
-                            <p className={`text-md font-medium ${isSelected ? "text-white" : ""}`}>
-                                Price: <span className="font-bold">{service.price.toLocaleString()} LKR</span>
+                        <div
+                            className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-500"
+                            style={{
+                                backgroundImage: `url(${imageUrl})`,
+
+                                transform: isActive ? 'scale(1)' : 'scale(1)',
+                            }}
+
+                            {...(isActive && { whileHover: { scale: 1.05 } })}
+                        >
+                        </div>
+
+
+                        <div
+                            className={`absolute inset-0 z-[1] transition-all duration-300 rounded-xl
+                                ${isSelected
+                                    ? "bg-black/80"
+                                    : "bg-black/60 hover:bg-black/70"
+                                }
+                            `}
+                        ></div>
+
+
+                        <div className="relative z-20 flex flex-col gap-3 flex-grow">
+
+                            {/* Checkmark */}
+                            {isSelected && isActive && (
+                                <FaCheckCircle className="absolute top-0 right-0 text-white text-2xl drop-shadow-lg" />
+                            )}
+
+                            {/* Service Details */}
+                            <h3 className={`text-2xl font-bold uppercase tracking-wide mt-4 ${isSelected ? "text-white" : "text-gray-100"}`}>
+                                {getName(service)}
+                            </h3>
+
+                            <p className={`text-lg font-medium ${isSelected ? "text-gray-200" : "text-gray-300"}`}>
+                                Price: <span className="font-extrabold">
+
+                                    {service.price?.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
+
+                                </span>
                             </p>
+
                             {service.description && (
-                                <p className={`text-xs line-clamp-3 ${isSelected ? "text-white" : "text-gray-600"}`}>
+                                <p className={`text-sm mt-1 line-clamp-3 ${isSelected ? "text-gray-400" : "text-gray-300"}`}>
                                     {service.description}
                                 </p>
                             )}
-                            {service.status && (
-                                <span
-                                    className={`text-xs font-semibold px-2 py-1 rounded-full self-start mt-2 
-                                        ${isSelected ? "bg-white text-blue-500" : getStatusClasses(service.status)}
-                                    `}
-                                >
-                                    {service.status}
-                                </span>
-                            )}
                         </div>
+
+                        {/* Status Badge */}
+                        {service.status && (
+                            <span
+                                className={`relative z-20 text-xs font-semibold px-3 py-1 mt-4 rounded-full self-start border 
+                                    ${getStatusClasses(service.status).replace('bg-gray-100', 'bg-white').replace('text-gray-700', 'text-black')}
+                                `}
+                            >
+                                {service.status}
+                            </span>
+                        )}
                     </motion.div>
                 );
             })}

@@ -119,17 +119,17 @@ export default function Appointment() {
 
                                 <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-4 gap-8 justify-items-center">
 
-                                    <div onClick={() => handleStylistSelect("Gavrawa Thialkshana")} className="cursor-pointer">
-                                        <ServiceCard image="/founder.jpg" name="Gavrawa Thialkshana" />
+                                    <div onClick={() => handleStylistSelect("William")} className="cursor-pointer">
+                                        <ServiceCard image="/William.jpg" name="William" />
                                     </div>
-                                    <div onClick={() => handleStylistSelect("Thilakshana")} className="cursor-pointer">
-                                        <ServiceCard image="/founder.jpg" name="Thilakshana" />
+                                    <div onClick={() => handleStylistSelect("Liam")} className="cursor-pointer">
+                                        <ServiceCard image="/Liam.jpg" name="Liam" />
                                     </div>
-                                    <div onClick={() => handleStylistSelect("Kaveen")} className="cursor-pointer">
-                                        <ServiceCard image="/founder.jpg" name="Kaveen" />
+                                    <div onClick={() => handleStylistSelect("Emma")} className="cursor-pointer">
+                                        <ServiceCard image="/Emma.jpg" name="Emma" />
                                     </div>
-                                    <div onClick={() => handleStylistSelect("Nuvan")} className="cursor-pointer">
-                                        <ServiceCard image="/founder.jpg" name="Nuvan" />
+                                    <div onClick={() => handleStylistSelect("Sophia")} className="cursor-pointer">
+                                        <ServiceCard image="/Sophia.jpg" name="Sophia" />
                                     </div>
                                 </div>
                             </div>
@@ -148,13 +148,13 @@ export default function Appointment() {
                                 </h2>
                                 <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 items-center justify-items-center gap-6 p-4 md:p-0 w-full md:w-auto">
 
-                                    <ServiceCard image="/founder.jpg" title="LusTre Haircut" comingSoon />
+                                    <ServiceCard image="/Haircutsoon.jpg" title="LusTre Haircut" comingSoon />
                                     <div className="hidden sm:grid items-center justify-center h-full space-y-2">
                                         <div className="w-px h-8 bg-gray-300 mx-auto"></div>
                                         <span className="text-sm font-medium text-gray-500 text-center">OR</span>
                                         <div className="w-px h-8 bg-gray-300 mx-auto"></div>
                                     </div>
-                                    <ServiceCard image="/founder.jpg" title="Wedding Appointment" comingSoon />
+                                    <ServiceCard image="/Weddingsoon.jpg" title="Wedding Appointment" comingSoon />
                                 </div>
                             </div>
                         </motion.div>

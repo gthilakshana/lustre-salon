@@ -70,6 +70,27 @@ export default function AdminService() {
     const [isUpdateOpen, setIsUpdateOpen] = useState(false);
     const [serviceToUpdate, setServiceToUpdate] = useState(null);
 
+
+    const formatCurrency = (amount) => {
+        // Handle null, undefined, or empty string values
+        if (amount === null || amount === undefined || amount === "") {
+            return "-";
+        }
+        // Ensure the value is treated as a number
+        const numberAmount = Number(amount);
+        if (isNaN(numberAmount)) {
+            return "-";
+        }
+
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            // Enforce two decimal places for cents, which is standard for USD.
+            minimumFractionDigits: 2,
+        }).format(numberAmount);
+    };
+    // -----------------------------------------------------------
+
     // Fetch services
     const fetchServices = async () => {
         try {
@@ -199,7 +220,7 @@ export default function AdminService() {
                             <tr key={s._id} className="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition">
                                 <td className="px-3 py-2">{s.subName || "-"}</td>
                                 <td className="px-3 py-2">{s.serviceName || "-"}</td>
-                                <td className="px-3 py-2">Rs. {s.price || "-"}</td>
+                                <td className="px-3 py-2 font-mono">{formatCurrency(s.price)}</td>
                                 <td className="px-3 py-2">{s.description || "-"}</td>
                                 <td className={`px-3 py-2 font-medium ${statusColor(s.status)}`}>{s.status || "-"}</td>
                                 <td className="px-3 py-2 text-center flex items-center justify-center gap-1">

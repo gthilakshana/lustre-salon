@@ -147,10 +147,10 @@ export default function AppointmentCard({ appointmentGroup }) {
             <div className="border-t border-gray-200 pt-3 mt-3 bg-gray-50 p-3 rounded-md flex justify-between items-center">
                 <div>
                     {(payment === "Full Payment" || payment === "Half Payment") && (
-                        <p className="font-bold text-sm text-gray-800">Total Cost: LKR {totalCost}</p>
+                        <p className="font-bold text-sm text-gray-800">Total Cost: ${totalCost}</p>
                     )}
                     {(payment === "Half Payment" || payment === "Book Only") && (
-                        <p className="font-semibold text-xs text-red-600">Due Amount: LKR {totalDue}</p>
+                        <p className="font-semibold text-xs text-red-600">Due Amount: ${totalDue}</p>
                     )}
                 </div>
                 <button

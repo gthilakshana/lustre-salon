@@ -163,16 +163,16 @@ export default function AdminAppointment() {
 
     const paid = (payment, price) =>
         payment === "Full Payment"
-            ? `Rs. ${price.toLocaleString()}`
+            ? `$${price.toLocaleString()}`
             : payment === "Half Payment"
-                ? `Rs. ${price.toLocaleString()}`
+                ? `$${price.toLocaleString()}`
                 : "—";
 
     const due = (payment, price) =>
         payment === "Half Payment"
-            ? `Rs. ${price.toLocaleString()}`
+            ? `$${price.toLocaleString()}`
             : payment === "Book Only"
-                ? `Rs. ${price.toLocaleString()}`
+                ? `$${price.toLocaleString()}`
                 : "—";
 
     return (

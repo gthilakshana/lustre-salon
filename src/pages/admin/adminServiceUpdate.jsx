@@ -88,15 +88,25 @@ export default function AdminServiceUpdate({ isOpen, onClose, service, refresh }
                         required
                     />
 
-                    <input
-                        type="number"
-                        placeholder="Price"
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
-                        className="px-4 py-2 border rounded-md focus:ring-1 focus:ring-gray-400 outline-none"
-                        required
-                        min={0}
-                    />
+                    <div>
+                        <input
+                            type="number"
+
+                            placeholder="Price (in USD, e.g., 60.00)"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+
+                            className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none w-full"
+                            required
+                            min={1}
+                            step="0.01"
+                        />
+
+                        <p className="mt-1 text-sm text-indigo-700 bg-indigo-50 p-2 rounded-md border border-indigo-300 font-medium">
+
+                            **Price Notice:** This price must be entered in **United States Dollars (USD)**. (Example: Enter $\text{60.00}$)
+                        </p>
+                    </div>
 
                     <textarea
                         placeholder="Description"

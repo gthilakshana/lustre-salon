@@ -56,7 +56,7 @@ export default function Footer() {
                         <div>
                             <p className="text-gray-400 text-sm">OUR LOCATION</p>
                             <p className="font-semibold">
-                                No.7, Galle Road, Colombo 04
+                                13801 N Florida Ave C, Tampa, FL 33613, United States
                             </p>
                         </div>
                     </div>
@@ -69,7 +69,7 @@ export default function Footer() {
                         <FaPhoneAlt className="w-6 h-6 hidden md:block text-red-600 mt-1" />
                         <div>
                             <p className="text-gray-400 text-sm">OUR PHONE</p>
-                            <p className="font-semibold">+94 77 344 555</p>
+                            <p className="font-semibold">+1-123 456-7890</p>
                         </div>
                     </div>
                 </div>

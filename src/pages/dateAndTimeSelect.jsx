@@ -39,6 +39,15 @@ export default function DateAndTimeSelect() {
     const [loading, setLoading] = useState(true);
     const type = selectedGender === 'Male' ? 'Men' : 'Women';
 
+    const [stylistName, setStylistName] = useState(
+
+        employeeName
+            ? decodeURIComponent(employeeName)
+            : "Unnamed Stylist"
+    );
+
+    const allStylistsFromNav = ["Gavrawa Thilakshana, Thilakshana, Kaveen, Nuvan"]
+
 
     //---- Scroll to top on page load ----//
 
@@ -52,9 +61,7 @@ export default function DateAndTimeSelect() {
 
     //--------------------------//
 
-    const stylistName = employeeName
-        ? decodeURIComponent(employeeName)
-        : "Unnamed Stylist";
+
 
     const displayInfo =
         selectedServices.length > 0 || employeeName
@@ -295,7 +302,7 @@ export default function DateAndTimeSelect() {
                         <div className="w-full flex justify-end items-center mb-6">
                             {displayInfo ? (
                                 <div className="flex items-center px-4 py-2 space-x-4 transition">
-                                    <h2 className="text-sm text-gray-800 ">Stylist: {stylistName} - Services: {selectedServices.length}</h2>
+                                    <h2 className="text-xs text-gray-500 ">Stylist: {stylistName} - Services: {selectedServices.length}</h2>
                                 </div>
                             ) : (
                                 <h2 className="text-sm text-gray-500">No stylist selected yet</h2>
@@ -406,8 +413,10 @@ export default function DateAndTimeSelect() {
                                             setSelectedGender={setSelectedGender}
                                             selectedDate={selectedDate}
                                             stylistName={stylistName}
+                                            setStylistName={setStylistName}
 
                                             bookedAppointments={bookedAppointments}
+                                            allStylists={allStylistsFromNav}
                                         />
                                     </motion.div>
 

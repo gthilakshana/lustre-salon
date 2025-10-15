@@ -65,7 +65,7 @@ export default function Login() {
                 if (user?.role === "admin") {
                     navigate("/admin");
                 } else {
-                    navigate("/");
+                    navigate("/user");
                 }
             }, 2000);
         } catch (error) {
@@ -107,7 +107,7 @@ export default function Login() {
                             {/* Mobile */}
                             <div className="flex">
                                 <span className="flex items-center justify-center px-4 border-t border-b border-l rounded-l-md bg-gray-100 text-gray-700">
-                                    +94
+                                    +1
                                 </span>
 
                                 <input

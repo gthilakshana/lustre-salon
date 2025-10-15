@@ -116,7 +116,7 @@ export default function Register() {
 
                             <div className="flex">
                                 <span className="px-4 py-3 border border-r-0 rounded-l-md bg-gray-50">
-                                    +94
+                                    +1
                                 </span>
                                 <input
                                     type="text"
