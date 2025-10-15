@@ -24,7 +24,7 @@ export default function Success() {
         const confirmPayment = async () => {
             try {
                 const { data } = await axios.post(
-                    `${import.meta.env.VITE_API_URL}/api/appointments/confirm-payment`,
+                    `${import.meta.env.VITE_API_URL}/api/stripe/confirm-payment`,
                     { sessionId },
                     {
                         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
