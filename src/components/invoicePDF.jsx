@@ -22,6 +22,17 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     const MUTED_TEXT = [100, 100, 100];
     const RED = [255, 73, 73];
 
+    // --- Currency Formatting Helper ---
+    // Use Intl.NumberFormat for standardized US Dollar formatting
+    const formatUSD = (amount) => {
+        if (typeof amount !== 'number') return '-';
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2
+        }).format(amount);
+    };
+
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
@@ -94,7 +105,8 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     doc.setTextColor(...MUTED_TEXT);
 
     doc.text(`Name: ${customer?.name || "Valued Customer"}`, boxX + boxPaddingX, currentY + boxPaddingY + 7);
-    doc.text(`Mobile: +94 ${customer?.mobile || "XXXXXXXXX"}`, boxX + boxPaddingX, currentY + boxPaddingY + 13);
+
+    doc.text(`Mobile: ${customer?.mobile || "(555) 555-5555"}`, boxX + boxPaddingX, currentY + boxPaddingY + 13);
     doc.text(`Email: ${customer?.email || "customer@email.com"}`, boxX + boxPaddingX, currentY + boxPaddingY + 19);
 
     doc.text(`Invoice Date: ${dayjs().format("DD MMM YYYY")}`, boxX + boxWidth / 2 + 10, currentY + boxPaddingY + 7);
@@ -104,7 +116,6 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     currentY += boxHeight + 2;
 
 
-
     // --- SERVICE TABLE ---
     const tableData = appointmentGroup.map((apt, i) => [
         i + 1,
@@ -112,13 +123,16 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
         apt.subName || "-",
         apt.stylist || "-",
         apt.time,
-        apt.payment === "Book Only" ? "-" : `${Number(apt.cost || 0).toLocaleString()} LKR`,
-        apt.payment === "Full Payment" ? "-" : `${Number(apt.due || 0).toLocaleString()} LKR`,
+
+        apt.payment === "Book Only" ? "-" : formatUSD(apt.cost || 0),
+
+        apt.payment === "Full Payment" ? "-" : formatUSD(apt.due || 0),
     ]);
 
     autoTable(doc, {
         startY: currentY,
-        head: [["#", "Service", "Sub Name", "Stylist", "Time", "Cost (LKR)", "Due (LKR)"]],
+
+        head: [["#", "Service", "Sub Name", "Stylist", "Time", "Cost (USD)", "Due (USD)"]],
         body: tableData,
         theme: "grid",
         headStyles: {
@@ -145,7 +159,7 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
 
     currentY = doc.lastAutoTable.finalY + 2;
 
-    // --- PAYMENT SUMMARY BOX (Centered + No Border) ---
+    // --- PAYMENT SUMMARY BOX 
     const sumBoxW = pageWidth * 0.85;
     const sumBoxH = 48;
     const sumBoxX = (pageWidth - sumBoxW) / 2;
@@ -175,7 +189,8 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     doc.setTextColor(...MUTED_TEXT);
     doc.text("Total Cost", sumBoxX + innerPad, y);
     doc.setFont("helvetica", "bold");
-    doc.text(`${totalCost.toLocaleString()} LKR`, sumBoxX + sumBoxW - innerPad, y, { align: "right" });
+
+    doc.text(formatUSD(totalCost), sumBoxX + sumBoxW - innerPad, y, { align: "right" });
 
     // --- Amount Due ---
     y += 10;
@@ -183,7 +198,8 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     doc.setTextColor(200, 0, 0);
     doc.text("Amount Due", sumBoxX + innerPad, y);
     doc.setFont("helvetica", "bold");
-    doc.text(`${totalDue.toLocaleString()} LKR`, sumBoxX + sumBoxW - innerPad, y, { align: "right" });
+
+    doc.text(formatUSD(totalDue), sumBoxX + sumBoxW - innerPad, y, { align: "right" });
 
     // --- Amount Paid ---
     y += 10;
@@ -191,13 +207,13 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     doc.setTextColor(0, 120, 0);
     doc.text("Amount Paid", sumBoxX + innerPad, y);
     doc.setFont("helvetica", "bold");
-    doc.text(`${totalPaid.toLocaleString()} LKR`, sumBoxX + sumBoxW - innerPad, y, { align: "right" });
+
+    doc.text(formatUSD(totalPaid), sumBoxX + sumBoxW - innerPad, y, { align: "right" });
 
     currentY += sumBoxH + 10;
 
 
-
-    // --- MESSAGE BAR (Centered + Wrapped Text) ---
+    // --- MESSAGE BAR 
     const msgBoxW = pageWidth * 0.85;
     const msgBoxX = (pageWidth - msgBoxW) / 2;
     const msgBoxY = currentY;
@@ -236,20 +252,22 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(7);
     doc.setTextColor(...WHITE);
+
     doc.text(
-        "123 Main Street, Colombo, Sri Lanka | info@lustresalon.com | www.lustresalon.com",
+        "123 Main Street, New York, NY 10001 | info@lustresalon.com | www.lustresalon.com",
         pageWidth / 2,
         footerY + 10,
         { align: "center" }
     );
-    doc.text("Hotline: +94 77 133 456", pageWidth / 2, footerY + 17, { align: "center" });
+
+    doc.text("Hotline: (800) 555-0199", pageWidth / 2, footerY + 17, { align: "center" });
 
     doc.setFont("helvetica", "bold");
     doc.setFontSize(8);
     doc.setTextColor(...GOLD);
     doc.text("Thank you for choosing LUSTRE SALON!", pageWidth / 2, footerY + 26, { align: "center" });
 
-    // --- OPEN PDF ---
+
     const pdfDataUri = doc.output("dataurlstring");
     const win = window.open();
     win.document.write(`
