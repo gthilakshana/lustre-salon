@@ -19,7 +19,7 @@ export default function User() {
     const [appointments, setAppointments] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    // Load user from localStorage
+    // ... useEffect for loading user ...
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
@@ -29,7 +29,7 @@ export default function User() {
         }
     }, [navigate]);
 
-    // Fetch appointments
+    // ... fetchAppointments function (no change needed here) ...
     const fetchAppointments = async () => {
         if (!user) return;
         try {
@@ -130,9 +130,7 @@ export default function User() {
         navigate("/login");
     };
 
-    const pendingAppointmentsCount = appointments.filter(apt => !apt.isCompleted).length;
-
-    // Group appointments by date & time
+    // 💡 FIX 1: The grouping function is necessary to find the unique "carts"
     const groupAppointmentsByTime = (appointments) => {
         const map = {};
         appointments.forEach(a => {
@@ -143,6 +141,11 @@ export default function User() {
         return Object.values(map);
     };
 
+    // 💡 FIX 2: Calculate the count of *unique groups* (carts), not the total number of services.
+    const pendingAppointmentsCount = groupAppointmentsByTime(
+        appointments.filter(apt => !apt.isCompleted) // Get only upcoming appointments
+    ).length; // Get the count of the groups (carts)
+
     return (
         <>
             <Header />
@@ -151,6 +154,7 @@ export default function User() {
 
                     {/* Sidebar */}
                     <div className="w-full h-[400px] md:h-[600px] md:max-w-sm bg-white shadow-xl overflow-hidden order-1 md:order-2">
+                        {/* ... Sidebar content ... */}
                         <div className="flex flex-col items-center p-8 bg-black text-gray-50">
                             <img
                                 src={user.image || "/user.png"}
@@ -205,7 +209,7 @@ export default function User() {
                                     <div className="p-6 bg-gray-100 shadow-md">
                                         <h3 className="font-semibold text-gray-700">Upcoming Appointments</h3>
                                         <p className="text-3xl font-bold text-red-500">
-                                            {pendingAppointmentsCount}
+                                            {pendingAppointmentsCount} {/* This will now be 1 */}
                                         </p>
                                         <button
                                             onClick={() => setActiveTab("appointments")}
@@ -238,6 +242,7 @@ export default function User() {
                                     </div>
                                 ) : appointments.length > 0 ? (
                                     <div className="grid gap-6 md:grid-cols">
+                                        {/* This renders one card per unique group (cart) */}
                                         {groupAppointmentsByTime(appointments).map((group, index) => (
                                             <AppointmentCard
                                                 key={index}
