@@ -11,6 +11,9 @@ export default function Success() {
     const [loading, setLoading] = useState(true);
     const [countdown, setCountdown] = useState(5);
 
+
+    const REDIRECT_PAGE = "/user";
+
     useEffect(() => {
         let timer;
         let countdownInterval;
@@ -40,7 +43,8 @@ export default function Success() {
                     setCountdown(prev => {
                         if (prev <= 1) {
                             clearInterval(countdownInterval);
-                            navigate("/");
+
+                            navigate(REDIRECT_PAGE, { replace: true });
                             return 0;
                         }
                         return prev - 1;

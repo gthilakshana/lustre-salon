@@ -77,13 +77,14 @@ export default function Cart({ cartItems, setCartItems, user }) {
 
                 return {
                     id: item.id,
+
                     stylistName: item.stylist || item.stylistName || "Unnamed Stylist",
                     serviceName: item.serviceName || item.title || item.name || "",
-                    subName: item.subName || item.subtitle || "",
+                    subName: item.subName || item.subtitle || "N/A",
                     date: item.date,
                     time: item.time,
                     endTime,
-                    type: item.gender,
+                    type: item.gender || "Gents",
                     price: totalCost,
                     fullPayment,
                     duePayment,
@@ -100,7 +101,7 @@ export default function Cart({ cartItems, setCartItems, user }) {
                 );
                 ShowToast("success", "Booking successful!", data.message || "Your appointment is confirmed as Pending.");
                 setCartItems([]);
-                navigate("/");
+                navigate("/user");
                 return;
             }
 
