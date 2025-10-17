@@ -127,7 +127,7 @@ export default function AdminPage() {
                                 <Link
                                     key={item.name}
                                     to={item.path}
-                                    className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all duration-300 ${active
+                                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-md font-semibold transition-all duration-300 ${active
                                         ? "bg-gray-700 text-white shadow-md"
                                         : "text-gray-300 hover:bg-gray-700/60 hover:text-white"
                                         }`}
