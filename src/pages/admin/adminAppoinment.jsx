@@ -10,7 +10,6 @@ function PageLoader() {
             <span className="w-8 h-8 border-4 border-gray-800 border-t-transparent rounded-full animate-spin"></span>
             <span className="mt-2 text-gray-700 text-sm font-medium">Loading Appointment...</span>
         </div>
-
     );
 }
 
@@ -58,6 +57,7 @@ export default function AdminAppointment() {
     const [appointments, setAppointments] = useState([]);
     const [search, setSearch] = useState("");
     const [paymentFilter, setPaymentFilter] = useState("All");
+    const [branchFilter, setBranchFilter] = useState("All");
     const [loading, setLoading] = useState(false);
     const [fetching, setFetching] = useState(true);
     const [confirmVisible, setConfirmVisible] = useState(false);
@@ -74,14 +74,21 @@ export default function AdminAppointment() {
             const now = dayjs();
 
             const mapped = res.data.map((a) => {
+
                 const dateTime = a.date && a.time
                     ? dayjs(`${a.date} ${a.time}`, "YYYY-MM-DD hh:mm A")
                     : null;
-                let status = a.status || "Pending";
 
-                if (dateTime && status !== "Completed") {
-                    if (now.isAfter(dateTime) && now.isBefore(dateTime.add(45, "minute"))) {
+                const endTime = dateTime ? dateTime.add(45, "minute") : null;
+                let status = "Pending";
+
+                if (dateTime) {
+                    if (now.isBefore(dateTime)) {
+                        status = "Pending";
+                    } else if (now.isAfter(dateTime) && now.isBefore(endTime)) {
                         status = "Ongoing";
+                    } else if (now.isAfter(endTime)) {
+                        status = "Completed";
                     }
                 }
 
@@ -100,19 +107,15 @@ export default function AdminAppointment() {
                                 ? "Half Payment"
                                 : "Book Only",
                     price: (a.fullPayment || 0) + (a.duePayment || 0),
+
                     status,
                 };
             });
 
-
             setAppointments(mapped);
         } catch (err) {
             console.error(err);
-            ShowToast(
-                "error",
-                "Failed to load appointments",
-                "Please try again or contact support."
-            );
+            ShowToast("error", "Failed to load appointments", "Please try again or contact support.");
         } finally {
             setFetching(false);
         }
@@ -148,12 +151,16 @@ export default function AdminAppointment() {
                 a.fullName.toLowerCase().includes(term) ||
                 a.service.toLowerCase().includes(term) ||
                 a.stylist.toLowerCase().includes(term);
+
             const matchPayment =
                 paymentFilter === "All" || a.payment === paymentFilter;
-            return matchSearch && matchPayment;
+
+            const matchBranch =
+                branchFilter === "All" || a.branch === branchFilter;
+
+            return matchSearch && matchPayment && matchBranch;
         })
         .sort((a, b) => {
-
             const order = { Pending: 1, Ongoing: 2, Completed: 3 };
             const rankA = order[a.status] ?? 4;
             const rankB = order[b.status] ?? 4;
@@ -176,7 +183,7 @@ export default function AdminAppointment() {
                 : "—";
 
     return (
-        <div className="w-full  text-sm relative">
+        <div className="w-full text-sm relative">
             {confirmVisible && (
                 <AppointmentDeleteConfirm
                     appointmentID={appointmentToDelete}
@@ -220,7 +227,7 @@ export default function AdminAppointment() {
                             key={type}
                             onClick={() => setPaymentFilter(type)}
                             className={`px-3 py-1.5 rounded-md border text-xs font-medium transition
-                ${paymentFilter === type
+                                ${paymentFilter === type
                                     ? "bg-black text-white"
                                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                                 }`}
@@ -228,6 +235,7 @@ export default function AdminAppointment() {
                             {type}
                         </button>
                     ))}
+
                 </div>
             </div>
 
@@ -235,7 +243,7 @@ export default function AdminAppointment() {
                 className={`overflow-x-auto border rounded-md transition-opacity ${fetching ? "opacity-50" : "opacity-100"
                     }`}
             >
-                <table className="w-full  text-left">
+                <table className="w-full text-left">
                     <thead className="bg-gray-800 text-white">
                         <tr>
                             {[
@@ -248,7 +256,8 @@ export default function AdminAppointment() {
                                 "Payment",
                                 "Paid",
                                 "Due",
-                                "Appointment",
+
+                                "Status",
                                 "Actions",
                             ].map((h) => (
                                 <th key={h} className="px-3 py-2 uppercase text-xs">
@@ -259,74 +268,58 @@ export default function AdminAppointment() {
                     </thead>
                     <tbody>
                         {filtered.length > 0 ? (
-                            filtered.map((a) => {
-                                const isOldPending =
-                                    a.status !== "Completed" &&
-                                    (() => {
-                                        const apptDate = new Date(a.date);
-                                        const now = new Date();
-                                        const diffDays =
-                                            (now - apptDate) / (1000 * 60 * 60 * 24);
-                                        return diffDays >= 3;
-                                    })();
-                                return (
-                                    <tr
-                                        key={a._id}
-                                        className={`odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition
-                                            ${a.status === "Pending" ? "bg-red-50" : ""} 
-                                            ${isOldPending ? "bg-yellow-50" : ""}`}
+                            filtered.map((a) => (
+                                <tr
+                                    key={a._id}
+                                    className={`odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition
+                                        ${a.status === "Pending" ? "bg-red-50" : ""}
+                                        ${a.status === "Ongoing" ? "bg-yellow-50" : ""}
+                                        ${a.status === "Completed" ? "bg-green-50" : ""}`}
+                                >
+                                    <td className="px-3 py-2">{a.fullName}</td>
+                                    <td className="px-3 py-2">{a.category}</td>
+                                    <td className="px-3 py-2">{a.service}</td>
+                                    <td className="px-3 py-2">{a.stylist}</td>
+                                    <td className="px-3 py-2">{a.date}</td>
+                                    <td className="px-3 py-2">{a.time}</td>
+                                    <td
+                                        className={`px-3 py-2 font-medium ${a.payment === "Full Payment"
+                                            ? "text-green-600"
+                                            : a.payment === "Half Payment"
+                                                ? "text-blue-600"
+                                                : "text-yellow-600"
+                                            }`}
                                     >
-                                        <td className="px-3 py-2">{a.fullName}</td>
-                                        <td className="px-3 py-2">{a.category}</td>
-                                        <td className="px-3 py-2">{a.service}</td>
-                                        <td className="px-3 py-2">{a.stylist}</td>
-                                        <td className="px-3 py-2">{a.date}</td>
-                                        <td className="px-3 py-2">{a.time}</td>
-                                        <td
-                                            className={`px-3 py-2 font-medium ${a.payment === "Full Payment"
-                                                ? "text-green-600"
-                                                : a.payment === "Half Payment"
-                                                    ? "text-blue-600"
-                                                    : "text-yellow-600"
-                                                }`}
-                                        >
-                                            {a.payment}
-                                        </td>
-                                        <td className="px-3 py-2">
-                                            {paid(a.payment, a.price)}
-                                        </td>
-                                        <td className="px-3 py-2 text-red-600">
-                                            {due(a.payment, a.price)}
-                                        </td>
-                                        <td
-                                            className={`px-3 py-2 font-medium ${a.status === "Completed"
-                                                ? "text-green-600"
-                                                : a.status === "Ongoing"
-                                                    ? "text-orange-600"
-                                                    : "text-red-600"
-                                                }`}
-                                        >
-                                            {a.status}
-                                        </td>
-                                        <td className="px-3 py-2 text-center">
-                                            <RiDeleteBin6Line
-                                                size={20}
-                                                className="cursor-pointer text-gray-500 hover:text-red-600 transition"
-                                                onClick={() => {
-                                                    setAppointmentToDelete(a._id);
-                                                    setConfirmVisible(true);
-                                                }}
-                                            />
-                                        </td>
-                                    </tr>
-                                );
-                            })
+                                        {a.payment}
+                                    </td>
+                                    <td className="px-3 py-2">{paid(a.payment, a.price)}</td>
+                                    <td className="px-3 py-2 text-red-600">{due(a.payment, a.price)}</td>
+
+                                    <td
+                                        className={`px-3 py-2 font-semibold ${a.status === "Completed"
+                                            ? "text-green-700"
+                                            : a.status === "Ongoing"
+                                                ? "text-orange-600"
+                                                : "text-red-600"
+                                            }`}
+                                    >
+                                        {a.status}
+                                    </td>
+                                    <td className="px-3 py-2 text-center">
+                                        <RiDeleteBin6Line
+                                            size={20}
+                                            className="cursor-pointer text-gray-500 hover:text-red-600 transition"
+                                            onClick={() => {
+                                                setAppointmentToDelete(a._id);
+                                                setConfirmVisible(true);
+                                            }}
+                                        />
+                                    </td>
+                                </tr>
+                            ))
                         ) : (
                             <tr>
-                                <td
-                                    colSpan={11}
-                                    className="px-3 py-8 text-center text-gray-500"
-                                >
+                                <td colSpan={13} className="px-3 py-8 text-center text-gray-500">
                                     No appointments found.
                                 </td>
                             </tr>
