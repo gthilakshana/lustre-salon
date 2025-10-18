@@ -79,7 +79,7 @@ export default function About() {
                         <div className="flex flex-col md:flex-row items-center md:items-stretch mb-16 gap-6 md:gap-10">
                             <div className="md:w-1/2 w-full self-center">
                                 <img
-                                    src="/salon.jpg"
+                                    src="/salon1.jpg"
                                     alt="Ribbon cutting"
                                     className="rounded-xl shadow-xl w-full h-auto md:h-[380px] object-cover aspect-[4/3] transition duration-300 hover:shadow-2xl"
                                 />
