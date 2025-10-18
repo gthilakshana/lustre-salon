@@ -78,7 +78,7 @@ export default function Pricing() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         className={`px-6 py-2 font-serif transition ${activeTab === tab.id
-                            ? "bg-white text-black"
+                            ? "bg-white text-black rounded-full"
                             : "bg-gray-800 text-white hover:bg-gray-700 rounded-full"
                             }`}
                     >
