@@ -117,7 +117,7 @@ export default function Appointment() {
                                 </h2>
 
 
-                                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-4 gap-8 justify-items-center">
+                                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-4  gap-8 justify-items-center">
 
                                     <div onClick={() => handleStylistSelect("William")} className="cursor-pointer">
                                         <ServiceCard image="/William.jpg" name="William" />

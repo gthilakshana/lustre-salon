@@ -19,7 +19,7 @@ export default function ServiceCard({ image, name, title, price, comingSoon }) {
     return (
         <div
             onClick={handleClick}
-            className={`relative border shadow-sm p-4 flex flex-col items-center text-center hover:shadow-lg transition ${comingSoon ? "cursor-not-allowed" : "cursor-pointer"}`}
+            className={`relative border rounded-lg shadow-sm p-4 flex flex-col items-center text-center hover:shadow-lg transition ${comingSoon ? "cursor-not-allowed" : "cursor-pointer"}`}
         >
             {comingSoon && (
                 <div className="absolute -top-2 items-center">

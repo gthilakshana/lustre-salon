@@ -25,17 +25,34 @@ export default function Footer() {
                     </div>
                 </div>
 
-                {/* Quick Links */}
+
+
                 <div className="flex flex-col items-center md:items-start text-center md:text-left">
                     <h2 className="text-red-500 mb-4 font-semibold">QUICK LINKS</h2>
                     <ul className="space-y-2 text-sm">
-                        {["HOME", "ABOUT", "TERMS & CONDITIONS", "CONTACT"].map((link) => (
-                            <li key={link}>
-                                <a href="#" className="hover:text-red-500">{link}</a>
-                            </li>
-                        ))}
+                        <li>
+                            <Link to="/" className="hover:text-red-500 transition-colors duration-300">
+                                HOME
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/about" className="hover:text-red-500 transition-colors duration-300">
+                                ABOUT
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/terms" className="hover:text-red-500 transition-colors duration-300">
+                                TERMS & CONDITIONS
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/contact" className="hover:text-red-500 transition-colors duration-300">
+                                CONTACT
+                            </Link>
+                        </li>
                     </ul>
                 </div>
+
 
                 {/* Contact Info */}
                 <div className="flex flex-col items-center md:items-start text-center md:text-left">
@@ -77,8 +94,18 @@ export default function Footer() {
 
 
             <div className="border-t border-gray-700 mt-8 pt-4 text-center text-xs md:text-sm text-gray-400">
-                © 2025 All Rights Reserved @ LUSTRE Salon | Designed & Developed by MIV Tech
+                © 2025 All Rights Reserved @{" "}
+                <span className="text-white font-semibold">LUSTRE Salon</span> | Designed & Developed by{" "}
+                <a
+                    href="https://makeitviralmedia.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-red-500 hover:text-red-400 font-medium transition-colors duration-300"
+                >
+                    MakeItViralMedia
+                </a>
             </div>
+
         </footer>
     );
 }
