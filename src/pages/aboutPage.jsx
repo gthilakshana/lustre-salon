@@ -104,7 +104,7 @@ export default function About() {
 
                             <div className="md:w-1/2 w-full order-1 md:order-2 self-center">
                                 <img
-                                    src="/Haircut.jpg"
+                                    src="/Haircut2.jpg"
                                     alt="New salon"
                                     className="rounded-xl shadow-xl w-full h-auto md:h-[380px] object-cover aspect-[4/3] transition duration-300 hover:shadow-2xl"
                                 />

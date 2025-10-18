@@ -29,7 +29,8 @@ export default function HomeView() {
     return (
         <section id="home">
             {/* Hero Section */}
-            <section className="relative w-full h-[40vh] md:h-screen overflow-hidden">
+            <section className="relative w-full h-screen md:h-screen overflow-hidden">
+                {/* Background Video */}
                 <video
                     className="absolute inset-0 w-full h-full object-cover z-0"
                     src="/salon-video.mp4"
@@ -39,8 +40,10 @@ export default function HomeView() {
                     playsInline
                 />
 
+                {/* Overlay */}
                 <div className="absolute inset-0 bg-black/40 z-10 flex items-center">
-                    <div className="max-w-4xl px-6 md:px-16">
+                    <div className="max-w-4xl px-6 md:px-16 text-center md:text-left">
+
                         <motion.h1
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -51,6 +54,7 @@ export default function HomeView() {
                             Experience the Elegance of <br /> LusTre Salon
                         </motion.h1>
 
+
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -58,12 +62,27 @@ export default function HomeView() {
                             transition={{ duration: 0.8, delay: 0.3 }}
                             className="text-gray-200 text-sm md:text-lg mt-4 max-w-2xl drop-shadow"
                         >
-                            Where Expert Care Meets Luxurious Services for a Transformative
-                            Beauty Experience in Sri Lanka.
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever
                         </motion.p>
+
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.5 }}
+                            className="mt-6 flex justify-center md:justify-start"
+                        >
+                            <a
+                                href="/appointment"
+                                className="bg-black hover:bg-red-600 text-white hover:border-2 hover:border-red-800 font-semibold px-5 md:px-7 py-3 md:py-4  transition hover:scale-105 duration-300 "
+                            >
+                                Book Now
+                            </a>
+                        </motion.div>
                     </div>
                 </div>
             </section>
+
 
             {/* Brand Section */}
             <Brand />
@@ -105,7 +124,7 @@ export default function HomeView() {
                         >
                             <Link
                                 to="/about"
-                                className="relative z-20 bg-black  hover:bg-gray-800 text-white font-semibold py-2 px-6 cursor-pointer transition-all duration-300"
+                                className="relative z-20 bg-black rounded-full  hover:bg-gray-800 text-white font-semibold py-2 px-6 cursor-pointer transition-all duration-300"
                             >
                                 View More
                             </Link>
