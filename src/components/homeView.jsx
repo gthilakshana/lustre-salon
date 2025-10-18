@@ -72,12 +72,12 @@ export default function HomeView() {
                             transition={{ duration: 0.8, delay: 0.5 }}
                             className="mt-6 flex justify-center md:justify-start"
                         >
-                            <a
-                                href="/appointment"
+                            <Link
+                                to="/appointment"
                                 className="bg-black hover:bg-red-600 text-white hover:border-2 hover:border-red-800 font-semibold px-5 md:px-7 py-3 md:py-4  transition hover:scale-105 duration-300 "
                             >
                                 Book Now
-                            </a>
+                            </Link>
                         </motion.div>
                     </div>
                 </div>
