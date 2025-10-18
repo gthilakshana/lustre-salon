@@ -79,7 +79,7 @@ export default function TimeSlots({
         setUiSelectedTime(selectedTime);
     }, [selectedTime]);
 
-    // Click handler for time slots
+
     const handleSlotClick = (slot) => {
         const past = isSlotInPast(selectedDate, slot);
         if (past) return;
@@ -87,12 +87,12 @@ export default function TimeSlots({
         const blockingBookings = getBlockingStylists(selectedDate, slot, bookedAppointments);
         const bookedStylistNames = blockingBookings.map((b) => b.normalizedName);
 
-        // Open stylist panel
+
         setUiSelectedTime(slot);
         setSelectedTime(slot);
         setShowStylistOptions(true);
 
-        // Deselect current stylist if already booked
+
         if (stylistName && bookedStylistNames.includes(stylistName.toLowerCase())) {
             setSelectedTime(null);
         }
@@ -101,7 +101,7 @@ export default function TimeSlots({
     // Stylist list
     const stylists = ["William", "Liam", "Emma", "Sophia"];
 
-    // Determine booked stylists for the selected time
+
     const bookedStylists = selectedDate && uiSelectedTime
         ? getBlockingStylists(selectedDate, uiSelectedTime, bookedAppointments).map((b) => b.normalizedName)
         : [];
@@ -120,18 +120,18 @@ export default function TimeSlots({
                 </h3>
             </div>
 
-            <div className="flex flex-col lg:flex-row w-full gap-6">
+            <div className="flex flex-col lg:flex-row w-full gap-3">
                 {/* Left Section: Time Slots */}
                 <div className="lg:w-3/5 w-full flex flex-col border lg:border-r border-gray-200 p-4 lg:p-5 rounded-xl">
-                    {/* Service Type */}
+
                     <div className="mb-6">
-                        <h4 className="text-lg font-semibold text-gray-700 mb-3">Select Service Type</h4>
+                        <h4 className="text-lg font-arial text-gray-700 mb-3">Select Service Type</h4>
                         <div className="flex gap-4">
                             <button
                                 onClick={() => setSelectedGender("Gents")}
                                 className={`p-4 w-[60px] h-[60px] flex items-center justify-center rounded-xl border transition-all duration-300 ${selectedGender === "Gents"
-                                        ? "bg-blue-600 text-white shadow-md scale-105"
-                                        : "bg-white text-gray-600 border-gray-300 hover:bg-blue-50"
+                                    ? "bg-blue-600 text-white shadow-md scale-105"
+                                    : "bg-white text-gray-600 border-gray-300 hover:bg-blue-50"
                                     }`}
                             >
                                 <FaMale size={30} />
@@ -139,8 +139,8 @@ export default function TimeSlots({
                             <button
                                 onClick={() => setSelectedGender("Ladies")}
                                 className={`p-4 w-[60px] h-[60px] flex items-center justify-center rounded-xl border transition-all duration-300 ${selectedGender === "Ladies"
-                                        ? "bg-pink-500 text-white shadow-md scale-105"
-                                        : "bg-white text-gray-600 border-gray-300 hover:bg-pink-50"
+                                    ? "bg-pink-500 text-white shadow-md scale-105"
+                                    : "bg-white text-gray-600 border-gray-300 hover:bg-pink-50"
                                     }`}
                             >
                                 <FaFemale size={30} />
@@ -196,12 +196,12 @@ export default function TimeSlots({
                 </div>
 
                 {/* Right Section: Stylist Options */}
-                <div className="lg:w-2/5 w-full flex flex-col p-4 lg:p-5">
-                    <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">Stylist Options</h4>
+                <div className="lg:w-2/5 w-full flex flex-col mt-5">
+                    <h4 className="text-lg font-arial justify-center text-gray-800 mb-4 flex items-center">Stylist Options</h4>
 
                     <div className="flex justify-center items-center w-full">
                         {showStylistOptions ? (
-                            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-1 gap-4 w-full p-4 border-gray-200 bg-white shadow-sm rounded-xl">
+                            <div className="grid  grid-cols-2  gap-4 w-full p-2 border-gray-200 bg-white shadow-sm rounded-xl border">
                                 {stylists.map((stylist) => {
                                     const stylistImages = {
                                         William: "/William.jpg",

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { IoSettingsOutline } from "react-icons/io5";
 import { BiMessageAdd } from "react-icons/bi";
+
 import {
     MdHomeRepairService,
     MdOutlineDashboardCustomize,
@@ -29,10 +31,8 @@ export default function AdminPage() {
     const [adminName, setAdminName] = useState("Administrator");
     const [adminCount, setAdminCount] = useState(0);
 
-
     const location = useLocation();
     const navigate = useNavigate();
-
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -46,26 +46,20 @@ export default function AdminPage() {
         }
     }, []);
 
-    // Fetch admin & customer counts
+    // Fetch admin count
     useEffect(() => {
         const fetchCounts = async () => {
             try {
                 const token = localStorage.getItem("token");
                 const config = { headers: { Authorization: `Bearer ${token}` } };
-
                 const res = await axios.get(import.meta.env.VITE_API_URL + "/api/users", config);
-
                 const users = res.data || [];
                 const admins = users.filter((u) => u.role === "admin").length;
-
-
                 setAdminCount(admins);
-
             } catch (err) {
                 console.error("Failed to fetch counts", err);
             }
         };
-
         fetchCounts();
     }, []);
 
@@ -76,6 +70,7 @@ export default function AdminPage() {
         { name: "Admins", icon: <RiAdminLine />, path: "/admin/admins" },
         { name: "Services", icon: <MdHomeRepairService />, path: "/admin/services" },
         { name: "Messages", icon: <BiMessageAdd />, path: "/admin/messages" },
+
     ];
 
     return (
@@ -93,68 +88,69 @@ export default function AdminPage() {
             {/* Sidebar */}
             <aside
                 className={`fixed top-0 left-0 h-full w-64 md:w-1/5 bg-gradient-to-b from-gray-800 to-gray-900 shadow-lg p-6 z-40 border-r border-gray-700 transform transition-transform duration-300
-        ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 flex flex-col`}
+        ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 flex flex-col justify-between`}
             >
-                {/* Logo */}
-                <header className="flex justify-center items-center w-full h-[100px] cursor-pointer">
-                    <Link to="/admin">
-                        <img
-                            src="LUSTRE.png"
-                            alt="Lustre Logo"
-                            className="h-[100px] w-[250px] object-cover hover:scale-105 transition-transform duration-300"
-                        />
-                    </Link>
-                </header>
+                <div>
+                    {/* Logo */}
+                    <header className="flex justify-center items-center w-full h-[100px] cursor-pointer">
+                        <Link to="/admin">
+                            <img
+                                src="LUSTRE.png"
+                                alt="Lustre Logo"
+                                className="h-[100px] w-[220px] object-cover hover:scale-105 transition-transform duration-300"
+                            />
+                        </Link>
+                    </header>
 
-                {/* Admin Name */}
-                <div className="flex flex-col justify-center items-center mt-4">
-                    <h2 className="text-white font-semibold text-lg">{adminName}</h2>
-                    <p className="text-gray-400 text-sm">Administrator</p>
+                    {/* Admin Name */}
+                    <div className="flex flex-col justify-center items-center mt-4">
+                        <h2 className="text-white font-semibold text-lg">{adminName}</h2>
+                        <p className="text-gray-400 text-sm">Administrator</p>
+                    </div>
+
+                    {/* Navigation */}
+                    <nav className="flex flex-col gap-3 mt-6">
+                        {menuItems.map((item) => {
+                            const active = location.pathname === item.path;
+                            return (
+                                <Link
+                                    key={item.name}
+                                    to={item.path}
+                                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-md font-semibold transition-all duration-300
+                    ${active
+                                            ? "bg-gray-600 text-white shadow-lg"
+                                            : "text-gray-300 hover:bg-gray-700/70 hover:text-white"
+                                        }`}
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    {item.icon}
+                                    <span>{item.name}</span>
+                                </Link>
+                            );
+                        })}
+                    </nav>
                 </div>
 
-                {/* Navigation */}
-                <nav className="flex flex-col gap-3 mt-6">
-                    {menuItems.map((item) => {
-                        const active = location.pathname === item.path;
-                        return (
-                            <Link
-                                key={item.name}
-                                to={item.path}
-                                className={`flex items-center gap-3 px-4 py-3 rounded-lg text-md font-semibold transition-all duration-300
-                ${active
-                                        ? "bg-red-600 text-white shadow-lg"
-                                        : "text-gray-300 hover:bg-gray-700/70 hover:text-white"
-                                    }`}
-                                onClick={() => setIsOpen(false)}
-                            >
-                                {item.icon}
-                                <span>{item.name}</span>
-                            </Link>
-                        );
-                    })}
-                </nav>
-
-                {/* Admin & Customer Record Cards */}
-                <div className="mt-6 flex flex-col gap-3">
-                    <div className="flex items-center justify-between p-3 bg-gray-700 rounded-lg shadow hover:shadow-lg transition duration-300">
-                        <span className="text-white font-medium">Admins</span>
+                {/* Bottom Section (Admin Count + Logout) */}
+                <div className="mt-8 border-t border-gray-700 pt-4">
+                    <div className="flex items-center justify-between p-3 bg-gray-800/80 rounded-lg shadow-inner hover:shadow-xl transition duration-300">
+                        <span className="text-white font-semibold">Admins</span>
                         <span className="text-red-500 font-bold text-lg">{adminCount}</span>
                     </div>
 
+                    <button
+                        onClick={() => {
+                            localStorage.removeItem("token");
+                            sessionStorage.clear();
+                            setIsOpen(false);
+                            navigate("/login");
+                        }}
+                        className="flex items-center gap-2 justify-center w-full mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md hover:scale-105 transition duration-300"
+                    >
+                        <IoMdLogOut size={18} />
+                        Logout
+                    </button>
                 </div>
-
-                {/* Logout Button */}
-                <button
-                    onClick={() => {
-                        localStorage.removeItem("token");
-                        sessionStorage.clear();
-                        setIsOpen(false);
-                        navigate("/login");
-                    }}
-                    className="flex items-center gap-2 mt-auto px-3 py-2 rounded-md bg-red-600 hover:bg-red-700 text-white font-medium shadow-md justify-center transition duration-300"
-                >
-                    <IoMdLogOut size={16} /> Logout
-                </button>
             </aside>
 
             {/* Content Area */}
