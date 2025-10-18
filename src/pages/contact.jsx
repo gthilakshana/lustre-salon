@@ -97,7 +97,7 @@ export default function Contact() {
                         <div className="absolute inset-0 flex flex-col justify-center items-center bg-black/70 p-4">
 
                             <div className="bg-white/10 backdrop-blur-sm px-6 md:px-12 py-8 shadow-2xl max-w-4xl text-center border-t-4 border-red-600 rounded-lg">
-                                <h2 className="text-white text-4xl md:text-6xl font-serif tracking-wider font-bold uppercase">
+                                <h2 className="text-white text-3xl md:text-5xl font-serif tracking-wider font-bold uppercase">
                                     Contact Us
                                 </h2>
                                 <p className="text-gray-200 mt-3 text-base md:text-xl font-light leading-snug max-w-2xl mx-auto">
@@ -113,7 +113,7 @@ export default function Contact() {
                     <div className="w-full max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-stretch justify-between gap-12">
 
                         <div className="flex-1 p-6 flex flex-col justify-between">
-                            <h2 className={`text-gray-900 text-3xl font-serif font-bold mb-3 uppercase relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-16 after:h-0.5 after:bg-red-600`}>
+                            <h2 className={`text-gray-900 text-2xl md:text-3xl font-serif font-bold mb-3 uppercase relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-16 after:h-0.5 after:bg-red-600`}>
                                 Get in Touch
                             </h2>
                             <span className="block text-gray-500 mb-6 text-base md:text-lg leading-relaxed">
@@ -148,7 +148,7 @@ export default function Contact() {
 
 
                         <div className="flex-1 p-6  flex flex-col justify-between">
-                            <h2 className={`text-gray-900 text-3xl font-serif font-bold mb-3 uppercase relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-16 after:h-0.5 after:bg-red-600`}>
+                            <h2 className={`text-gray-900 text-2xl md:text-3xl font-serif font-bold mb-3 uppercase relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-16 after:h-0.5 after:bg-red-600`}>
                                 Send a Message
                             </h2>
                             <span className="block text-gray-500 mb-6 text-base md:text-lg leading-relaxed">
@@ -206,7 +206,7 @@ export default function Contact() {
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full bg-black text-white py-2 hover:bg-gray-800 transition"
+                                    className="w-full bg-black text-white py-2 hover:bg-gray-800 transition rounded-lg"
                                 >
                                     {loading ? "Sending..." : "Send"}
                                 </button>

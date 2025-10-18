@@ -100,7 +100,7 @@ export default function Footer() {
                     href="https://makeitviralmedia.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-red-500 hover:text-red-400 font-medium transition-colors duration-300"
+                    className="text-gray-400 hover:text-red-400  transition-colors duration-300"
                 >
                     MakeItViralMedia
                 </a>

@@ -51,7 +51,7 @@ export default function About() {
 
                                 className="bg-white/10 backdrop-blur-sm px-6 md:px-12 py-8 shadow-2xl max-w-4xl text-center border-t-4 border-red-600"
                             >
-                                <h2 className={`text-white text-4xl md:text-6xl font-serif tracking-wider font-bold uppercase`}>
+                                <h2 className={`text-white text-3xl md:text-5xl font-serif tracking-wider font-bold uppercase`}>
                                     Our Story
                                 </h2>
                                 <p className={`text-white mt-3 md:mt-5 text-base md:text-xl font-light leading-snug max-w-2xl mx-auto`}>
@@ -71,7 +71,7 @@ export default function About() {
                     transition={{ duration: 1, delay: 0.3 }}
                 >
                     <div className="w-full max-w-7xl mt-12 px-4 md:px-8">
-                        <h2 className="text-gray-900 text-3xl  md:text-4xl font-serif font-bold text-center mb-16 uppercase relative after:content-[''] after:absolute after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-red-600">
+                        <h2 className="text-gray-900 text-3xl md:text-4xl font-serif font-bold text-center mb-16 uppercase relative after:content-[''] after:absolute after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-red-600">
                             Our Journey
                         </h2>
 
@@ -127,7 +127,7 @@ export default function About() {
                             className="md:w-1/2 flex justify-center order-1 md:order-2"
                         >
 
-                            <div className="p-2 border-4 border-white shadow-2xl">
+                            <div className="p-2 border-2 border-white shadow-2xl">
                                 <img
                                     src="/founder.jpg"
                                     alt="Founder"
@@ -145,15 +145,15 @@ export default function About() {
                             className="md:w-1/2 order-2 md:order-1"
                         >
                             <div className="text-center md:text-left">
-                                <h2 className={`text-gray-900 text-4xl font-serif font-bold mb-4`}>Meet Our Founder</h2>
+                                <h2 className={`text-gray-900 text-3xl md:text-4xl font-serif font-bold mb-4`}>Meet Our Founder</h2>
 
-                                <p className={`text-gray-600 text-base md:text-lg leading-relaxed mb-6 border-l-4 border-red-600 pl-4`}>
+                                <p className={`text-gray-600 text-base md:text-lg leading-relaxed mb-6  `}>
                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                                     <br /><br />
                                     Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words.
                                 </p>
 
-                                <h3 className={`text-red-600 text-2xl font-serif font-semibold`}>Viraj Amarasingha</h3>
+                                <h3 className={`text-red-600 text-2xl font-arial font-bold`}>Viraj Amarasingha</h3>
                                 <p className="text-gray-500 italic">Founder & CEO, LusTre Salon</p>
                             </div>
                         </motion.div>
@@ -192,18 +192,18 @@ export default function About() {
                             transition={{ duration: 0.8, delay: 0.4 }}
                             className="md:w-1/2 text-center md:text-left order-1 md:order-2"
                         >
-                            <h2 className={`text-4xl font-serif font-bold text-white mb-8 relative after:content-[''] after:absolute after:bottom-[-10px] after:left-1/2 md:after:left-0 after:w-20 after:h-1 after:bg-red-600`}>
+                            <h2 className={`  text-3xl md:text-4xl font-serif font-bold text-white mb-8 relative after:content-[''] after:absolute after:bottom-[-10px] after:left-1/2 md:after:left-0 after:w-20 after:h-1 after:bg-red-600`}>
                                 Our Vision & Mission
                             </h2>
 
                             <div className="space-y-6">
                                 <p className={`text-white text-base md:text-lg leading-relaxed`}>
 
-                                    <span className={`font-serif font-bold text-2xl block text-red-600 mb-1`}>Vision:</span> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                    <span className={`font-arial font-bold text-2xl block text-red-600 mb-1`}>Vision:</span> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                                 </p>
                                 <p className={`text-white text-base md:text-lg leading-relaxed`}>
 
-                                    <span className={`font-serif font-bold text-2xl block text-red-600 mb-1`}>Mission:</span> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                    <span className={`font-arial font-bold text-2xl block text-red-600 mb-1`}>Mission:</span> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                                 </p>
                             </div>
                         </motion.div>
@@ -224,7 +224,7 @@ export default function About() {
                             transition={{ duration: 0.8 }}
                         >
 
-                            <h2 className={`text-gray-900 text-4xl font-serif font-bold mb-10 relative after:content-[''] after:absolute after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-red-600`}>
+                            <h2 className={`text-gray-900 text-3xl md:text-4xl font-serif font-bold mb-10 relative after:content-[''] after:absolute after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-red-600`}>
                                 Our Commitment to You
                             </h2>
                             <p className={`text-gray-600 text-base md:text-xl leading-relaxed mb-6`}>
