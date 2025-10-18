@@ -31,7 +31,7 @@ export default function About() {
         <>
             <Header />
 
-            <div className="w-full min-h-screen  pt-16 flex flex-col items-center justify-start">
+            <div className="w-full min-h-screen  pt-16 flex flex-col items-center justify-start overflow-hidden">
 
 
 
