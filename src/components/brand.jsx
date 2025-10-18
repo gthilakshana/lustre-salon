@@ -11,27 +11,29 @@ export default function Brand() {
   ];
 
   return (
-    <section className="relative bg-white py-10 px-4 w-full h-[150px] md:h-[180px] overflow-hidden flex items-center ">
+    <section className="relative bg-white py-4 px-4 w-full h-[120px] sm:h-[150px] md:h-[180px] overflow-hidden flex items-center">
 
-      {/* Gradient fade edges */}
-      <div className="absolute top-0 left-0 h-full w-24 bg-gradient-to-r from-gray-50 " />
-      <div className="absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-gray-50 " />
 
-      {/* Animated scroll */}
+      <div className="absolute top-0 left-0 h-full w-12 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 right-0 h-full w-12 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 1 }}
+        className="w-full"
       >
-        <div className="flex gap-12 animate-smoothScroll items-center">
+        <div className="flex gap-4 sm:gap-8 animate-smoothScroll items-center">
           {[...logos, ...logos].map((logo, idx) => (
-            <img
-              key={idx}
-              src={logo}
-              alt="Brand Logo"
-              className="h-24 w-40 md:h-30 md:w-45 object-contain opacity-60 filter grayscale hover:grayscale-0 hover:opacity-100 hover:scale-110 transition-all duration-500"
-            />
+            <div key={idx} className="flex-shrink-0">
+              <img
+                src={logo}
+                alt="Brand Logo"
+                className="h-12 w-24 sm:h-20 sm:w-40 md:h-32 md:w-48 object-contain opacity-60 filter grayscale hover:grayscale-0 hover:opacity-100 hover:scale-110 transition-all duration-500"
+              />
+            </div>
           ))}
         </div>
       </motion.div>
