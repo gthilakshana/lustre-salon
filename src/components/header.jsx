@@ -30,14 +30,14 @@ export default function Header({ currentUser }) {
 
     return (
         <header className="fixed top-0 w-full z-50 bg-black text-white">
-            <div className="w-full mx-auto flex items-center justify-between px-2 py-4 md:px-3 md:py-4">
+            <div className="w-full mx-auto flex items-center justify-between px-2 py-4 md:px-4 md:py-4">
                 {/* Logo */}
                 <div className="flex justify-start -ml-8 md:-ml-6">
                     <Link to="/">
                         <img
                             src="/LUSTRE.png"
                             alt="Salon Logo"
-                            className="h-16 w-[180px] object-cover cursor-pointer hover:scale-105 transition-transform duration-300"
+                            className="h-17 w-[160px] object-cover cursor-pointer hover:scale-105 transition-transform duration-300"
                         />
                     </Link>
                 </div>
