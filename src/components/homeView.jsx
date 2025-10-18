@@ -32,7 +32,7 @@ export default function HomeView() {
             <section className="relative w-full h-screen md:h-screen overflow-hidden">
                 {/* Background Video */}
                 <video
-                    className="absolute inset-0 w-full h-full object-cover z-0"
+                    className="hidden md:block absolute inset-0 w-full h-full object-cover z-0"
                     src="/salon-video.mp4"
                     autoPlay
                     loop
@@ -40,8 +40,18 @@ export default function HomeView() {
                     playsInline
                 />
 
+                {/* Background Video - Mobile */}
+                <video
+                    className="block md:hidden absolute inset-0 w-full h-full object-cover z-0"
+                    src="/salon-video2.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                />
+
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-black/10 z-10 flex items-center">
+                <div className="absolute inset-0 bg-black/30 z-10 flex items-center">
                     <div className="max-w-4xl px-6 md:px-16 text-center md:text-left">
 
                         <motion.h1
