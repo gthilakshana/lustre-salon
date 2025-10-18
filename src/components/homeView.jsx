@@ -41,7 +41,7 @@ export default function HomeView() {
                 />
 
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-black/40 z-10 flex items-center">
+                <div className="absolute inset-0 bg-black/10 z-10 flex items-center">
                     <div className="max-w-4xl px-6 md:px-16 text-center md:text-left">
 
                         <motion.h1
@@ -49,10 +49,11 @@ export default function HomeView() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.8 }}
-                            className="text-white text-2xl md:text-5xl font-serif font-bold leading-tight drop-shadow-lg"
+                            className="text-white text-2xl md:text-5xl font-arial font-bold leading-tight drop-shadow-4xl"
                         >
                             Experience the Elegance of <br /> LusTre Salon
                         </motion.h1>
+
 
 
                         <motion.p
