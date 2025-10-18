@@ -70,7 +70,7 @@ export default function About() {
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 1, delay: 0.3 }}
                 >
-                    <div className="w-full max-w-6xl mt-12 px-4 md:px-8">
+                    <div className="w-full max-w-7xl mt-12 px-4 md:px-8">
                         <h2 className={`text-gray-900 text-3xl md:text-4xl font-serif font-bold text-center mb-16 uppercase relative after:content-[''] after:absolute after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-red-600`}>
                             Our Journey
                         </h2>
@@ -114,7 +114,7 @@ export default function About() {
 
 
                 <div className={`w-full mt-12 bg-gray-50 flex items-center py-20`}>
-                    <div className="w-full max-w-6xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-12">
+                    <div className="w-full max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-12">
 
 
                         <motion.div
@@ -164,7 +164,7 @@ export default function About() {
 
 
                 <div className="w-full bg-black flex items-center py-16">
-                    <div className="w-full max-w-6xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-12">
+                    <div className="w-full max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-12">
 
 
                         <motion.div
@@ -212,7 +212,7 @@ export default function About() {
 
 
                 <div className={`w-full bg-white py-16`}>
-                    <div className="w-full max-w-5xl mx-auto px-4 md:px-8 text-center">
+                    <div className="w-full max-w-7xl mx-auto px-4 md:px-8 text-center">
 
 
                         <motion.div
