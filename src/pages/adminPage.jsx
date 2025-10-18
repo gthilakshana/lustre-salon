@@ -22,20 +22,18 @@ import AdminTable from "./admin/adminTable";
 import AdminAppoinment from "./admin/adminAppoinment";
 import AdminService from "./admin/adminService";
 import AdminServiceUpdate from "./admin/adminServiceUpdate";
-
 import AdminServiceAdd from "./admin/adminServiceAdd";
 
 export default function AdminPage() {
     const [isOpen, setIsOpen] = useState(false);
     const [adminName, setAdminName] = useState("Administrator");
-
     const [adminCount, setAdminCount] = useState(0);
-    const [customerCount, setCustomerCount] = useState(0);
+
 
     const location = useLocation();
     const navigate = useNavigate();
 
-    //  Get admin name from token
+
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
@@ -48,24 +46,21 @@ export default function AdminPage() {
         }
     }, []);
 
-    // Fetch admin & customer record counts
+    // Fetch admin & customer counts
     useEffect(() => {
         const fetchCounts = async () => {
             try {
                 const token = localStorage.getItem("token");
                 const config = { headers: { Authorization: `Bearer ${token}` } };
 
-                const res = await axios.get(
-                    import.meta.env.VITE_API_URL + "/api/users",
-                    config
-                );
+                const res = await axios.get(import.meta.env.VITE_API_URL + "/api/users", config);
 
                 const users = res.data || [];
                 const admins = users.filter((u) => u.role === "admin").length;
-                const customers = users.filter((u) => u.role === "user").length;
+
 
                 setAdminCount(admins);
-                setCustomerCount(customers);
+
             } catch (err) {
                 console.error("Failed to fetch counts", err);
             }
@@ -79,7 +74,6 @@ export default function AdminPage() {
         { name: "Customers", icon: <FiUsers />, path: "/admin/customers" },
         { name: "Appointments", icon: <MdBorderColor />, path: "/admin/orders" },
         { name: "Admins", icon: <RiAdminLine />, path: "/admin/admins" },
-        // { name: "Admin Records", icon: <RiAdminLine />, path: "/admin/admin-records" },
         { name: "Services", icon: <MdHomeRepairService />, path: "/admin/services" },
         { name: "Messages", icon: <BiMessageAdd />, path: "/admin/messages" },
     ];
@@ -98,8 +92,8 @@ export default function AdminPage() {
 
             {/* Sidebar */}
             <aside
-                className={`fixed top-0 left-0 h-full w-64 md:w-1/5 bg-gradient-to-b from-gray-900 to-black shadow-lg p-6 z-40 border-r border-gray-700 transform transition-transform duration-300
-                ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 flex flex-col`}
+                className={`fixed top-0 left-0 h-full w-64 md:w-1/5 bg-gradient-to-b from-gray-800 to-gray-900 shadow-lg p-6 z-40 border-r border-gray-700 transform transition-transform duration-300
+        ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 flex flex-col`}
             >
                 {/* Logo */}
                 <header className="flex justify-center items-center w-full h-[100px] cursor-pointer">
@@ -113,69 +107,59 @@ export default function AdminPage() {
                 </header>
 
                 {/* Admin Name */}
-                <div className="flex justify-center mt-4">
-                    <h2 className="text-white font-semibold text-sm uppercase tracking-wide">
-                        {adminName}
-                    </h2>
+                <div className="flex flex-col justify-center items-center mt-4">
+                    <h2 className="text-white font-semibold text-lg">{adminName}</h2>
+                    <p className="text-gray-400 text-sm">Administrator</p>
                 </div>
 
-                <main className="flex flex-col flex-1 mt-6">
-                    <nav className="flex flex-col gap-2">
-                        {menuItems.map((item) => {
-                            const active = location.pathname === item.path;
-                            return (
-                                <Link
-                                    key={item.name}
-                                    to={item.path}
-                                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-md font-semibold transition-all duration-300 ${active
-                                        ? "bg-gray-700 text-white shadow-md"
-                                        : "text-gray-300 hover:bg-gray-700/60 hover:text-white"
-                                        }`}
-                                    onClick={() => setIsOpen(false)}
-                                >
-                                    {item.icon}
-                                    <span>{item.name}</span>
-                                </Link>
-                            );
-                        })}
-                    </nav>
+                {/* Navigation */}
+                <nav className="flex flex-col gap-3 mt-6">
+                    {menuItems.map((item) => {
+                        const active = location.pathname === item.path;
+                        return (
+                            <Link
+                                key={item.name}
+                                to={item.path}
+                                className={`flex items-center gap-3 px-4 py-3 rounded-lg text-md font-semibold transition-all duration-300
+                ${active
+                                        ? "bg-red-600 text-white shadow-lg"
+                                        : "text-gray-300 hover:bg-gray-700/70 hover:text-white"
+                                    }`}
+                                onClick={() => setIsOpen(false)}
+                            >
+                                {item.icon}
+                                <span>{item.name}</span>
+                            </Link>
+                        );
+                    })}
+                </nav>
 
-
-
-
-                    {/* Admin & Customer Record Counts */}
-                    <div className="mt-6 p-2 rounded-lg bg-gray-800/60 border border-gray-700 text-center">
-                        <p className="text-gray-300 text-sm">
-                            Admin Records:{" "}
-                            <span className="font-bold text-white">{adminCount}</span>
-                        </p>
-                        <p className="text-gray-300 text-sm mt-2">
-                            Customer Records:{" "}
-                            <span className="font-bold text-white">{customerCount}</span>
-                        </p>
+                {/* Admin & Customer Record Cards */}
+                <div className="mt-6 flex flex-col gap-3">
+                    <div className="flex items-center justify-between p-3 bg-gray-700 rounded-lg shadow hover:shadow-lg transition duration-300">
+                        <span className="text-white font-medium">Admins</span>
+                        <span className="text-red-500 font-bold text-lg">{adminCount}</span>
                     </div>
 
-                    {/* Logout Button */}
+                </div>
 
-                    <button
-                        onClick={() => {
-                            localStorage.removeItem("token");
-                            sessionStorage.clear();
-                            setIsOpen(false);
-                            navigate("/login");
-                        }}
-                        className="flex items-center gap-2 mt-auto px-3 cursor-pointer py-2 rounded-md 
-               bg-red-600 hover:bg-red-700 text-white text-sm
-               justify-center font-medium shadow-md transition duration-300"
-                    >
-                        <IoMdLogOut size={14} /> Logout
-                    </button>
-                </main>
+                {/* Logout Button */}
+                <button
+                    onClick={() => {
+                        localStorage.removeItem("token");
+                        sessionStorage.clear();
+                        setIsOpen(false);
+                        navigate("/login");
+                    }}
+                    className="flex items-center gap-2 mt-auto px-3 py-2 rounded-md bg-red-600 hover:bg-red-700 text-white font-medium shadow-md justify-center transition duration-300"
+                >
+                    <IoMdLogOut size={16} /> Logout
+                </button>
             </aside>
 
             {/* Content Area */}
             <div className="w-full md:w-[calc(100%-20%)] bg-gray-50 min-h-screen ml-0 md:ml-[20%] flex flex-col">
-                <div className="overflow-y-auto p-6">
+                <div className="overflow-y-auto p-6 space-y-6">
                     <Routes>
                         <Route path="/*" element={<AdminView />} />
                         <Route path="/dashboard" element={<AdminView />} />
@@ -187,9 +171,7 @@ export default function AdminPage() {
                         <Route path="/add-service" element={<AdminServiceAdd />} />
                         <Route path="/orders" element={<AdminAppoinment />} />
                         <Route path="/update-service/:id" element={<AdminServiceUpdate />} />
-
                         <Route path="/update-admin/:id" element={<AdminUpdate />} />
-                        {/* <Route path="/admin-records" element={<div>Admin Records Page</div>} /> */}
                     </Routes>
                 </div>
             </div>
