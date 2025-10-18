@@ -71,46 +71,48 @@ export default function About() {
                     transition={{ duration: 1, delay: 0.3 }}
                 >
                     <div className="w-full max-w-7xl mt-12 px-4 md:px-8">
-                        <h2 className={`text-gray-900 text-3xl md:text-4xl font-serif font-bold text-center mb-16 uppercase relative after:content-[''] after:absolute after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-red-600`}>
+                        <h2 className="text-gray-900 text-3xl  md:text-4xl font-serif font-bold text-center mb-16 uppercase relative after:content-[''] after:absolute after:bottom-[-10px] after:left-1/2 after:-translate-x-1/2 after:w-20 after:h-1 after:bg-red-600">
                             Our Journey
                         </h2>
 
-
-
-                        <div className="flex flex-col md:flex-row items-center md:items-stretch mb-16 gap-10">
-                            <div className="md:w-1/2 self-center">
+                        {/* Section 1 */}
+                        <div className="flex flex-col md:flex-row items-center md:items-stretch mb-16 gap-6 md:gap-10">
+                            <div className="md:w-1/2 w-full self-center">
                                 <img
                                     src="/salon.jpg"
                                     alt="Ribbon cutting"
-                                    className="rounded-xl shadow-xl w-full object-cover aspect-[4/3] transition duration-300 hover:shadow-2xl"
+                                    className="rounded-xl shadow-xl w-full h-auto md:h-[380px] object-cover aspect-[4/3] transition duration-300 hover:shadow-2xl"
                                 />
                             </div>
 
-                            <div className={`md:w-1/2 text-gray-600 text-base md:text-lg leading-relaxed self-center`}>
-
-                                <h3 className={`text-red-600 text-2xl font-serif font-bold mb-3`}>The Beginning</h3>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                            <div className="md:w-1/2 w-full text-gray-600 text-base sm:text-lg md:text-lg leading-relaxed self-center">
+                                <h3 className="text-red-600 text-2xl  md:text-3xl font-serif font-bold mb-3">The Beginning</h3>
+                                <p className={`text-gray-600 text-base md:text-lg leading-relaxed max-w-3xl mx-auto`}>
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                </p>
                             </div>
                         </div>
 
-
-                        <div className="flex flex-col md:flex-row items-center md:items-stretch gap-10">
-                            <div className={`md:w-1/2 text-gray-600 text-base md:text-lg leading-relaxed order-2 md:order-1 self-center`}>
-
-                                <h3 className={`text-red-600 text-2xl font-serif font-bold mb-3`}>Our Growth</h3>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        {/* Section 2 */}
+                        <div className="flex flex-col md:flex-row items-center md:items-stretch gap-6 md:gap-10">
+                            <div className="md:w-1/2 w-full text-gray-600 text-base sm:text-lg md:text-lg leading-relaxed order-2 md:order-1 self-center">
+                                <h3 className="text-red-600 text-2xl  md:text-3xl font-serif font-bold mb-3">Our Growth</h3>
+                                <p className={`text-gray-600 text-base md:text-lg leading-relaxed max-w-3xl mx-auto`}>
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                                </p>
                             </div>
 
-                            <div className="md:w-1/2 order-1 md:order-2 self-center">
+                            <div className="md:w-1/2 w-full order-1 md:order-2 self-center">
                                 <img
-                                    src="/haircut.jpg"
+                                    src="/Haircut.jpg"
                                     alt="New salon"
-                                    className="rounded-xl shadow-xl w-full object-cover aspect-[4/3] transition duration-300 hover:shadow-2xl"
+                                    className="rounded-xl shadow-xl w-full h-auto md:h-[380px] object-cover aspect-[4/3] transition duration-300 hover:shadow-2xl"
                                 />
                             </div>
                         </div>
                     </div>
                 </motion.div>
+
 
 
                 <div className={`w-full mt-12 bg-gray-50 flex items-center py-20`}>
@@ -175,9 +177,9 @@ export default function About() {
                             className="md:w-1/2 flex justify-center order-1 md:order-2"
                         >
                             <img
-                                src="/salon.jpg"
+                                src="/Team.jpg"
                                 alt="Vision and Mission"
-                                className="w-full h-full object-cover shadow-xl rounded-lg aspect-[4/3] border-2 border-red-600/50"
+                                className="w-full h-full object-cover shadow-xl rounded-lg aspect-[4/3] "
                             />
 
                         </motion.div>

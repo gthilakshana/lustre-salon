@@ -58,7 +58,7 @@ export default function Pricing() {
     ];
 
     return (
-        <section id="pricing" className="bg-black text-white py-16 px-8 md:px-20">
+        <section id="pricing" className="bg-black md:h-[600px] text-white py-16 px-8 md:px-20">
 
             <motion.h1
                 className="text-3xl md:text-4xl font-serif font-bold text-center mb-10 uppercase"
@@ -79,7 +79,7 @@ export default function Pricing() {
                         whileTap={{ scale: 0.95 }}
                         className={`px-6 py-2 font-serif transition ${activeTab === tab.id
                             ? "bg-white text-black"
-                            : "bg-gray-800 text-white hover:bg-gray-700"
+                            : "bg-gray-800 text-white hover:bg-gray-700 rounded-full"
                             }`}
                     >
                         {tab.label}
