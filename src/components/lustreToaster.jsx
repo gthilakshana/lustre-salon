@@ -39,7 +39,7 @@ export const ShowToast = (type = "info", message = "", description = "", actions
 
             <div
                 className={`${t.visible ? "animate-enter" : "animate-leave"} 
-                    flex flex-col gap-2 w-80 p-4 shadow-2xl bg-black text-white 
+                    flex flex-col gap-2 w-80 p-4 shadow-2xl bg-black text-white rounded-lg
                     `}
                 style={{ backdropFilter: 'blur(5px)' }}
             >

@@ -7,22 +7,19 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
-    ResponsiveContainer,
-    ReferenceLine
+    ResponsiveContainer
 } from 'recharts';
 
-// --- CHART DATA PROCESSING (Unchanged) ---
+// --- Chart Data Processing ---
 const getMonthlyRevenueData = (appointments) => {
     const now = dayjs();
     const dataMap = {};
-
 
     for (let i = 5; i >= 0; i--) {
         const month = now.subtract(i, 'month');
         const key = month.format('YYYY-MM');
         dataMap[key] = { name: month.format('MMM'), revenue: 0 };
     }
-
 
     appointments.forEach(a => {
         const apptDate = dayjs(a.date);
@@ -35,26 +32,27 @@ const getMonthlyRevenueData = (appointments) => {
 
     return Object.values(dataMap);
 };
-// --- END CHART DATA PROCESSING ---
-
+// --- End Chart Data Processing ---
 
 const RevenueChart = ({ appointments }) => {
     const chartData = useMemo(() => getMonthlyRevenueData(appointments), [appointments]);
-
 
     const primaryBlue = '#1D4ED8';
     const softBlue = '#93C5FD';
 
     return (
-        <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-xl">
-            <h3 className="text-lg sm:text-xl font-light text-gray-700 mb-4 tracking-tight">6-Month Revenue Trend</h3>
-            <div className="h-64 sm:h-80">
+        <div className="bg-white dark:bg-gray-900 p-5 sm:p-6 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700 transition-transform duration-300 hover:shadow-xl">
+            <h3 className="text-lg sm:text-xl font-medium text-gray-800 dark:text-gray-200 mb-5 tracking-tight">
+                6-Month Revenue Trend
+            </h3>
+
+            <div className="h-64 sm:h-100">
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart
                         data={chartData}
-                        margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
+                        margin={{ top: 15, right: 10, left: 0, bottom: 0 }}
                     >
-
+                        {/* Gradient Fill */}
                         <defs>
                             <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="5%" stopColor={primaryBlue} stopOpacity={0.4} />
@@ -62,51 +60,51 @@ const RevenueChart = ({ appointments }) => {
                             </linearGradient>
                         </defs>
 
-
+                        {/* Grid Lines */}
                         <CartesianGrid
-                            strokeDasharray="4 4"
-                            stroke="#e0e0e0"
+                            strokeDasharray="3 3"
+                            stroke="#E5E7EB"
                             vertical={false}
-                            opacity={0.7}
+                            opacity={0.6}
                         />
 
-
+                        {/* X Axis */}
                         <XAxis
                             dataKey="name"
                             stroke="#6B7280"
                             tickLine={false}
                             axisLine={false}
-                            style={{ fontSize: '12px' }}
+                            style={{ fontSize: '12px', fontWeight: 500 }}
                         />
 
-
+                        {/* Y Axis */}
                         <YAxis
                             stroke="#6B7280"
                             tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
                             tickLine={false}
                             axisLine={false}
                             orientation="right"
-                            style={{ fontSize: '12px' }}
+                            style={{ fontSize: '12px', fontWeight: 500 }}
                         />
 
-
+                        {/* Tooltip */}
                         <Tooltip
-                            cursor={{ fill: '#E5E7EB', opacity: 0.5 }}
+                            cursor={{ fill: '#F3F4F6', opacity: 0.5 }}
                             contentStyle={{
                                 backgroundColor: '#ffffff',
                                 border: '1px solid #D1D5DB',
-                                borderRadius: '6px',
+                                borderRadius: '8px',
                                 padding: '10px',
-                                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+                                boxShadow: '0 6px 12px rgba(0,0,0,0.1)'
                             }}
-                            labelStyle={{ color: '#4B5563', fontWeight: 'bold' }}
-                            formatter={(value, name) => [
+                            labelStyle={{ color: '#374151', fontWeight: 600 }}
+                            formatter={(value) => [
                                 `$${value.toLocaleString(undefined, { minimumFractionDigits: 2 })}`,
                                 'Revenue'
                             ]}
                         />
 
-
+                        {/* Revenue Area */}
                         <Area
                             type="monotone"
                             dataKey="revenue"

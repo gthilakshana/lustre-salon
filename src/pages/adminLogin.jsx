@@ -6,7 +6,7 @@ import axios from "axios";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
-export default function Login() {
+export default function AdminLogin() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [mobile, setMobile] = useState("");
@@ -43,38 +43,38 @@ export default function Login() {
                 return ShowToast(
                     "error",
                     "Account Blocked",
-                    "Your account is blocked. Please contact Lustre Salon admin for assistance."
+                    "Your account is blocked. Please contact the system administrator."
                 );
             }
 
 
-            if (user?.role === "admin") {
+            if (user?.role !== "admin") {
                 setLoading(false);
                 return ShowToast(
                     "error",
                     "Access Denied",
-                    "Admin accounts cannot log in from the user login page."
+                    "This login is for administrators only."
                 );
             }
 
             ShowToast(
                 "success",
                 "Login Successful",
-                message || "Welcome back to Lustre Salon!"
+                message || "Welcome back, AdminPanel!"
             );
 
             if (token) localStorage.setItem("token", token);
             if (user) localStorage.setItem("user", JSON.stringify(user));
 
             setTimeout(() => {
-                navigate("/user");
+                navigate("/admin");
             }, 2000);
         } catch (error) {
             const errorMsg = error?.response?.data?.message || "Login failed.";
             ShowToast(
                 "error",
                 "Login Failed",
-                errorMsg || "Please try again or contact Lustre Salon support."
+                errorMsg || "Please try again or contact system support."
             );
         } finally {
             setLoading(false);
@@ -85,10 +85,17 @@ export default function Login() {
         <>
             <Header />
 
-            <div className="min-h-screen flex pt-16 flex-col bg-white">
+            <div
+                className="min-h-screen flex pt-16 flex-col bg-cover bg-center bg-no-repeat"
+                style={{
+                    backgroundImage: "url('/Weddingsoon.jpg')",
+                }}
+            >
                 <main className="flex-1 flex items-center justify-center px-4 mt-16 mb-16">
                     <div className="w-full max-w-md bg-white p-4">
-                        <h1 className="text-2xl md:text-3xl font-bold uppercase text-center mb-8">Login</h1>
+                        <h1 className="text-2xl md:text-3xl font-bold uppercase text-center mb-8">
+                            Admin Login
+                        </h1>
 
                         <form onSubmit={handleLogin} className="space-y-4">
                             <input
@@ -137,7 +144,7 @@ export default function Login() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full py-3 cursor-pointer bg-black text-white font-medium rounded-md hover:bg-gray-800 transition flex items-center justify-center "
+                                className="w-full py-3 cursor-pointer bg-black text-white font-medium rounded-md hover:bg-gray-800 transition flex items-center justify-center"
                             >
                                 {loading ? (
                                     <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
@@ -156,18 +163,19 @@ export default function Login() {
                             </p>
 
                             <p className="text-center text-sm text-gray-600 mt-6 border-t pt-6">
-                                Don’t have an account?{" "}
+                                Go back to{" "}
                                 <Link
-                                    to="/register"
+                                    to="/login"
                                     className="text-black font-medium hover:underline"
                                 >
-                                    Create one
+                                    User Login
                                 </Link>
                             </p>
                         </form>
                     </div>
                 </main>
             </div>
+
             <Footer />
         </>
     );

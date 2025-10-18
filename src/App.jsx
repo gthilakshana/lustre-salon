@@ -15,6 +15,7 @@ import Success from './pages/success'
 import NotFoundPage from './pages/notFoundPage'
 import AdminPage from './pages/adminPage'
 import User from './pages/user'
+import AdminLogin from './pages/adminLogin'
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/adminLogin" element={<AdminLogin />} />
             <Route path="/forgotPassword" element={<ForgotPassword />} />
             <Route path="/resetPassword" element={<ResetPassword />} />
             <Route path="/user" element={<User />} />

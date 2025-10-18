@@ -33,28 +33,27 @@ export default function AdminView() {
 
 
     const themeClasses = {
-        'white': { bg: "bg-white", text: "text-gray-800", icon: "text-gray-600", title: "text-gray-900", border: "border-gray-200" },
+        'white': { bg: "bg-white", text: "text-gray-800", icon: "text-gray-700", title: "text-gray-900", border: "border-gray-300" },
 
+        'blue': { bg: "bg-blue-600", text: "text-white", icon: "text-blue-100", title: "text-white", border: "border-blue-700" },
 
-        'light-blue': { bg: "bg-blue-50", text: "text-blue-700", icon: "text-blue-500", title: "text-blue-800", border: "border-blue-200" },
+        'red': { bg: "bg-red-600", text: "text-white", icon: "text-red-100", title: "text-white", border: "border-red-700" },
 
+        'gray': { bg: "bg-gray-700", text: "text-white", icon: "text-gray-200", title: "text-white", border: "border-gray-800" },
 
-        'light-red': { bg: "bg-red-50", text: "text-red-700", icon: "text-red-500", title: "text-red-800", border: "border-red-200" },
+        'green': { bg: "bg-green-600", text: "text-white", icon: "text-green-100", title: "text-white", border: "border-green-700" },
 
-
-        'light-gray': { bg: "bg-gray-100", text: "text-gray-700", icon: "text-gray-500", title: "text-gray-800", border: "border-gray-300" },
-
-
-        'revenue-bg': { bg: "bg-blue-100", text: "text-blue-800", icon: "text-blue-500", border: "border-blue-300" },
+        'revenue-bg': { bg: "bg-gradient-to-br from-blue-700 to-indigo-800", text: "text-white", icon: "text-blue-200", border: "border-blue-900" },
     };
+
     // ----------------------------
 
 
     const [stats, setStats] = useState([
-        { icon: FaUsers, title: "Customers", value: 0, color: "light-blue", description: "Registered users" },
-        { icon: FaUserShield, title: "Admins", value: 0, color: "light-gray", description: "Admin users" },
-        { icon: FaEnvelope, title: "Unread Messages", value: 0, color: "light-red", description: "Pending replies" },
-        { icon: FaCalendarAlt, title: "Total Appointments", value: 0, color: "light-blue", description: "All-time bookings" },
+        { icon: FaUsers, title: "Customers", value: 0, color: "blue", description: "Registered users" },
+        { icon: FaUserShield, title: "Admins", value: 0, color: "gray", description: "Admin users" },
+        { icon: FaEnvelope, title: "Unread Messages", value: 0, color: "red", description: "Pending replies" },
+        { icon: FaCalendarAlt, title: "Total Appointments", value: 0, color: "white", description: "All-time bookings" },
     ]);
     // -------------------------------------
 
@@ -105,10 +104,10 @@ export default function AdminView() {
 
 
             setStats([
-                { icon: FaUsers, title: "Customers", value: customers, color: "light-blue", description: "Registered users" },
-                { icon: FaUserShield, title: "Admins", value: admins, color: "light-gray", description: "Admin users" },
-                { icon: FaEnvelope, title: "Unread Messages", value: messages, color: "light-red", description: "Pending replies" },
-                { icon: FaCalendarAlt, title: "Total Appointments", value: appointmentsData.length, color: "light-blue", description: "All-time bookings" },
+                { icon: FaUsers, title: "Customers", value: customers, color: "blue", description: "Registered users" },
+                { icon: FaUserShield, title: "Admins", value: admins, color: "gray", description: "Admin users" },
+                { icon: FaEnvelope, title: "Unread Messages", value: messages, color: "red", description: "Pending replies" },
+                { icon: FaCalendarAlt, title: "Total Appointments", value: appointmentsData.length, color: "white", description: "All-time bookings" },
             ]);
         } catch (err) {
             console.error(err);
@@ -124,10 +123,10 @@ export default function AdminView() {
 
 
     const quickLinks = [
-        { title: "Customers", icon: FaUsers, path: "/admin/customers", color: "light-blue", subtitle: "Manage all user accounts" },
-        { title: "Admins", icon: FaUserShield, path: "/admin/admins", color: "light-gray", subtitle: "Manage administrator access" },
-        { title: "Messages", icon: FaEnvelope, path: "/admin/messages", color: "light-red", subtitle: "View contact inquiries" },
-        { title: "Appointments", icon: FaCalendarAlt, path: "/admin/orders", color: "light-blue", subtitle: "View and edit bookings" },
+        { title: "Customers", icon: FaUsers, path: "/admin/customers", color: "white", subtitle: "Manage all user accounts" },
+        { title: "Admins", icon: FaUserShield, path: "/admin/admins", color: "white", subtitle: "Manage administrator access" },
+        { title: "Messages", icon: FaEnvelope, path: "/admin/messages", color: "white", subtitle: "View contact inquiries" },
+        { title: "Appointments", icon: FaCalendarAlt, path: "/admin/orders", color: "white", subtitle: "View and edit bookings" },
     ];
     // -------------------------------------------
 
@@ -157,49 +156,84 @@ export default function AdminView() {
                 </h1>
                 <button
                     onClick={fetchStats}
-                    className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-100 transition duration-200"
                     disabled={loading}
+                    className={`flex items-center gap-2 px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 shadow-md
+    ${loading
+                            ? "bg-gray-800 cursor-not-allowed opacity-80"
+                            : "bg-black hover:bg-gray-900 active:scale-95"} text-white`}
                 >
-                    <FaSyncAlt className={`${loading ? "animate-spin" : ""}`} />
+                    <FaSyncAlt
+                        className={`${loading ? "animate-spin" : ""} text-white text-base`}
+                    />
                     {loading ? "Refreshing..." : "Refresh Data"}
                 </button>
+
             </header>
 
             {/* Admin Profile */}
-            <section className="flex items-center gap-4 mb-8 p-4 bg-white border border-gray-100 rounded-xl shadow-md">
-                <img
-                    src={currentAdmin.image}
-                    alt={currentAdmin.fullName}
-                    className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border-2 "
-                />
-                <div>
-                    <h2 className="text-lg sm:text-xl font-semibold text-gray-900 tracking-tight uppercase">{currentAdmin.fullName}</h2>
-                    <p className="text-gray-500 text-xs sm:text-sm ">{currentAdmin.role === "admin" ? "System Administrator" : currentAdmin.role}</p>
+            <section
+                className="flex items-center gap-4 mb-8 p-4 border border-gray-100 rounded-xl shadow-md bg-cover bg-center bg-no-repeat relative overflow-hidden"
+                style={{
+                    backgroundImage: "url('/Haircutsoon.jpg')",
+                }}
+            >
+
+                <div className="absolute inset-0 bg-black/60"></div>
+
+                <div className="relative flex items-center gap-4 z-10">
+                    <img
+                        src={currentAdmin.image}
+                        alt={currentAdmin.fullName}
+                        className="w-10 h-10 sm:w-16 sm:h-16 rounded-full object-cover border-4 border-white"
+                    />
+                    <div>
+                        <h2 className="text-lg sm:text-xl font-semibold text-white tracking-tight uppercase">
+                            {currentAdmin.fullName}
+                        </h2>
+                        <p className="text-white text-xs sm:text-sm">
+                            {currentAdmin.role === "admin"
+                                ? "System Administrator"
+                                : currentAdmin.role}
+                        </p>
+                    </div>
                 </div>
             </section>
+
 
             <h2 className="text-xl sm:text-2xl font-light text-gray-800 mb-6 border-b pb-2">Key Metrics</h2>
 
 
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-10">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
                 {stats.map((stat, idx) => {
                     const Icon = stat.icon;
                     const classes = themeClasses[stat.color] || themeClasses['white'];
                     return (
                         <div
                             key={idx}
-                            className={`${classes.bg} p-4 sm:p-6 rounded-xl shadow-md border ${classes.border} transition duration-300 transform hover:scale-[1.02]`}
+                            className={`${classes.bg} p-5 sm:p-6 rounded-2xl shadow-lg border border-gray-200 hover:shadow-2xl transition duration-300 transform hover:-translate-y-1`}
                         >
-                            <div className="flex items-center justify-between">
-                                <Icon className={`${classes.icon} text-xl sm:text-2xl`} />
-                                <span className={`${classes.text} text-xl sm:text-2xl font-extrabold tracking-tight`}>{stat.value.toLocaleString()}</span>
+                            <div className="flex items-center justify-between mb-3">
+                                <div className="flex items-center gap-3">
+                                    <div className={`p-2 rounded-full ${classes.icon} bg-opacity-20`}>
+                                        <Icon className="text-2xl sm:text-3xl" />
+                                    </div>
+                                    <span className={`${classes.text} text-2xl sm:text-3xl font-bold tracking-tight`}>
+                                        {stat.value.toLocaleString()}
+                                    </span>
+                                </div>
+                                {stat.badge && (
+                                    <span className="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">
+                                        {stat.badge}
+                                    </span>
+                                )}
                             </div>
-                            <h3 className={`${classes.title} font-medium text-base sm:text-lg mt-2`}>{stat.title}</h3>
-                            <p className={`${classes.text} opacity-75 text-xs mt-1`}>{stat.description}</p>
+                            <h3 className={`${classes.title} font-medium text-lg sm:text-xl`}>{stat.title}</h3>
+                            <p className={`${classes.text} text-sm sm:text-base text-gray-500 mt-1`}>{stat.description}</p>
                         </div>
                     );
                 })}
             </div>
+
 
             <hr className="my-6 sm:my-8 border-gray-200" />
 
@@ -215,30 +249,51 @@ export default function AdminView() {
 
                 <div className="lg:col-span-1 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-4 sm:gap-6 order-2">
                     {/* Total Revenue */}
-                    <div className={`${revenueClasses.bg} p-4 sm:p-6 rounded-xl shadow-md transition transform hover:scale-[1.02] border ${revenueClasses.border}`}>
-                        <div className="flex items-center gap-3 mb-2">
-                            <FaDollarSign className={`${revenueClasses.icon} text-xl sm:text-2xl`} />
-                            <h3 className={`text-blue-900 font-semibold text-xs sm:text-sm uppercase tracking-wider`}>Total Revenue</h3>
+                    <div className="p-5 sm:p-6 rounded-2xl shadow-lg border border-gray-200 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+                        <div className="flex items-center gap-3 mb-3">
+                            <div className="p-3 bg-green-600/20 rounded-full">
+                                <FaDollarSign className="text-green-400 text-2xl" />
+                            </div>
+                            <h3 className="font-semibold text-sm sm:text-base uppercase tracking-wide text-gray-200">
+                                Total Revenue
+                            </h3>
                         </div>
-                        <p className={`${revenueClasses.text} text-2xl sm:text-3xl font-bold`}>${revenue.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                        <p className="text-3xl sm:text-4xl font-bold tracking-tight">
+                            ${revenue.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </p>
                     </div>
+
                     {/* Weekly Revenue */}
-                    <div className={`${revenueClasses.bg} p-4 sm:p-6 rounded-xl shadow-md transition transform hover:scale-[1.02] border ${revenueClasses.border}`}>
-                        <div className="flex items-center gap-3 mb-2">
-                            <FaCalendarWeek className={`${revenueClasses.icon} text-xl sm:text-2xl`} />
-                            <h3 className={`text-blue-900 font-semibold text-xs sm:text-sm uppercase tracking-wider`}>Weekly Revenue</h3>
+                    <div className="p-5 sm:p-6 rounded-2xl shadow-lg border border-gray-200 bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+                        <div className="flex items-center gap-3 mb-3">
+                            <div className="p-3 bg-blue-600/20 rounded-full">
+                                <FaCalendarWeek className="text-blue-400 text-2xl" />
+                            </div>
+                            <h3 className="font-semibold text-sm sm:text-base uppercase tracking-wide text-gray-200">
+                                Weekly Revenue
+                            </h3>
                         </div>
-                        <p className={`${revenueClasses.text} text-2xl sm:text-3xl font-bold`}>${revenue.weekly.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                        <p className="text-3xl sm:text-4xl font-bold tracking-tight">
+                            ${revenue.weekly.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </p>
                     </div>
+
                     {/* Monthly Revenue */}
-                    <div className={`${revenueClasses.bg} p-4 sm:p-6 rounded-xl shadow-md transition transform hover:scale-[1.02] border ${revenueClasses.border}`}>
-                        <div className="flex items-center gap-3 mb-2">
-                            <FaCalendar className={`${revenueClasses.icon} text-xl sm:text-2xl`} />
-                            <h3 className={`text-blue-900 font-semibold text-xs sm:text-sm uppercase tracking-wider`}>Monthly Revenue</h3>
+                    <div className="p-5 sm:p-6 rounded-2xl shadow-lg border border-gray-200 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-800 text-white hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+                        <div className="flex items-center gap-3 mb-3">
+                            <div className="p-3 bg-purple-600/20 rounded-full">
+                                <FaCalendar className="text-purple-400 text-2xl" />
+                            </div>
+                            <h3 className="font-semibold text-sm sm:text-base uppercase tracking-wide text-gray-200">
+                                Monthly Revenue
+                            </h3>
                         </div>
-                        <p className={`${revenueClasses.text} text-2xl sm:text-3xl font-bold`}>${revenue.monthly.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                        <p className="text-3xl sm:text-4xl font-bold tracking-tight">
+                            ${revenue.monthly.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </p>
                     </div>
                 </div>
+
             </div>
 
             <hr className="my-6 sm:my-8 border-gray-200" />
