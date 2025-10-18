@@ -11,7 +11,7 @@ export default function Brand() {
   ];
 
   return (
-    <section className="relative bg-white py-10 px-4 w-full h-[150px] md:h-[180px] overflow-hidden flex items-center">
+    <section className="relative bg-white py-10 px-4 w-full h-[150px] md:h-[180px] overflow-hidden flex items-center ">
 
       {/* Gradient fade edges */}
       <div className="absolute top-0 left-0 h-full w-24 bg-gradient-to-r from-gray-50 " />

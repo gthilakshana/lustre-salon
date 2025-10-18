@@ -88,7 +88,7 @@ export default function HomeView() {
             <Brand />
 
 
-            <section className="relative w-full overflow-hidden py-8 md:py-12">
+            <section className="relative w-full overflow-hidden py-8 md:py-12 border-t-2 border-gray-200">
                 <div className="flex flex-col md:flex-row w-full h-auto md:h-[300px] px-5 gap-6 relative z-20">
                     {/* Text Section */}
                     <motion.div
