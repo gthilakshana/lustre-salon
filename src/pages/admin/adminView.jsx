@@ -94,7 +94,9 @@ export default function AdminView() {
             const users = usersRes.data || [];
             const customers = users.filter(u => u.role === "user").length;
             const admins = users.filter(u => u.role === "admin").length;
-            const messages = messagesRes.data.filter(m => m.status === 'unread').length || 0;
+
+            const messages = messagesRes.data.length || 0;
+
             const appointmentsData = appointmentsRes.data || [];
 
             setAppointments(appointmentsData.map(a => ({
@@ -106,7 +108,7 @@ export default function AdminView() {
             setStats([
                 { icon: FaUsers, title: "Customers", value: customers, color: "blue", description: "Registered users" },
                 { icon: FaUserShield, title: "Admins", value: admins, color: "gray", description: "Admin users" },
-                { icon: FaEnvelope, title: "Unread Messages", value: messages, color: "red", description: "Pending replies" },
+                { icon: FaEnvelope, title: "Messages", value: messages, color: "red", description: "Customer Messages" },
                 { icon: FaCalendarAlt, title: "Total Appointments", value: appointmentsData.length, color: "white", description: "All-time bookings" },
             ]);
         } catch (err) {
@@ -150,31 +152,36 @@ export default function AdminView() {
     return (
         <div className="p-4 sm:p-8 min-h-screen bg-gray-50 font-sans">
 
-            <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 pb-4 border-b border-gray-200">
-                <h1 className="text-2xl sm:text-3xl font-light tracking-wide text-gray-900 mb-3 sm:mb-0">
-                    <span className="font-bold text-2xl uppercase">Lustre Salon Dashboard</span>
+            <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0 mb-6 sm:mb-8 pb-4 border-b border-gray-200">
+
+
+                <h1 className="text-center sm:text-left w-full sm:w-auto text-2xl sm:text-3xl font-light tracking-wide text-gray-900">
+                    <span className="font-arial font-bold text-xl md:text-2xl uppercase">Lustre Salon Dashboard</span>
                 </h1>
+
+
                 <button
                     onClick={fetchStats}
                     disabled={loading}
-                    className={`flex items-center gap-2 px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 shadow-md
-    ${loading
+                    className={`flex items-center justify-center gap-1
+        w-auto px-3 py-1.5 text-xs font-medium rounded-full shadow
+        transition-all duration-300
+        ${loading
                             ? "bg-gray-800 cursor-not-allowed opacity-80"
                             : "bg-black hover:bg-gray-900 active:scale-95"} text-white`}
                 >
-                    <FaSyncAlt
-                        className={`${loading ? "animate-spin" : ""} text-white text-base`}
-                    />
-                    {loading ? "Refreshing..." : "Refresh Data"}
+                    <FaSyncAlt className={`${loading ? "animate-spin" : ""} text-white text-sm`} />
+                    {loading ? "Refreshing..." : "Refresh"}
                 </button>
 
             </header>
 
+
             {/* Admin Profile */}
             <section
-                className="flex items-center gap-4 mb-8 p-4 border border-gray-100 rounded-xl shadow-md bg-cover bg-center bg-no-repeat relative overflow-hidden"
+                className="flex items-center mb-8 p-4  border border-gray-100 rounded-xl shadow-md bg-cover bg-center bg-no-repeat relative overflow-hidden"
                 style={{
-                    backgroundImage: "url('/Haircutsoon.jpg')",
+                    backgroundImage: "url('/Team.jpg')",
                 }}
             >
 
@@ -184,13 +191,13 @@ export default function AdminView() {
                     <img
                         src={currentAdmin.image}
                         alt={currentAdmin.fullName}
-                        className="w-10 h-10 sm:w-16 sm:h-16 rounded-full object-cover border-4 border-white"
+                        className="w-10 h-10 sm:w-15 sm:h-15 rounded-full object-cover border-4 border-white"
                     />
                     <div>
                         <h2 className="text-lg sm:text-xl font-semibold text-white tracking-tight uppercase">
                             {currentAdmin.fullName}
                         </h2>
-                        <p className="text-white text-xs sm:text-sm">
+                        <p className="text-white text-xs ">
                             {currentAdmin.role === "admin"
                                 ? "System Administrator"
                                 : currentAdmin.role}
@@ -200,7 +207,7 @@ export default function AdminView() {
             </section>
 
 
-            <h2 className="text-xl sm:text-2xl font-light text-gray-800 mb-6 border-b pb-2">Key Metrics</h2>
+            <h2 className="text-xl sm:text-xl font-arial uppercase text-gray-800 mb-6 border-b pb-2">Key Metrics</h2>
 
 
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
@@ -217,7 +224,7 @@ export default function AdminView() {
                                     <div className={`p-2 rounded-full ${classes.icon} bg-opacity-20`}>
                                         <Icon className="text-2xl sm:text-3xl" />
                                     </div>
-                                    <span className={`${classes.text} text-2xl sm:text-3xl font-bold tracking-tight`}>
+                                    <span className={`${classes.text} text-xl md:text-3xl font-bold tracking-tight`}>
                                         {stat.value.toLocaleString()}
                                     </span>
                                 </div>
@@ -227,8 +234,8 @@ export default function AdminView() {
                                     </span>
                                 )}
                             </div>
-                            <h3 className={`${classes.title} font-medium text-lg sm:text-xl`}>{stat.title}</h3>
-                            <p className={`${classes.text} text-sm sm:text-base text-gray-500 mt-1`}>{stat.description}</p>
+                            <h3 className={`${classes.title} font-medium text-md md:text-xl`}>{stat.title}</h3>
+                            <p className={`${classes.text} text-xs md:text-md text-gray-500 mt-1`}>{stat.description}</p>
                         </div>
                     );
                 })}
@@ -238,7 +245,7 @@ export default function AdminView() {
             <hr className="my-6 sm:my-8 border-gray-200" />
 
             {/* Revenue Section*/}
-            <h2 className="text-xl sm:text-2xl font-light text-gray-800 mb-6 border-b pb-2">Revenue Overview</h2>
+            <h2 className="text-xl sm:text-xl font-arial uppercase text-gray-800 mb-6 border-b pb-2">Revenue Overview</h2>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10">
 
 
@@ -299,7 +306,7 @@ export default function AdminView() {
             <hr className="my-6 sm:my-8 border-gray-200" />
 
             {/* Quick Links */}
-            <h2 className="text-xl sm:text-2xl font-light text-gray-800 mb-6 border-b pb-2">Quick Actions</h2>
+            <h2 className="text-xl sm:text-xl font-arial uppercase text-gray-800 mb-6 border-b pb-2">Quick Actions</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 {quickLinks.map((link, idx) => {
                     const Icon = link.icon;

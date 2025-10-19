@@ -242,7 +242,7 @@ export default function AdminAppointment() {
                     }`}
             >
                 <table className="w-full text-left">
-                    <thead className="bg-gray-800 text-white">
+                    <thead className="bg-gray-800 text-white ">
                         <tr>
                             {[
                                 "Customer",
@@ -264,7 +264,7 @@ export default function AdminAppointment() {
                             ))}
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="text-xs ">
                         {filtered.length > 0 ? (
                             filtered.map((a) => (
                                 <tr key={a._id} className={`odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition
@@ -278,7 +278,7 @@ export default function AdminAppointment() {
                                     <td className="px-3 py-2">{a.stylist}</td>
                                     <td className="px-3 py-2">{a.date}</td>
                                     <td className="px-3 py-2">{a.time}</td>
-                                    <td className={`px-3 py-2 font-medium 
+                                    <td className={`px-3 py-2 font-arial 
           ${a.payment === "Full Payment" ? "text-green-600"
                                             : a.payment === "Half Payment" ? "text-blue-600"
                                                 : "text-yellow-600"}`}>

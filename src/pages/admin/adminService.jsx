@@ -72,11 +72,11 @@ export default function AdminService() {
 
 
     const formatCurrency = (amount) => {
-        // Handle null, undefined, or empty string values
+
         if (amount === null || amount === undefined || amount === "") {
             return "-";
         }
-        // Ensure the value is treated as a number
+
         const numberAmount = Number(amount);
         if (isNaN(numberAmount)) {
             return "-";
@@ -85,13 +85,13 @@ export default function AdminService() {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
-            // Enforce two decimal places for cents, which is standard for USD.
+
             minimumFractionDigits: 2,
         }).format(numberAmount);
     };
     // -----------------------------------------------------------
 
-    // Fetch services
+
     const fetchServices = async () => {
         try {
             setFetching(true);
@@ -107,7 +107,7 @@ export default function AdminService() {
 
     useEffect(() => { fetchServices(); }, []);
 
-    // Delete service
+
     const handleDelete = async (id) => {
         try {
             setLoading(true);
@@ -206,7 +206,7 @@ export default function AdminService() {
             </div>
 
             {/* Table */}
-            <div className="overflow-x-auto border rounded-md">
+            <div className="overflow-x-auto border rounded-md text-xs">
                 <table className="w-full  text-left">
                     <thead className="bg-gray-800 text-white">
                         <tr>

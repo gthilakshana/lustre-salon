@@ -59,7 +59,7 @@ export default function AdminLogin() {
 
             ShowToast(
                 "success",
-                "Login Successful",
+                "Login Successful AdminPanel",
                 message || "Welcome back, AdminPanel!"
             );
 
@@ -148,7 +148,7 @@ export default function AdminLogin() {
                                 className="w-full py-3 cursor-pointer bg-red-600 text-white font-medium rounded-md hover:bg-red-700 transition flex items-center justify-center"
                             >
                                 {loading ? (
-                                    <span className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></span>
+                                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                                 ) : (
                                     "Admin Login"
                                 )}

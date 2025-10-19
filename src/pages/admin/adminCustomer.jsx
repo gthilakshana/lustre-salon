@@ -146,7 +146,7 @@ export default function AdminCustomer() {
             </div>
 
             {/* Table */}
-            <div className="overflow-x-auto border rounded-md">
+            <div className="overflow-x-auto border rounded-md text-xs">
                 <table className="w-full min-w-full text-left">
                     <thead className="bg-gray-800 text-white">
                         <tr>

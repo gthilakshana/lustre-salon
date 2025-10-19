@@ -70,6 +70,8 @@ export default function AdminPage() {
         { name: "Admins", icon: <RiAdminLine />, path: "/admin/admins" },
         { name: "Services", icon: <MdHomeRepairService />, path: "/admin/services" },
         { name: "Messages", icon: <BiMessageAdd />, path: "/admin/messages" },
+        { name: "Settings", icon: <IoSettingsOutline />, path: "/admin/settings" },
+        // { name: "Wedding", icon: <IoMdLogOut />, path: "/admin/wedding" },
 
     ];
 
@@ -104,8 +106,8 @@ export default function AdminPage() {
 
                     {/* Admin Name */}
                     <div className="flex flex-col justify-center items-center mt-4">
-                        <h2 className="text-white font-semibold text-lg">{adminName}</h2>
-                        <p className="text-gray-400 text-sm">Administrator</p>
+                        <h2 className="text-white font-semibold text-md">{adminName}</h2>
+                        <p className="text-gray-400 text-xs">Administrator</p>
                     </div>
 
                     {/* Navigation */}
@@ -116,10 +118,10 @@ export default function AdminPage() {
                                 <Link
                                     key={item.name}
                                     to={item.path}
-                                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-md font-semibold transition-all duration-300
+                                    className={`flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-arial transition-all duration-300
                     ${active
                                             ? "bg-gray-600 text-white shadow-lg"
-                                            : "text-gray-300 hover:bg-gray-700/70 hover:text-white"
+                                            : "text-gray-300 hover:bg-gray-700/70 hover:text-red-400 hover:shadow-lg"
                                         }`}
                                     onClick={() => setIsOpen(false)}
                                 >
@@ -134,8 +136,8 @@ export default function AdminPage() {
                 {/* Bottom Section (Admin Count + Logout) */}
                 <div className="mt-8 border-t border-gray-700 pt-4">
                     <div className="flex items-center justify-between p-3 bg-gray-800/80 rounded-lg shadow-inner hover:shadow-xl transition duration-300">
-                        <span className="text-white font-semibold">Admins</span>
-                        <span className="text-red-500 font-bold text-lg">{adminCount}</span>
+                        <span className="text-white text-sm font-semibold">Admins</span>
+                        <span className="text-red-500 text-sm font-bold text-lg">{adminCount}</span>
                     </div>
 
                     <button
@@ -143,9 +145,9 @@ export default function AdminPage() {
                             localStorage.removeItem("token");
                             sessionStorage.clear();
                             setIsOpen(false);
-                            navigate("/login");
+                            navigate("/adminLogin");
                         }}
-                        className="flex items-center gap-2 justify-center w-full mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md hover:scale-105 transition duration-300"
+                        className="flex items-center gap-2 justify-center w-full mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-lg shadow-md hover:scale-105 transition duration-300"
                     >
                         <IoMdLogOut size={18} />
                         Logout
