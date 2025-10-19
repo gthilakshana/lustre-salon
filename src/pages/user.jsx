@@ -169,7 +169,7 @@ export default function User() {
     return (
         <>
             <Header />
-            <div className="w-full min-h-screen pt-30 bg-gray-50 flex justify-center p-6">
+            <div className="w-full min-h-screen pt-30 bg-gray-50 flex justify-center p-3">
                 <div className="w-full max-w-6xl flex gap-6 md:flex-row flex-col">
 
                     {/* Sidebar */}
@@ -231,7 +231,7 @@ export default function User() {
                     </div>
 
                     {/* Content */}
-                    <div className="flex-1 p-8 order-2 md:order-2 bg-white shadow-xl ">
+                    <div className="flex-1 p-5  order-2 md:order-2 bg-white shadow-xl ">
                         {activeTab === "dashboard" && (
                             <div>
                                 <h2 className="text-xl font-bold text-gray-800 mb-4 uppercase">
@@ -264,7 +264,7 @@ export default function User() {
 
                         {activeTab === "appointments" && (
                             <div>
-                                <h2 className="text-md md:text-xl uppercase font-bold text-gray-800 mb-4">
+                                <h2 className="text-md md:text-xl uppercase font-semibold  text-gray-800 mb-4">
                                     My Appointments
                                 </h2>
 
@@ -273,7 +273,7 @@ export default function User() {
                                         <span className="w-8 h-8 border-2 border-gray-600 border-t-transparent rounded-full animate-spin"></span>
                                     </div>
                                 ) : appointments.length > 0 ? (
-                                    <div className="grid gap-6 md:grid-cols">
+                                    <div className="grid gap-5 md:grid-cols">
 
                                         {groupAppointmentsByTime(appointments).map((group, index) => (
                                             <AppointmentCard
@@ -283,7 +283,7 @@ export default function User() {
                                         ))}
                                     </div>
                                 ) : (
-                                    <div className="mt-6 p-6 bg-gray-100 rounded-xl shadow-md">
+                                    <div className="mt-6 p-6 bg-gray-100  shadow-md">
                                         <p className="text-sm text-gray-500">
                                             You have no upcoming or recent past appointments.
                                         </p>

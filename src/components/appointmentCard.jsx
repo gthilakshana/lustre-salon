@@ -82,27 +82,30 @@ export default function AppointmentCard({ appointmentGroup }) {
 
     // --- Card Style ---
     const cardStyle = isCompleted
-        ? "relative p-5 bg-white border border-gray-200 rounded-2xl shadow-md opacity-70 pointer-events-none"
-        : "relative p-5 bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300";
+        ? "relative p-5 bg-white border border-gray-200   shadow-md opacity-70 pointer-events-none"
+        : "relative p-5 bg-white border border-gray-200  shadow-md hover:shadow-lg transition-all duration-300";
 
     return (
-        <div className={cardStyle}>
+        <div className={cardStyle} >
 
-            <div className="absolute top-0 right-0">
+
+            <div className="absolute top-3 left-3 bg-gray-100 text-black text-xs font-semibold px-3 py-1 rounded-full ">
+                {serviceCount} {serviceCount === 1 ? 'Service' : 'Services'}
+            </div>
+
+
+            <div className="absolute top-3 right-3">
                 <span
-                    className={`text-white text-xs font-semibold px-3 py-1 rounded-tr-2xl rounded-bl-2xl shadow-md ${status.color}`}
+                    className={`text-white text-xs font-arial px-3 py-2 rounded-bl-2xl shadow-md ${status.color}`}
                 >
                     {status.text}
                 </span>
             </div>
 
 
-            <div className="border-b border-gray-200 pb-3 mb-3">
-                <h2 className="text-md md:text-lg font-bold text-gray-900 tracking-wide flex items-center gap-2">
+            <div className="border-b border-gray-200 pb-3 mb-3 mt-12">
+                <h2 className="text-sm font-semibold uppercase text-gray-900 tracking-wide">
                     {services.join(", ")}
-                    <span className="text-xs font-medium text-gray-500 normal-case ml-2">
-                        ({serviceCount} {serviceCount === 1 ? 'Service' : 'Services'})
-                    </span>
                 </h2>
                 {subNames.length > 0 && (
                     <p className="text-xs text-gray-500 mt-1">{subNames.join(", ")}</p>
@@ -112,22 +115,22 @@ export default function AppointmentCard({ appointmentGroup }) {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-4">
                 <div className="space-y-1.5">
-                    <p className="flex items-center text-gray-700">
-                        <FaCalendarAlt className="text-red-500 mr-2" size={14} />
-                        <span className="text-xs font-semibold mr-1">Date:</span> <p className="text-xs">{date}</p>
-                    </p>
-                    <p className="flex items-center text-gray-700">
-                        <FaClock className="text-red-500 mr-2" size={14} />
-                        <span className="text-xs font-semibold mr-1">Time:</span> <p className="text-xs">{time}</p>
-                    </p>
+                    <div className="flex items-center text-gray-700">
+                        <FaCalendarAlt className="text-gray-400 mr-2" size={14} />
+                        <span className="text-xs font-semibold mr-1">Date:</span> <span className="text-xs">{date}</span>
+                    </div>
+                    <div className="flex items-center text-gray-700">
+                        <FaClock className="text-gray-400 mr-2" size={14} />
+                        <span className="text-xs font-semibold mr-1">Time:</span> <span className="text-xs">{time}</span>
+                    </div>
                 </div>
                 <div className="space-y-1.5">
-                    <p className="flex items-center text-gray-700">
-                        <FaUserTie className="text-red-500 mr-2" size={14} />
-                        <span className="text-xs font-semibold mr-1">Stylist:</span> <p className="text-xs">{stylists.join(", ")}</p>
-                    </p>
+                    <div className="flex items-center text-gray-700">
+                        <FaUserTie className="text-gray-400 mr-2" size={14} />
+                        <span className="text-xs font-semibold mr-1">Stylist:</span> <span className="text-xs">{stylists.join(", ")}</span>
+                    </div>
                     <span
-                        className={`mt-1 inline-block px-2 py-0.5 text-xs font-semibold rounded-full ${paymentStyle}`}
+                        className={`mt-1 inline-block px-2 py-0.5 text-xs font-arial rounded-full ${paymentStyle}`}
                     >
                         {payment}
                     </span>
@@ -139,51 +142,52 @@ export default function AppointmentCard({ appointmentGroup }) {
                 <div>
                     {payment === "Full Payment" && (
                         <>
-                            <p className=" font-bold text-gray-800 text-xs">
+                            <p className="font-bold text-gray-800 text-xs">
                                 Total Cost: ${totalCost.toFixed(2)}
                             </p>
-                            <p className="font-semibold text-xs text-green-600">
+                            <p className="font-arial text-xs text-green-600">
                                 Paid: ${totalCost.toFixed(2)}
                             </p>
-                            <p className="font-semibold text-xs text-red-600">
+                            <p className="font-arial text-xs text-red-600">
                                 Due: $0.00
                             </p>
                         </>
                     )}
-
                     {payment === "Half Payment" && (
                         <>
                             <p className="font-bold text-gray-800 text-xs">
                                 Total Cost: ${totalCost.toFixed(2)}
                             </p>
-                            <p className="font-semibold text-xs text-green-600">
+                            <p className="font-arial text-xs text-green-600">
                                 Paid: ${(totalCost - totalDue).toFixed(2)}
                             </p>
-                            <p className="font-semibold text-xs text-red-600">
+                            <p className="font-arial text-xs text-red-600">
                                 Due: ${totalDue.toFixed(2)}
                             </p>
                         </>
                     )}
-
                     {payment === "Book Only" && (
                         <>
                             <p className="font-bold text-gray-800 text-xs">
                                 Total Cost: ${totalCost.toFixed(2)}
                             </p>
-                            <p className="font-semibold text-xs text-green-600">
+                            <p className="font-arial text-xs text-green-600">
                                 Paid: $0.00
                             </p>
-                            <p className="font-semibold text-xs text-red-600">
+                            <p className="font-arial text-xs text-red-600">
                                 Due: ${totalDue.toFixed(2)}
                             </p>
                         </>
                     )}
                 </div>
+            </div>
 
+
+            <div className="mt-3 flex justify-end">
                 <button
                     onClick={handleDownloadInvoice}
                     disabled={loadingInvoice || isCompleted}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-md text-xs font-semibold transition ${isCompleted
+                    className={`flex items-center gap-2 px-4 py-2 rounded-sm text-xs font-semibold transition ${isCompleted
                         ? "bg-gray-300 text-gray-600 cursor-not-allowed"
                         : "bg-black text-white hover:bg-gray-800"
                         }`}
@@ -196,5 +200,6 @@ export default function AppointmentCard({ appointmentGroup }) {
                 Please arrive 10 minutes before your appointment.
             </p>
         </div>
+
     );
 }
