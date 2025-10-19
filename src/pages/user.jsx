@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaCalendarAlt, FaTachometerAlt } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import AppointmentCard from "../components/appointmentCard";
@@ -173,48 +173,60 @@ export default function User() {
                 <div className="w-full max-w-6xl flex gap-6 md:flex-row flex-col">
 
                     {/* Sidebar */}
-                    <div className="w-full h-[400px] md:h-[600px] md:max-w-sm bg-white shadow-xl overflow-hidden order-1 md:order-2">
-                        {/* ... Sidebar content ... */}
+                    <div className="w-full h-[500px] md:h-[600px] md:max-w-sm bg-white shadow-xl flex flex-col justify-between overflow-hidden order-1 md:order-2">
+
+                        {/* User Info */}
                         <div className="flex flex-col items-center p-8 bg-black text-gray-50">
                             <img
                                 src={user.image || "/user.png"}
                                 alt="User Avatar"
-                                className="w-18 h-18 rounded-full border-4 object-cover border-white shadow-lg mb-4"
+                                className="w-14 h-14 md:w-18 md:h-18 rounded-full border-4 object-cover border-white shadow-lg mb-4"
                             />
-                            <h2 className="text-lg uppercase">{user.fullName}</h2>
+                            <h2 className="text-md md:text-lg uppercase">{user.fullName}</h2>
                             <p className="text-sm opacity-90">+1 {user.mobileNumber}</p>
                         </div>
 
-                        <div className="flex flex-col divide-y divide-gray-200">
+                        {/* Menu Items */}
+                        <div className="flex-1 flex flex-col divide-y divide-gray-200 overflow-y-auto">
                             <button
                                 onClick={() => setActiveTab("dashboard")}
-                                className={`flex items-center cursor-pointer gap-4 px-6 py-4 transition ${activeTab === "dashboard"
+                                className={`flex items-center gap-4 px-6 py-4 transition ${activeTab === "dashboard"
                                     ? "bg-gray-50"
                                     : "hover:bg-gray-200"
                                     }`}
                             >
                                 <FaTachometerAlt className="text-black" size={20} />
-                                <span className="font-medium text-gray-800">Dashboard</span>
+                                <span className="text-sm font-medium text-gray-800">Dashboard</span>
                             </button>
 
                             <button
                                 onClick={() => setActiveTab("appointments")}
-                                className={`flex items-center cursor-pointer gap-4 px-6 py-4 transition ${activeTab === "appointments"
+                                className={`flex items-center gap-4 px-6 py-4 transition ${activeTab === "appointments"
                                     ? "bg-gray-50"
                                     : "hover:bg-gray-200"
                                     }`}
                             >
                                 <FaCalendarAlt className="text-black" size={20} />
-                                <span className="font-medium text-gray-800">My Appointments</span>
+                                <span className="text-sm font-medium text-gray-800">My Appointments</span>
                             </button>
 
                             <button
                                 onClick={handleLogout}
-                                className="flex items-center cursor-pointer gap-4 px-6 py-4 hover:bg-gray-200 transition"
+                                className="flex items-center gap-4 px-6 py-4 hover:bg-gray-200 transition"
                             >
                                 <IoMdLogOut className="text-black" size={20} />
-                                <span className="font-medium text-gray-800">Logout</span>
+                                <span className="text-sm font-medium text-gray-800">Logout</span>
                             </button>
+                        </div>
+
+                        {/* BOOK NOW Button */}
+                        <div className="p-6">
+                            <Link
+                                to="/appointment"
+                                className="w-full block text-center bg-black text-sm rounded-md text-white font-semibold py-3 shadow-lg hover:bg-gray-900 hover:text-red-500  transition-all duration-300"
+                            >
+                                BOOK NOW
+                            </Link>
                         </div>
                     </div>
 
@@ -252,7 +264,7 @@ export default function User() {
 
                         {activeTab === "appointments" && (
                             <div>
-                                <h2 className="text-xl uppercase font-bold text-gray-800 mb-4">
+                                <h2 className="text-md md:text-xl uppercase font-bold text-gray-800 mb-4">
                                     My Appointments
                                 </h2>
 

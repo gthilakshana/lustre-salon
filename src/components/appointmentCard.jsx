@@ -14,7 +14,7 @@ export default function AppointmentCard({ appointmentGroup }) {
 
     const { date, time, payment, rawDate, rawTime, isCompleted } = appointmentGroup[0];
 
-    // Hide expired appointments automatically
+
     useEffect(() => {
         if (isCompleted || !rawDate || !rawTime) return;
 
@@ -36,7 +36,7 @@ export default function AppointmentCard({ appointmentGroup }) {
 
     if (!visible) return null;
 
-    // --- Status and Payment Styling ---
+
     const status = {
         text: isCompleted ? "Completed" : "Pending",
         color: isCompleted ? "bg-green-600" : "bg-red-600",
@@ -87,7 +87,7 @@ export default function AppointmentCard({ appointmentGroup }) {
 
     return (
         <div className={cardStyle}>
-            {/* Status Tag */}
+
             <div className="absolute top-0 right-0">
                 <span
                     className={`text-white text-xs font-semibold px-3 py-1 rounded-tr-2xl rounded-bl-2xl shadow-md ${status.color}`}
@@ -96,35 +96,35 @@ export default function AppointmentCard({ appointmentGroup }) {
                 </span>
             </div>
 
-            {/* Header */}
+
             <div className="border-b border-gray-200 pb-3 mb-3">
-                <h2 className="text-lg font-bold text-gray-900 uppercase tracking-wide flex items-center gap-2">
+                <h2 className="text-md md:text-lg font-bold text-gray-900 tracking-wide flex items-center gap-2">
                     {services.join(", ")}
                     <span className="text-xs font-medium text-gray-500 normal-case ml-2">
                         ({serviceCount} {serviceCount === 1 ? 'Service' : 'Services'})
                     </span>
                 </h2>
                 {subNames.length > 0 && (
-                    <p className="text-sm text-gray-500 mt-1">{subNames.join(", ")}</p>
+                    <p className="text-xs text-gray-500 mt-1">{subNames.join(", ")}</p>
                 )}
             </div>
 
-            {/* Details Section */}
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-4">
                 <div className="space-y-1.5">
                     <p className="flex items-center text-gray-700">
                         <FaCalendarAlt className="text-red-500 mr-2" size={14} />
-                        <span className="font-semibold mr-1">Date:</span> {date}
+                        <span className="text-xs font-semibold mr-1">Date:</span> <p className="text-xs">{date}</p>
                     </p>
                     <p className="flex items-center text-gray-700">
                         <FaClock className="text-red-500 mr-2" size={14} />
-                        <span className="font-semibold mr-1">Time:</span> {time}
+                        <span className="text-xs font-semibold mr-1">Time:</span> <p className="text-xs">{time}</p>
                     </p>
                 </div>
                 <div className="space-y-1.5">
                     <p className="flex items-center text-gray-700">
                         <FaUserTie className="text-red-500 mr-2" size={14} />
-                        <span className="font-semibold mr-1">Stylist:</span> {stylists.join(", ")}
+                        <span className="text-xs font-semibold mr-1">Stylist:</span> <p className="text-xs">{stylists.join(", ")}</p>
                     </p>
                     <span
                         className={`mt-1 inline-block px-2 py-0.5 text-xs font-semibold rounded-full ${paymentStyle}`}
@@ -134,12 +134,12 @@ export default function AppointmentCard({ appointmentGroup }) {
                 </div>
             </div>
 
-            {/* Payment Info */}
+
             <div className="bg-gray-50 border-t border-gray-200 pt-3 mt-3 rounded-md p-3 flex justify-between items-center">
                 <div>
                     {payment === "Full Payment" && (
                         <>
-                            <p className="font-bold text-gray-800 text-sm">
+                            <p className=" font-bold text-gray-800 text-xs">
                                 Total Cost: ${totalCost.toFixed(2)}
                             </p>
                             <p className="font-semibold text-xs text-green-600">
@@ -153,7 +153,7 @@ export default function AppointmentCard({ appointmentGroup }) {
 
                     {payment === "Half Payment" && (
                         <>
-                            <p className="font-bold text-gray-800 text-sm">
+                            <p className="font-bold text-gray-800 text-xs">
                                 Total Cost: ${totalCost.toFixed(2)}
                             </p>
                             <p className="font-semibold text-xs text-green-600">
@@ -167,7 +167,7 @@ export default function AppointmentCard({ appointmentGroup }) {
 
                     {payment === "Book Only" && (
                         <>
-                            <p className="font-bold text-gray-800 text-sm">
+                            <p className="font-bold text-gray-800 text-xs">
                                 Total Cost: ${totalCost.toFixed(2)}
                             </p>
                             <p className="font-semibold text-xs text-green-600">
@@ -183,12 +183,12 @@ export default function AppointmentCard({ appointmentGroup }) {
                 <button
                     onClick={handleDownloadInvoice}
                     disabled={loadingInvoice || isCompleted}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition ${isCompleted
+                    className={`flex items-center gap-2 px-4 py-2 rounded-md text-xs font-semibold transition ${isCompleted
                         ? "bg-gray-300 text-gray-600 cursor-not-allowed"
                         : "bg-black text-white hover:bg-gray-800"
                         }`}
                 >
-                    {loadingInvoice ? "Generating..." : <><FaDownload size={12} /> Invoice</>}
+                    {loadingInvoice ? "Generating..." : <><FaDownload size={10} /> Invoice</>}
                 </button>
             </div>
 

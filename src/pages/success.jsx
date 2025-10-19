@@ -3,6 +3,7 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ShowToast } from "../components/lustreToaster";
 import Header from "../components/header";
+import Footer from "../components/footer";
 
 export default function Success() {
     const navigate = useNavigate();
@@ -112,6 +113,8 @@ export default function Success() {
                     </div>
                 )}
             </div>
+
+            <Footer />
         </>
     );
 }
