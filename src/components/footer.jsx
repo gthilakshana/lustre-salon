@@ -93,14 +93,14 @@ export default function Footer() {
             </div>
 
 
-            <div className="border-t border-gray-700 mt-8 pt-4 text-center text-xs md:text-sm text-gray-400">
+            <div className="border-t border-gray-700 mt-8 pt-4 text-center text-xs  text-gray-400">
                 © 2025 All Rights Reserved @{" "}
-                <span className="text-white font-semibold">LUSTRE Salon</span> | Designed & Developed by{" "}
+                <span className="text-white text-xs font-semibold">LUSTRE Salon</span> | Designed & Developed by{" "}
                 <a
                     href="https://makeitviralmedia.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-red-400  transition-colors duration-300"
+                    className="text-gray-400 hover:text-red-400 text-xs transition-colors duration-300"
                 >
                     MakeItViralMedia
                 </a>

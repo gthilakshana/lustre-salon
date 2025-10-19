@@ -85,35 +85,34 @@ export default function AdminLogin() {
         <>
             <Header />
 
-            <div
-                className="min-h-screen flex pt-16 flex-col bg-cover bg-center bg-no-repeat"
-                style={{
-                    backgroundImage: "url('/Weddingsoon.jpg')",
-                }}
-            >
-                <main className="flex-1 flex items-center justify-center px-4 mt-16 mb-16">
-                    <div className="w-full max-w-md bg-white p-4">
-                        <h1 className="text-2xl md:text-3xl font-bold uppercase text-center mb-8">
+            <div className="min-h-screen flex pt-16 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/adminLogin.png')" }}>
+                <main className="flex flex-1 items-center justify-center px-4">
+
+                    <div className="w-full max-w-md bg-black shadow-xl  p-8 m-4">
+                        <h1 className="text-2xl md:text-3xl font-bold uppercase text-center text-white mb-8">
                             Admin Login
                         </h1>
 
                         <form onSubmit={handleLogin} className="space-y-4">
+
                             <input
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="Gmail address"
-                                className="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                className="w-full px-4 py-3 border border-gray-600 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
                             />
 
+
                             <div className="flex items-center gap-2">
-                                <div className="flex-1 h-px bg-gray-300"></div>
-                                <span className="text-gray-500 text-sm">OR</span>
-                                <div className="flex-1 h-px bg-gray-300"></div>
+                                <div className="flex-1 h-px bg-gray-600"></div>
+                                <span className="text-gray-400 text-sm">OR</span>
+                                <div className="flex-1 h-px bg-gray-600"></div>
                             </div>
 
+
                             <div className="flex">
-                                <span className="flex items-center justify-center px-4 border-t border-b border-l rounded-l-md bg-gray-100 text-gray-700">
+                                <span className="flex items-center justify-center px-4 border-t border-b border-l rounded-l-md bg-gray-800 text-white">
                                     +1
                                 </span>
 
@@ -122,61 +121,67 @@ export default function AdminLogin() {
                                     value={mobile}
                                     onChange={(e) => setMobile(e.target.value)}
                                     placeholder="Mobile number"
-                                    className="flex-1 h-[54px] w-full px-4 border-t border-b border-r-0 focus:outline-none"
+                                    className="flex-1 h-[54px] w-full px-4 border-t border-b border-r-0 bg-gray-900 text-white focus:outline-none"
                                 />
 
                                 <button
                                     type="button"
-                                    className="h-[54px] px-5 bg-black text-white font-medium rounded-r-md cursor-pointer hover:bg-gray-800 transition"
+                                    className="h-[54px] px-5 bg-gray-700 text-white font-medium rounded-r-md cursor-pointer hover:bg-gray-600 transition"
                                 >
                                     Verify
                                 </button>
                             </div>
+
 
                             <input
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Password"
-                                className="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                className="w-full px-4 py-3 border border-gray-600 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
                             />
+
 
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full py-3 cursor-pointer bg-black text-white font-medium rounded-md hover:bg-gray-800 transition flex items-center justify-center"
+                                className="w-full py-3 cursor-pointer bg-red-600 text-white font-medium rounded-md hover:bg-red-700 transition flex items-center justify-center"
                             >
                                 {loading ? (
-                                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                    <span className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></span>
                                 ) : (
-                                    "Login"
+                                    "Admin Login"
                                 )}
                             </button>
 
-                            <p className="text-right text-sm text-gray-600">
+
+                            <p className="text-right text-sm text-gray-400">
                                 <Link
                                     to="/forgotPassword"
-                                    className="text-black font-medium hover:underline"
+                                    className="text-white font-medium hover:underline"
                                 >
                                     Forgot password?
                                 </Link>
                             </p>
 
-                            <p className="text-center text-sm text-gray-600 mt-6 border-t pt-6">
+
+                            <p className="text-center text-sm text-gray-400 mt-6 border-t border-gray-700 pt-6">
                                 Go back to{" "}
                                 <Link
                                     to="/login"
-                                    className="text-black font-medium hover:underline"
+                                    className="text-white font-medium hover:underline"
                                 >
                                     User Login
                                 </Link>
                             </p>
                         </form>
                     </div>
+
                 </main>
             </div>
 
             <Footer />
         </>
+
     );
 }
