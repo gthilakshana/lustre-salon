@@ -8,11 +8,12 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     const firstAppointment = appointmentGroup[0];
     const { rawDate, time } = firstAppointment;
 
-    const totalCost = appointmentGroup.reduce((acc, a) => acc + (a.cost || 0), 0);
-    const totalDue = appointmentGroup.reduce((acc, a) => acc + (a.due || 0), 0);
-    const totalPaid = totalCost - totalDue;
+    // --- Totals computation ---
+    const totalCost = appointmentGroup.reduce((acc, a) => acc + Number(a.cost || 0), 0);
+    const totalPaid = appointmentGroup.reduce((acc, a) => acc + Number(a.paid || 0), 0);
+    const totalDue = appointmentGroup.reduce((acc, a) => acc + Number(a.due || 0), 0);
 
-    // --- COLORS ---
+    // --- Colors ---
     const BLACK = [0, 0, 0];
     const WHITE = [255, 255, 255];
     const GOLD = [212, 175, 55];
@@ -21,24 +22,25 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     const DARK_TEXT = [40, 40, 40];
     const MUTED_TEXT = [100, 100, 100];
     const RED = [255, 73, 73];
+    const GREEN = [0, 120, 0];
 
     // --- Currency Formatting Helper ---
-    // Use Intl.NumberFormat for standardized US Dollar formatting
     const formatUSD = (amount) => {
-        if (typeof amount !== 'number') return '-';
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            minimumFractionDigits: 2
-        }).format(amount);
+        const num = Number(amount) || 0;
+        return new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+            minimumFractionDigits: 2,
+        }).format(num);
     };
+
 
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
     const marginX = 20;
 
-    // --- HEADER (Premium Design) ---
+    // --- HEADER ---
     const headerHeight = 45;
     doc.setFillColor(...BLACK);
     doc.rect(0, 0, pageWidth, headerHeight, "F");
@@ -51,13 +53,11 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
             logo.onload = res;
             logo.onerror = rej;
         });
-        // Smaller + centered vertically
         doc.addImage(logo, "PNG", 15, 8, 30, 28);
     } catch {
         console.warn("Logo failed to load");
     }
 
-    // --- Text Styling ---
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
     doc.setTextColor(...RED);
@@ -68,19 +68,16 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     doc.setTextColor(230, 230, 230);
     doc.text("Your Premium Grooming Partner", pageWidth - 15, 22, { align: "right" });
 
-    // "INVOICE" Label
     doc.setFont("helvetica", "bolditalic");
     doc.setFontSize(25);
     doc.setTextColor(...GOLD);
     doc.text("INVOICE", pageWidth - 15, 30, { align: "right" });
 
-    // --- Divider Line ---
     doc.setDrawColor(...GOLD);
     doc.setLineWidth(0.8);
     doc.line(15, headerHeight, pageWidth - 15, headerHeight);
 
     let currentY = headerHeight + 12;
-
 
     // --- CUSTOMER + APPOINTMENT DETAILS BOX ---
     const boxWidth = pageWidth * 0.85;
@@ -92,20 +89,17 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     doc.setFillColor(...LIGHT_GRAY);
     doc.roundedRect(boxX, currentY - 4, boxWidth, boxHeight, 4, 4, "F");
 
-    // --- Titles ---
     doc.setFont("helvetica", "bold");
     doc.setFontSize(10);
     doc.setTextColor(...DARK_TEXT);
     doc.text("BILL TO", boxX + boxPaddingX, currentY + boxPaddingY);
     doc.text("APPOINTMENT DETAILS", boxX + boxWidth / 2 + 10, currentY + boxPaddingY);
 
-    // --- Info Text ---
     doc.setFont("helvetica", "normal");
     doc.setFontSize(9);
     doc.setTextColor(...MUTED_TEXT);
 
     doc.text(`Name: ${customer?.name || "Valued Customer"}`, boxX + boxPaddingX, currentY + boxPaddingY + 7);
-
     doc.text(`Mobile: ${customer?.mobile || "(555) 555-5555"}`, boxX + boxPaddingX, currentY + boxPaddingY + 13);
     doc.text(`Email: ${customer?.email || "customer@email.com"}`, boxX + boxPaddingX, currentY + boxPaddingY + 19);
 
@@ -115,7 +109,6 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
 
     currentY += boxHeight + 2;
 
-
     // --- SERVICE TABLE ---
     const tableData = appointmentGroup.map((apt, i) => [
         i + 1,
@@ -123,16 +116,14 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
         apt.subName || "-",
         apt.stylist || "-",
         apt.time,
-
-        apt.payment === "Book Only" ? "-" : formatUSD(apt.cost || 0),
-
-        apt.payment === "Full Payment" ? "-" : formatUSD(apt.due || 0),
+        formatUSD(apt.cost || 0),
+        formatUSD(apt.paid || 0),
+        formatUSD(apt.due || 0),
     ]);
 
     autoTable(doc, {
         startY: currentY,
-
-        head: [["#", "Service", "Sub Name", "Stylist", "Time", "Cost (USD)", "Due (USD)"]],
+        head: [["#", "Service", "Sub Name", "Stylist", "Time", "Total (USD)", "Paid (USD)", "Due (USD)"]],
         body: tableData,
         theme: "grid",
         headStyles: {
@@ -153,19 +144,20 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
             4: { halign: "center", cellWidth: 20 },
             5: { halign: "right", cellWidth: 25 },
             6: { halign: "right", cellWidth: 25 },
+            7: { halign: "right", cellWidth: 25 },
         },
         margin: { left: marginX, right: marginX },
     });
 
     currentY = doc.lastAutoTable.finalY + 2;
 
-    // --- PAYMENT SUMMARY BOX 
+    // --- PAYMENT SUMMARY ---
     const sumBoxW = pageWidth * 0.85;
     const sumBoxH = 48;
     const sumBoxX = (pageWidth - sumBoxW) / 2;
     const sumBoxY = currentY;
 
-    doc.setFillColor(255, 255, 255);
+    doc.setFillColor(...WHITE);
     doc.roundedRect(sumBoxX, sumBoxY, sumBoxW, sumBoxH, 3, 3, "F");
 
     const innerPad = 10;
@@ -176,44 +168,36 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     doc.setTextColor(...DARK_TEXT);
     doc.text("Payment Summary", sumBoxX + innerPad, y - 2);
 
-    // --- Golden Divider Line ---
     doc.setDrawColor(...GOLD);
     doc.setLineWidth(0.4);
     doc.line(sumBoxX + innerPad, y + 2, sumBoxX + sumBoxW - innerPad, y + 2);
 
     y += 12;
-    doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
 
-    // --- Total Cost ---
     doc.setTextColor(...MUTED_TEXT);
     doc.text("Total Cost", sumBoxX + innerPad, y);
     doc.setFont("helvetica", "bold");
-
     doc.text(formatUSD(totalCost), sumBoxX + sumBoxW - innerPad, y, { align: "right" });
 
-    // --- Amount Due ---
     y += 10;
     doc.setFont("helvetica", "normal");
-    doc.setTextColor(200, 0, 0);
-    doc.text("Amount Due", sumBoxX + innerPad, y);
-    doc.setFont("helvetica", "bold");
-
-    doc.text(formatUSD(totalDue), sumBoxX + sumBoxW - innerPad, y, { align: "right" });
-
-    // --- Amount Paid ---
-    y += 10;
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(0, 120, 0);
+    doc.setTextColor(...GREEN);
     doc.text("Amount Paid", sumBoxX + innerPad, y);
     doc.setFont("helvetica", "bold");
-
     doc.text(formatUSD(totalPaid), sumBoxX + sumBoxW - innerPad, y, { align: "right" });
+
+    y += 10;
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(...RED);
+    doc.text("Amount Due", sumBoxX + innerPad, y);
+    doc.setFont("helvetica", "bold");
+    doc.text(formatUSD(totalDue), sumBoxX + sumBoxW - innerPad, y, { align: "right" });
 
     currentY += sumBoxH + 10;
 
-
-    // --- MESSAGE BAR 
+    // --- MESSAGE BAR ---
     const msgBoxW = pageWidth * 0.85;
     const msgBoxX = (pageWidth - msgBoxW) / 2;
     const msgBoxY = currentY;
@@ -229,13 +213,10 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     const messageText =
         "Please arrive 10 minutes before your scheduled appointment time. We will be waiting for you. Thank you for your patience. Selecting multiple services will increase the total time duration of your booking.";
 
-
     const splitText = doc.splitTextToSize(messageText, msgBoxW - 20);
-
     doc.text(splitText, pageWidth / 2, msgBoxY + 10, { align: "center" });
 
     currentY += msgBoxH + 10;
-
 
     // --- FOOTER ---
     const footerHeight = 32;
@@ -244,7 +225,6 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     doc.setDrawColor(...GOLD);
     doc.setLineWidth(0.5);
     doc.line(0, headerHeight, pageWidth, headerHeight);
-
 
     doc.setFillColor(...BLACK);
     doc.rect(0, footerY, pageWidth, footerHeight, "F");
@@ -259,7 +239,6 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
         footerY + 10,
         { align: "center" }
     );
-
     doc.text("Hotline: (800) 555-0199", pageWidth / 2, footerY + 17, { align: "center" });
 
     doc.setFont("helvetica", "bold");
@@ -267,7 +246,7 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     doc.setTextColor(...GOLD);
     doc.text("Thank you for choosing LUSTRE SALON!", pageWidth / 2, footerY + 26, { align: "center" });
 
-
+    // --- OPEN PDF IN NEW WINDOW ---
     const pdfDataUri = doc.output("dataurlstring");
     const win = window.open();
     win.document.write(`

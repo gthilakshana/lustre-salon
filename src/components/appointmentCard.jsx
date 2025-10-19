@@ -14,7 +14,7 @@ export default function AppointmentCard({ appointmentGroup }) {
 
     const { date, time, payment, rawDate, rawTime, isCompleted } = appointmentGroup[0];
 
-    // Hide expired appointments
+    // Hide expired appointments automatically
     useEffect(() => {
         if (isCompleted || !rawDate || !rawTime) return;
 
@@ -53,12 +53,11 @@ export default function AppointmentCard({ appointmentGroup }) {
     const subNames = [...new Set(appointmentGroup.map(a => a.subName).filter(Boolean))];
     const stylists = [...new Set(appointmentGroup.map(a => a.stylist))];
 
-    // 💡 NEW: Get the count of services in this single cart/booking
     const serviceCount = appointmentGroup.length;
 
     // --- Cost ---
-    const totalCost = appointmentGroup.reduce((acc, a) => acc + (a.cost || 0), 0);
-    const totalDue = appointmentGroup.reduce((acc, a) => acc + (a.due || 0), 0);
+    const totalCost = appointmentGroup.reduce((acc, a) => acc + (Number(a.cost) || 0), 0);
+    const totalDue = appointmentGroup.reduce((acc, a) => acc + (Number(a.due) || 0), 0);
 
     // --- Invoice Generation ---
     const handleDownloadInvoice = async () => {
@@ -99,7 +98,6 @@ export default function AppointmentCard({ appointmentGroup }) {
 
             {/* Header */}
             <div className="border-b border-gray-200 pb-3 mb-3">
-                {/* 💡 FIX: Add the service count (cart count) here */}
                 <h2 className="text-lg font-bold text-gray-900 uppercase tracking-wide flex items-center gap-2">
                     {services.join(", ")}
                     <span className="text-xs font-medium text-gray-500 normal-case ml-2">
@@ -139,15 +137,46 @@ export default function AppointmentCard({ appointmentGroup }) {
             {/* Payment Info */}
             <div className="bg-gray-50 border-t border-gray-200 pt-3 mt-3 rounded-md p-3 flex justify-between items-center">
                 <div>
-                    {(payment === "Full Payment" || payment === "Half Payment") && (
-                        <p className="font-bold text-gray-800 text-sm">
-                            Total Cost: ${totalCost.toFixed(2)}
-                        </p>
+                    {payment === "Full Payment" && (
+                        <>
+                            <p className="font-bold text-gray-800 text-sm">
+                                Total Cost: ${totalCost.toFixed(2)}
+                            </p>
+                            <p className="font-semibold text-xs text-green-600">
+                                Paid: ${totalCost.toFixed(2)}
+                            </p>
+                            <p className="font-semibold text-xs text-red-600">
+                                Due: $0.00
+                            </p>
+                        </>
                     )}
-                    {(payment === "Half Payment" || payment === "Book Only") && (
-                        <p className="font-semibold text-xs text-red-600">
-                            Due Amount: ${totalDue.toFixed(2)}
-                        </p>
+
+                    {payment === "Half Payment" && (
+                        <>
+                            <p className="font-bold text-gray-800 text-sm">
+                                Total Cost: ${totalCost.toFixed(2)}
+                            </p>
+                            <p className="font-semibold text-xs text-green-600">
+                                Paid: ${(totalCost - totalDue).toFixed(2)}
+                            </p>
+                            <p className="font-semibold text-xs text-red-600">
+                                Due: ${totalDue.toFixed(2)}
+                            </p>
+                        </>
+                    )}
+
+                    {payment === "Book Only" && (
+                        <>
+                            <p className="font-bold text-gray-800 text-sm">
+                                Total Cost: ${totalCost.toFixed(2)}
+                            </p>
+                            <p className="font-semibold text-xs text-green-600">
+                                Paid: $0.00
+                            </p>
+                            <p className="font-semibold text-xs text-red-600">
+                                Due: ${totalDue.toFixed(2)}
+                            </p>
+                        </>
                     )}
                 </div>
 

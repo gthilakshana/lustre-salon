@@ -74,23 +74,23 @@ export default function AdminAppointment() {
             const now = dayjs();
 
             const mapped = res.data.map((a) => {
-
                 const dateTime = a.date && a.time
                     ? dayjs(`${a.date} ${a.time}`, "YYYY-MM-DD hh:mm A")
                     : null;
-
                 const endTime = dateTime ? dateTime.add(45, "minute") : null;
                 let status = "Pending";
 
                 if (dateTime) {
-                    if (now.isBefore(dateTime)) {
-                        status = "Pending";
-                    } else if (now.isAfter(dateTime) && now.isBefore(endTime)) {
-                        status = "Ongoing";
-                    } else if (now.isAfter(endTime)) {
-                        status = "Completed";
-                    }
+                    if (dayjs().isBefore(dateTime)) status = "Pending";
+                    else if (dayjs().isAfter(dateTime) && dayjs().isBefore(endTime)) status = "Ongoing";
+                    else if (dayjs().isAfter(endTime)) status = "Completed";
                 }
+
+                const full = Number(a.fullPayment || 0);
+                const due = Number(a.duePayment || 0);
+                const totalCost = Number(full + due).toFixed(2);
+                const paidAmount = Number(full).toFixed(2);
+                const dueAmount = Number(due).toFixed(2);
 
                 return {
                     _id: a._id,
@@ -100,17 +100,15 @@ export default function AdminAppointment() {
                     stylist: a.stylistName || "-",
                     date: a.date ? new Date(a.date).toLocaleDateString() : "-",
                     time: a.time || "-",
-                    payment:
-                        a.paymentType === "Full"
-                            ? "Full Payment"
-                            : a.paymentType === "Half"
-                                ? "Half Payment"
-                                : "Book Only",
-                    price: (a.fullPayment || 0) + (a.duePayment || 0),
-
+                    payment: a.paymentType === "Full" ? "Full Payment" : a.paymentType === "Half" ? "Half Payment" : "Book Only",
+                    totalCost,   // total service cost
+                    paid: a.paymentType === "Full" ? paidAmount : a.paymentType === "Half" ? paidAmount : "0.00",
+                    due: a.paymentType === "Full" ? "0.00" : a.paymentType === "Half" ? dueAmount : totalCost,
                     status,
                 };
             });
+
+
 
             setAppointments(mapped);
         } catch (err) {
@@ -254,9 +252,9 @@ export default function AdminAppointment() {
                                 "Date",
                                 "Time",
                                 "Payment",
+                                "Total Cost",
                                 "Paid",
                                 "Due",
-
                                 "Status",
                                 "Actions",
                             ].map((h) => (
@@ -269,12 +267,10 @@ export default function AdminAppointment() {
                     <tbody>
                         {filtered.length > 0 ? (
                             filtered.map((a) => (
-                                <tr
-                                    key={a._id}
-                                    className={`odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition
-                                        ${a.status === "Pending" ? "bg-red-50" : ""}
-                                        ${a.status === "Ongoing" ? "bg-yellow-50" : ""}
-                                        ${a.status === "Completed" ? "bg-green-50" : ""}`}
+                                <tr key={a._id} className={`odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition
+        ${a.status === "Pending" ? "bg-red-50" : ""}
+        ${a.status === "Ongoing" ? "bg-yellow-50" : ""}
+        ${a.status === "Completed" ? "bg-green-50" : ""}`}
                                 >
                                     <td className="px-3 py-2">{a.fullName}</td>
                                     <td className="px-3 py-2">{a.category}</td>
@@ -282,49 +278,39 @@ export default function AdminAppointment() {
                                     <td className="px-3 py-2">{a.stylist}</td>
                                     <td className="px-3 py-2">{a.date}</td>
                                     <td className="px-3 py-2">{a.time}</td>
-                                    <td
-                                        className={`px-3 py-2 font-medium ${a.payment === "Full Payment"
-                                            ? "text-green-600"
-                                            : a.payment === "Half Payment"
-                                                ? "text-blue-600"
-                                                : "text-yellow-600"
-                                            }`}
-                                    >
+                                    <td className={`px-3 py-2 font-medium 
+          ${a.payment === "Full Payment" ? "text-green-600"
+                                            : a.payment === "Half Payment" ? "text-blue-600"
+                                                : "text-yellow-600"}`}>
                                         {a.payment}
                                     </td>
-                                    <td className="px-3 py-2">{paid(a.payment, a.price)}</td>
-                                    <td className="px-3 py-2 text-red-600">{due(a.payment, a.price)}</td>
-
-                                    <td
-                                        className={`px-3 py-2 font-semibold ${a.status === "Completed"
-                                            ? "text-green-700"
-                                            : a.status === "Ongoing"
-                                                ? "text-orange-600"
-                                                : "text-red-600"
-                                            }`}
-                                    >
+                                    <td className="px-3 py-2">${a.totalCost}</td>
+                                    <td className="px-3 py-2 text-green-600">${a.paid}</td>
+                                    <td className="px-3 py-2 text-red-600">${a.due}</td>
+                                    <td className={`px-3 py-2 font-semibold
+          ${a.status === "Completed" ? "text-green-700"
+                                            : a.status === "Ongoing" ? "text-orange-600"
+                                                : "text-red-600"}`}>
                                         {a.status}
                                     </td>
                                     <td className="px-3 py-2 text-center">
                                         <RiDeleteBin6Line
                                             size={20}
                                             className="cursor-pointer text-gray-500 hover:text-red-600 transition"
-                                            onClick={() => {
-                                                setAppointmentToDelete(a._id);
-                                                setConfirmVisible(true);
-                                            }}
+                                            onClick={() => { setAppointmentToDelete(a._id); setConfirmVisible(true); }}
                                         />
                                     </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan={13} className="px-3 py-8 text-center text-gray-500">
+                                <td colSpan={12} className="px-3 py-8 text-center text-gray-500">
                                     No appointments found.
                                 </td>
                             </tr>
                         )}
                     </tbody>
+
                 </table>
             </div>
         </div>

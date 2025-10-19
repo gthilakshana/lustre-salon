@@ -19,7 +19,7 @@ export default function User() {
     const [appointments, setAppointments] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    // ... useEffect for loading user ...
+
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
@@ -29,7 +29,7 @@ export default function User() {
         }
     }, [navigate]);
 
-    // ... fetchAppointments function (no change needed here) ...
+
     const fetchAppointments = async () => {
         if (!user) return;
         try {
@@ -57,6 +57,12 @@ export default function User() {
 
                 const isCompleted = appointmentDateTime.isBefore(now);
 
+                const full = Number(a.fullPayment || 0);
+                const due = Number(a.duePayment || 0);
+                const totalCost = Number(full + due).toFixed(2);
+                const paidAmount = Number(full).toFixed(2);
+                const dueAmount = Number(due).toFixed(2);
+
                 const appointmentData = {
                     id: a._id,
                     service: a.serviceName || "-",
@@ -70,21 +76,35 @@ export default function User() {
                             : a.paymentType === "Half"
                                 ? "Half Payment"
                                 : "Book Only",
+
+
+                    cost: totalCost,
+
+
+                    paid:
+                        a.paymentType === "Full"
+                            ? paidAmount
+                            : a.paymentType === "Half"
+                                ? paidAmount
+                                : "0.00",
+
+
                     due:
                         a.paymentType === "Full"
-                            ? (a.fullPayment || 0)
-                            : ((a.fullPayment || 0) + (a.duePayment || 0)),
-                    cost:
-                        a.paymentType === "Book Only"
-                            ? null
-                            : a.paymentType === "Full"
-                                ? (a.fullPayment || 0)
-                                : ((a.fullPayment || 0) + (a.duePayment || 0)) * 2,
+                            ? "0.00"
+                            : a.paymentType === "Half"
+                                ? dueAmount
+                                : totalCost,
+
+
                     isCompleted: isCompleted,
                     rawDate: a.date,
                     rawTime: a.time,
-                    userId: a.userId, // add userId for invoice generation
+                    userId: a.userId,
                 };
+
+
+
 
                 if (isCompleted) {
                     completedAppointments.push(appointmentData);
@@ -130,7 +150,7 @@ export default function User() {
         navigate("/login");
     };
 
-    // 💡 FIX 1: The grouping function is necessary to find the unique "carts"
+
     const groupAppointmentsByTime = (appointments) => {
         const map = {};
         appointments.forEach(a => {
@@ -141,10 +161,10 @@ export default function User() {
         return Object.values(map);
     };
 
-    // 💡 FIX 2: Calculate the count of *unique groups* (carts), not the total number of services.
+
     const pendingAppointmentsCount = groupAppointmentsByTime(
-        appointments.filter(apt => !apt.isCompleted) // Get only upcoming appointments
-    ).length; // Get the count of the groups (carts)
+        appointments.filter(apt => !apt.isCompleted)
+    ).length;
 
     return (
         <>
@@ -242,7 +262,7 @@ export default function User() {
                                     </div>
                                 ) : appointments.length > 0 ? (
                                     <div className="grid gap-6 md:grid-cols">
-                                        {/* This renders one card per unique group (cart) */}
+
                                         {groupAppointmentsByTime(appointments).map((group, index) => (
                                             <AppointmentCard
                                                 key={index}
