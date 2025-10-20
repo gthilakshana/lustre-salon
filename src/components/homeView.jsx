@@ -27,7 +27,7 @@ export default function HomeView() {
     };
 
     return (
-        <section id="home">
+        <section id="home" className="scroll-mt-20">
             {/* Hero Section */}
             <section className="relative w-full h-screen md:h-screen overflow-hidden">
                 {/* Background Video */}

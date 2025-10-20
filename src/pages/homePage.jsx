@@ -25,7 +25,7 @@ export default function HomePage({ section }) {
     useEffect(() => {
         const id = section || "home";
         const el = document.getElementById(id);
-        if (el) {
+        if (el && section) {
             setTimeout(() => {
                 el.scrollIntoView({ behavior: "smooth" });
             }, 50);
@@ -50,12 +50,12 @@ export default function HomePage({ section }) {
 
             <div className="min-h-screen w-full flex flex-col overflow-hidden">
                 <main className="flex-1 mt-16 md:mt-22">
-                    <section id="home"><HomeView /></section>
-                    <section id="pricing"><Pricing /></section>
-                    <section id="services"><Services /></section>
-                    <section id="products"><Product /></section>
-                    <section id="team"><Team /></section>
-                    <section id="reviews"><Reviews /></section>
+                    <section id="home" className="scroll-mt-20"><HomeView /></section>
+                    <section id="pricing" className="scroll-mt-20"><Pricing /></section>
+                    <section id="services" className="scroll-mt-20"><Services /></section>
+                    <section id="products" className="scroll-mt-20"><Product /></section>
+                    <section id="team" className="scroll-mt-20"><Team /></section>
+                    <section id="reviews" className="scroll-mt-20"><Reviews /></section>
                 </main>
 
                 <Footer />
