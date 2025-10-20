@@ -144,8 +144,8 @@ export default function Calendar({ selectedDate, setSelectedDate, bookedDates = 
                             disabled={disabled}
                             className={buttonClass}
                         >
-                            <span className="text-base leading-none">{d.format("D")}</span>
-                            {isMonday && <div className="text-[10px] font-semibold text-red-500 leading-none absolute bottom-0.5">Closed</div>}
+                            <span className="text-xs md:text-sm">{d.format("D")}</span>
+                            {isMonday && <div className="text-[6px] md:text-[9px] font-arial text-red-500 leading-none absolute bottom-0.5">Closed</div>}
                             {isBooked && !disabled && !isSelected && (
 
                                 <div className="absolute top-1 right-1 h-2 w-2 bg-yellow-600 rounded-full border border-white"></div>
