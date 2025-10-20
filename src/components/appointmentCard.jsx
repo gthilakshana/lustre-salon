@@ -89,7 +89,7 @@ export default function AppointmentCard({ appointmentGroup }) {
         <div className={cardStyle} >
 
 
-            <div className="absolute top-3 left-3 bg-gray-100 text-black text-xs font-semibold px-3 py-1 rounded-full ">
+            <div className="absolute top-3 left-3 bg-gray-50 text-black text-[10px] font-semibold px-3 py-1 rounded-full ">
                 {serviceCount} {serviceCount === 1 ? 'Service' : 'Services'}
             </div>
 

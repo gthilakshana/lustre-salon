@@ -41,7 +41,7 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     const marginX = 20;
 
     // --- HEADER ---
-    const headerHeight = 45;
+    const headerHeight = 40;
     doc.setFillColor(...BLACK);
     doc.rect(0, 0, pageWidth, headerHeight, "F");
 
@@ -60,22 +60,20 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
 
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
-    doc.setTextColor(...RED);
+    doc.setTextColor(...WHITE);
     doc.text("LUSTRE SALON", pageWidth - 15, 15, { align: "right" });
 
-    doc.setFont("helvetica", "italic");
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(9);
     doc.setTextColor(230, 230, 230);
     doc.text("Your Premium Grooming Partner", pageWidth - 15, 22, { align: "right" });
 
-    doc.setFont("helvetica", "bolditalic");
-    doc.setFontSize(25);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
     doc.setTextColor(...GOLD);
     doc.text("INVOICE", pageWidth - 15, 30, { align: "right" });
 
-    doc.setDrawColor(...GOLD);
-    doc.setLineWidth(0.8);
-    doc.line(15, headerHeight, pageWidth - 15, headerHeight);
+
 
     let currentY = headerHeight + 12;
 
@@ -123,7 +121,7 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
 
     autoTable(doc, {
         startY: currentY,
-        head: [["#", "Service", "Sub Name", "Stylist", "Time", "Total (USD)", "Paid (USD)", "Due (USD)"]],
+        head: [["#", "Services", "Sub Names", "Stylist", "Time", "Total (USD)", "Paid (USD)", "Due (USD)"]],
         body: tableData,
         theme: "grid",
         headStyles: {
@@ -151,6 +149,11 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
 
     currentY = doc.lastAutoTable.finalY + 2;
 
+
+
+
+
+
     // --- PAYMENT SUMMARY ---
     const sumBoxW = pageWidth * 0.85;
     const sumBoxH = 48;
@@ -168,7 +171,7 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     doc.setTextColor(...DARK_TEXT);
     doc.text("Payment Summary", sumBoxX + innerPad, y - 2);
 
-    doc.setDrawColor(...GOLD);
+    doc.setDrawColor(...DARK_GRAY);
     doc.setLineWidth(0.4);
     doc.line(sumBoxX + innerPad, y + 2, sumBoxX + sumBoxW - innerPad, y + 2);
 
@@ -196,6 +199,11 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     doc.text(formatUSD(totalDue), sumBoxX + sumBoxW - innerPad, y, { align: "right" });
 
     currentY += sumBoxH + 10;
+
+
+
+
+
 
     // --- MESSAGE BAR ---
     const msgBoxW = pageWidth * 0.85;
@@ -226,12 +234,12 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     doc.setLineWidth(0.5);
     doc.line(0, headerHeight, pageWidth, headerHeight);
 
-    doc.setFillColor(...BLACK);
+    doc.setFillColor(...LIGHT_GRAY);
     doc.rect(0, footerY, pageWidth, footerHeight, "F");
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(7);
-    doc.setTextColor(...WHITE);
+    doc.setTextColor(...BLACK);
 
     doc.text(
         "123 Main Street, New York, NY 10001 | info@lustresalon.com | www.lustresalon.com",
