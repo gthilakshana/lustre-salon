@@ -150,7 +150,7 @@ export default function AdminCustomer() {
                 <table className="w-full min-w-full text-left">
                     <thead className="bg-gray-800 text-white">
                         <tr>
-                            {["Name", "Email", "Mobile", "Role", "Status", "Actions"].map(h => (
+                            {["Name", "Email", "Mobile", "Gender", "Role", "Status", "Actions"].map(h => (
                                 <th key={h} className="px-3 py-2 uppercase text-xs">{h}</th>
                             ))}
                         </tr>
@@ -161,6 +161,7 @@ export default function AdminCustomer() {
                                 <td className="px-3 py-2 font-medium">{c.fullName}</td>
                                 <td className="px-3 py-2">{c.email}</td>
                                 <td className="px-3 py-2">+1 {c.mobileNumber}</td>
+                                <td className="px-3 py-2">{c.gender}</td>
                                 <td className="px-3 py-2">
                                     <span className="px-2 py-1 rounded-md text-xs bg-gray-100 text-gray-700">{c.role}</span>
                                 </td>
