@@ -18,7 +18,7 @@ import jwt_decode from "jwt-decode";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
 import ActiveUsersChart from "../admin/activeUsersChart";
-import RevenueCard from "../admin/RevenueCard";
+import RevenueCard from "../admin/revenueCard";
 import {
     Chart as ChartJS,
     CategoryScale,
