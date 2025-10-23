@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaCalendarAlt, FaTachometerAlt } from "react-icons/fa";
+import { RiBook2Fill } from "react-icons/ri";
 import { IoMdLogOut } from "react-icons/io";
 import { useNavigate, Link } from "react-router-dom";
 import Header from "../components/header";
@@ -195,7 +196,7 @@ export default function User() {
                                     : "hover:bg-gray-200"
                                     }`}
                             >
-                                <FaTachometerAlt className="text-black" size={20} />
+                                <FaTachometerAlt className="text-black" size={17} />
                                 <span className="text-sm font-medium text-gray-800">Dashboard</span>
                             </button>
 
@@ -206,28 +207,37 @@ export default function User() {
                                     : "hover:bg-gray-200"
                                     }`}
                             >
-                                <FaCalendarAlt className="text-black" size={20} />
+                                <FaCalendarAlt className="text-black" size={17} />
                                 <span className="text-sm font-medium text-gray-800">My Appointments</span>
                             </button>
+
+                            <button
+                                onClick={() => navigate("/appointment")}
+                                className="flex items-center gap-4 px-6 py-4 hover:bg-gray-200 transition"
+                            >
+                                <RiBook2Fill className="text-black" size={17} />
+                                <span className="text-sm font-medium text-gray-800">Book Now</span>
+                            </button>
+
 
                             <button
                                 onClick={handleLogout}
                                 className="flex items-center gap-4 px-6 py-4 hover:bg-gray-200 transition"
                             >
-                                <IoMdLogOut className="text-black" size={20} />
+                                <IoMdLogOut className="text-black" size={17} />
                                 <span className="text-sm font-medium text-gray-800">Logout</span>
                             </button>
                         </div>
 
                         {/* BOOK NOW Button */}
-                        <div className="p-6">
+                        {/* <div className="p-6">
                             <Link
                                 to="/appointment"
                                 className="w-full block text-center bg-black text-sm rounded-md text-white font-semibold py-3 shadow-lg hover:bg-gray-900 hover:text-red-500  transition-all duration-300"
                             >
                                 BOOK NOW
                             </Link>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* Content */}
