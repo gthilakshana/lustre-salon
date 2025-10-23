@@ -298,7 +298,7 @@ export default function DateAndTimeSelect() {
 
 
                                     {selectedServices.length > 1 && (
-                                        <p className="text-sm text-red-600 mt-4 mb-2 p-2 bg-red-50 border border-red-200 rounded-md w-full max-w-lg text-center">
+                                        <p className="text-[10px] md:text-sm text-red-600 mt-4 mb-2 p-2 bg-red-50 border border-red-200 rounded-md w-full max-w-lg text-center">
                                             Selecting **multiple services** will increase the **total time duration** of your booking.
                                         </p>
                                     )}

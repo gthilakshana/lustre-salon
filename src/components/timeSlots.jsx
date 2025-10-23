@@ -109,7 +109,7 @@ export default function TimeSlots({
     return (
         <div className="bg-white w-full shadow-2xl p-6 sm:p-8 transition-all duration-300">
             <div className="w-full mb-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-4 border-b pb-2">
+                <h3 className="text-md md:text-lg font-bold text-gray-800 mb-4 border-b pb-2">
                     {selectedDate
                         ? new Date(selectedDate).toLocaleDateString("en-US", {
                             weekday: "long",
@@ -125,7 +125,7 @@ export default function TimeSlots({
                 <div className="lg:w-3/5 w-full flex flex-col border lg:border-r border-gray-200 p-4 lg:p-5 rounded-xl">
 
                     <div className="mb-6">
-                        <h4 className="text-lg font-arial text-gray-700 mb-3">Select Service Type</h4>
+                        <h4 className="text-md md:text-lg font-arial text-gray-700 mb-3">Select Service Type</h4>
                         <div className="flex gap-4">
                             <button
                                 onClick={() => setSelectedGender("Gents")}
@@ -148,9 +148,9 @@ export default function TimeSlots({
                         </div>
                     </div>
 
-                    <h4 className="text-sm font-semibold text-gray-700 mb-4">
+                    <h4 className="text-xs md:text-sm font-semibold text-gray-700 mb-4">
                         Select Time Slot for{" "}
-                        <span className="text-blue-600 font-bold text-sm">{stylistName || "Stylist"}</span>
+                        <span className="text-blue-600 font-bold text-xs md:text-sm ">{stylistName || "Stylist"}</span>
                     </h4>
 
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -197,7 +197,7 @@ export default function TimeSlots({
 
                 {/* Right Section: Stylist Options */}
                 <div className="lg:w-2/5 w-full flex flex-col mt-5">
-                    <h4 className="text-lg font-arial justify-center text-gray-800 mb-4 flex items-center">Stylist Options</h4>
+                    <h4 className="text-md md:text-lg font-arial justify-center text-gray-800 mb-4 flex items-center">Stylist Options</h4>
 
                     <div className="flex justify-center items-center w-full">
                         {showStylistOptions ? (
@@ -251,7 +251,7 @@ export default function TimeSlots({
                             </div>
                         ) : (
                             <div className="bg-gray-100 rounded-xl p-6 flex flex-col justify-center items-center text-center border border-gray-200 w-full min-h-[300px] sm:min-h-[400px]">
-                                <p className="text-sm text-gray-700 max-w-xs">
+                                <p className="text-xs md:text-sm  text-gray-700 max-w-xs">
                                     Click a time slot to see stylist options.
                                 </p>
                             </div>

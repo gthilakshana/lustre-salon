@@ -82,7 +82,7 @@ export default function Calendar({ selectedDate, setSelectedDate, bookedDates = 
                 >
                     <FaChevronLeft size={16} />
                 </button>
-                <h2 className="text-xl font-bold text-gray-800">{referenceMonth.format("MMMM YYYY")}</h2>
+                <h2 className="text-md md:text-lg font-bold text-gray-800">{referenceMonth.format("MMMM YYYY")}</h2>
                 <button
                     onClick={() => canMoveForward && setCurrentMonthIndex(currentMonthIndex + 1)}
                     disabled={!canMoveForward}
