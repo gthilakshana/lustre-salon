@@ -19,33 +19,40 @@ export default function ServiceCard({ image, name, title, price, comingSoon }) {
     return (
         <div
             onClick={handleClick}
-            className={`relative border rounded-lg shadow-sm p-4 flex flex-col items-center text-center hover:shadow-lg transition ${comingSoon ? "cursor-not-allowed" : "cursor-pointer"}`}
+            className={`
+                relative border rounded-lg shadow-sm p-3 sm:p-4 flex flex-col items-center text-center
+                hover:shadow-md transition-all duration-300
+                ${comingSoon ? "cursor-not-allowed" : "cursor-pointer"}
+            `}
         >
             {comingSoon && (
-                <div className="absolute -top-2 items-center">
-                    <div className="bg-red-700 text-white text-xs font-semibold px-4 py-1 shadow-md rounded-md">
+                <div className="absolute -top-2 flex justify-center w-full">
+                    <div className="bg-red-700 text-white text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1 shadow-md rounded-md">
                         Coming Soon
                     </div>
                 </div>
             )}
 
             {/* Image */}
-            <div style={{ width: "12rem", height: "12rem" }} className="flex items-center justify-center overflow-hidden">
+            <div className="w-32 h-32 sm:w-44 sm:h-44 md:w-48 md:h-48 flex items-center justify-center overflow-hidden rounded-md mt-2">
                 <img
                     src={image}
                     alt={displayName}
-                    className={`object-cover w-full h-full ${comingSoon ? "opacity-50" : ""}`}
+                    className={`object-cover w-full h-full rounded-md ${comingSoon ? "opacity-50" : ""}`}
                 />
             </div>
 
-
-
-
-            <h3 className={`mt-4 text-base font-semibold ${comingSoon ? "text-gray-400" : "text-black"}`}>
+            {/* Name */}
+            <h3 className={`mt-3 text-sm sm:text-base md:text-lg font-semibold ${comingSoon ? "text-gray-400" : "text-black"}`}>
                 {displayName}
             </h3>
 
-            {price && <p className="text-sm text-gray-600 mt-1">{price}</p>}
+            {/* Price */}
+            {price && (
+                <p className="text-xs sm:text-sm md:text-base text-gray-600 mt-1">
+                    {price}
+                </p>
+            )}
         </div>
     );
 }

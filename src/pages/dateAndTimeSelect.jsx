@@ -320,9 +320,9 @@ export default function DateAndTimeSelect() {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.8, ease: "easeOut" }}
                                 >
-                                    <motion.h2 className="text-2xl font-bold mb-4 uppercase">Select Service</motion.h2>
+                                    <motion.h2 className="text-xl md:text-2xl font-bold mb-4 uppercase">Select Service</motion.h2>
 
-                                    <p className="mb-6"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                                    <p className="mb-6 text-xs md:text-sm"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
 
                                     <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
@@ -376,13 +376,13 @@ export default function DateAndTimeSelect() {
                             {step === "datetime" && (
                                 <motion.div
                                     ref={datetimeRef}
-                                    className="w-full sm:w-full md:w-[90%] mt-10 "
+                                    className="w-full sm:w-full md:w-[90%] mt-4 "
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.8, ease: "easeOut" }}
                                 >
                                     <motion.h2
-                                        className="text-2xl  font-bold mb-4 uppercase"
+                                        className="text-xl md:text-2xl font-bold mb-4 uppercase"
                                         initial={{ opacity: 0, y: -20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.8, delay: 0.1 }}
@@ -390,7 +390,7 @@ export default function DateAndTimeSelect() {
                                         Pick Date & Time
                                     </motion.h2>
 
-                                    <p className="mb-6 text-sm sm:text-base">
+                                    <p className="mb-6 md:text-sm text-xs">
                                         Select an available date and time slot with **{stylistName}**.
                                     </p>
 
@@ -448,7 +448,7 @@ export default function DateAndTimeSelect() {
                                     transition={{ duration: 0.8, ease: "easeOut" }}
                                 >
                                     <motion.h2
-                                        className="text-2xl font-bold mb-4 uppercase"
+                                        className="text-xl md:text-2xl font-bold mb-4 uppercase"
                                         initial={{ opacity: 0, y: -20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.8, delay: 0.1 }}
@@ -456,11 +456,8 @@ export default function DateAndTimeSelect() {
                                         Confirm Appointment Payment
                                     </motion.h2>
 
-                                    <span className="text-sm sm:text-base">
-                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo
-                                        recusandae ea, quae minima, iusto dolorem ducimus accusamus
-                                        amet error commodi aspernatur architecto laboriosam nobis sed
-                                        consequuntur impedit.
+                                    <span className="text-xs md:text-sm ">
+                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                                     </span>
 
                                     {/* Banner/Image Section (kept as is) */}
@@ -472,7 +469,7 @@ export default function DateAndTimeSelect() {
                                         />
                                         <div className="absolute inset-0 flex items-center justify-center p-2 sm:p-4">
                                             <p className="text-white text-center text-sm sm:text-lg md:text-xl font-semibold bg-black/40 p-1 sm:p-2 rounded">
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries
+                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                             </p>
                                         </div>
                                         <div className="absolute bottom-2 sm:bottom-4 right-2 sm:right-4 w-[80px] sm:w-[100px] h-[80px] sm:h-[100px]">

@@ -174,7 +174,7 @@ export default function User() {
                 <div className="w-full max-w-6xl flex gap-6 md:flex-row flex-col">
 
                     {/* Sidebar */}
-                    <div className="w-full h-[500px] md:h-[600px] md:max-w-sm bg-white shadow-xl flex flex-col justify-between overflow-hidden order-1 md:order-2">
+                    <div className="w-full h-[500px] md:h-[610px] md:max-w-sm  bg-white shadow-xl flex flex-col justify-between overflow-hidden order-1 md:order-2">
 
                         {/* User Info */}
                         <div className="flex flex-col items-center p-8 bg-black text-gray-50">
@@ -255,7 +255,7 @@ export default function User() {
                                         </p>
                                         <button
                                             onClick={() => setActiveTab("appointments")}
-                                            className="mt-3 px-4 py-2 rounded-full cursor-pointer bg-black text-white hover:bg-red-600 transition"
+                                            className="mt-3 px-4 py-2 text-xs lg:text-sm rounded-lg cursor-pointer bg-black text-white hover:bg-red-600 transition"
                                         >
                                             View All Bookings
                                         </button>
