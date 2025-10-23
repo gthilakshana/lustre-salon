@@ -34,6 +34,7 @@ export default function ActiveUsersChart() {
                 const users = res.data.filter((u) => u.role === "user");
                 const userCountByPeriod = {};
 
+                // Count users per period
                 users.forEach((u) => {
                     const dateField = u.createdAt || u.rawDate || u.registeredAt;
                     if (!dateField) return;
@@ -46,8 +47,24 @@ export default function ActiveUsersChart() {
                     userCountByPeriod[key] = (userCountByPeriod[key] || 0) + 1;
                 });
 
-                const labels = Object.keys(userCountByPeriod).sort((a, b) => new Date(a) - new Date(b));
-                const dataPoints = labels.map((label) => userCountByPeriod[label]);
+                let labels = [];
+                let dataPoints = [];
+
+                if (view === "weekly") {
+                    // Last 8 weeks
+                    const startOfWeek = dayjs().startOf("isoWeek");
+                    for (let i = 7; i >= 0; i--) {
+                        const wkStart = startOfWeek.subtract(i, "week");
+                        const wkEnd = wkStart.endOf("isoWeek");
+                        const label = `${wkStart.format("DD MMM")} - ${wkEnd.format("DD MMM")}`;
+                        const key = wkStart.format("YYYY-[W]WW");
+                        labels.push(label);
+                        dataPoints.push(userCountByPeriod[key] || 0);
+                    }
+                } else {
+                    labels = Object.keys(userCountByPeriod).sort((a, b) => new Date(a) - new Date(b));
+                    dataPoints = labels.map((label) => userCountByPeriod[label]);
+                }
 
                 setChartData({
                     labels,
@@ -71,7 +88,7 @@ export default function ActiveUsersChart() {
     }, [view]);
 
     return (
-        <div className="bg-white p-4  border border-gray-200">
+        <div className="bg-white p-4 border border-gray-200 rounded-xl">
             <h3 className="text-lg font-semibold text-gray-800 mb-2 text-center">
                 Active Users ({view})
             </h3>
@@ -81,7 +98,7 @@ export default function ActiveUsersChart() {
                     <button
                         key={v}
                         onClick={() => setView(v)}
-                        className={`px-3 py-1  ${view === v
+                        className={`px-3 py-1  rounded-full ${view === v
                             ? "bg-gray-800 text-white"
                             : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                             }`}

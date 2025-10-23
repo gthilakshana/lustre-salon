@@ -1,5 +1,8 @@
 import React, { useMemo, useState } from "react";
 import dayjs from "dayjs";
+import isoWeek from "dayjs/plugin/isoWeek";
+dayjs.extend(isoWeek);
+
 import {
     AreaChart,
     Area,
@@ -14,7 +17,7 @@ const primaryBlue = "#1D4ED8";
 const softBlue = "#93C5FD";
 
 const safeDate = (a) => {
-    const d = a?.date ?? a?.rawDate ?? a?.raw_date ?? a?.createdAt ?? a?.created_at;
+    const d = a?.date ?? a?.rawDate ?? a?.createdAt ?? a?.created_at;
     return dayjs(d);
 };
 
@@ -38,38 +41,42 @@ const getDailyRevenueData = (appointments, days = 7) => {
         const appt = safeDate(a);
         if (!appt.isValid()) return;
         const key = appt.format("YYYY-MM-DD");
-        if (dataMap[key]) {
-            dataMap[key].revenue += safePrice(a);
-        }
+        if (dataMap[key]) dataMap[key].revenue += safePrice(a);
     });
 
     return Object.values(dataMap);
 };
 
 const getWeeklyRevenueData = (appointments, weeks = 8) => {
-    const now = dayjs().startOf("week");
+    const now = dayjs().startOf("isoWeek");
     const dataMap = {};
 
     for (let i = weeks - 1; i >= 0; i--) {
-        const wk = now.subtract(i, "week");
-        const key = wk.format("YYYY-[W]WW");
-        dataMap[key] = { name: wk.format("DD MMM"), revenue: 0, weekStart: wk };
+        const wkStart = now.subtract(i, "week");
+        const wkEnd = wkStart.endOf("isoWeek");
+        const key = wkStart.format("YYYY-[W]WW");
+
+        dataMap[key] = {
+            weekStart: wkStart,
+            weekEnd: wkEnd,
+            name: `${wkStart.format("DD MMM")} - ${wkEnd.format("DD MMM")}`,
+            revenue: 0, // ensure zero revenue weeks exist
+        };
     }
 
     appointments.forEach((a) => {
         const appt = safeDate(a);
         if (!appt.isValid()) return;
-        const wkStart = appt.startOf("week");
+        const wkStart = appt.startOf("isoWeek");
         const key = wkStart.format("YYYY-[W]WW");
-        if (dataMap[key]) {
-            dataMap[key].revenue += safePrice(a);
-        }
+        if (dataMap[key]) dataMap[key].revenue += safePrice(a);
     });
 
     return Object.values(dataMap)
         .sort((a, b) => a.weekStart.valueOf() - b.weekStart.valueOf())
-        .map((x) => ({ name: x.name, revenue: x.revenue }));
+        .map(x => ({ name: x.name, revenue: x.revenue }));
 };
+
 
 const getMonthlyRevenueData = (appointments, months = 6) => {
     const now = dayjs().startOf("month");
@@ -85,9 +92,7 @@ const getMonthlyRevenueData = (appointments, months = 6) => {
         const appt = safeDate(a);
         if (!appt.isValid()) return;
         const key = appt.format("YYYY-MM");
-        if (dataMap[key]) {
-            dataMap[key].revenue += safePrice(a);
-        }
+        if (dataMap[key]) dataMap[key].revenue += safePrice(a);
     });
 
     return Object.values(dataMap);
@@ -106,7 +111,7 @@ const RevenueChart = ({ appointments = [] }) => {
     const chartData = view === "daily" ? dailyData : view === "weekly" ? weeklyData : monthlyData;
 
     return (
-        <div className="bg-white p-4   border border-gray-200">
+        <div className="bg-white p-4 border border-gray-200 rounded-xl">
             <h3 className="text-lg font-semibold text-gray-800 mb-2 text-center">
                 Revenue ({view})
             </h3>
@@ -116,7 +121,7 @@ const RevenueChart = ({ appointments = [] }) => {
                     <button
                         key={v}
                         onClick={() => setView(v)}
-                        className={`px-3 py-1  ${view === v
+                        className={`px-3 py-1 rounded-full font-medium ${view === v
                             ? "bg-gray-800 text-white"
                             : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                             }`}
@@ -126,7 +131,7 @@ const RevenueChart = ({ appointments = [] }) => {
                 ))}
             </div>
 
-            <div className="h-48">
+            <div className="h-56">
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={chartData}>
                         <defs>
@@ -139,7 +144,18 @@ const RevenueChart = ({ appointments = [] }) => {
                         <XAxis dataKey="name" stroke="#6B7280" />
                         <YAxis stroke="#6B7280" />
                         <Tooltip formatter={(value) => [currencyFormatter(value), "Revenue"]} />
-                        <Area type="monotone" dataKey="revenue" stroke={primaryBlue} fill="url(#colorRevenue)" strokeWidth={3} />
+                        <Area
+                            type="monotone"
+                            dataKey="revenue"
+                            stroke={primaryBlue}
+                            fill="url(#colorRevenue)"
+                            strokeWidth={3}
+                            dot={{ r: 4 }}
+                            activeDot={{ r: 6 }}
+                            isAnimationActive={false}
+                            connectNulls={true}  // ensures line connects even over zero values
+                        />
+
                     </AreaChart>
                 </ResponsiveContainer>
             </div>

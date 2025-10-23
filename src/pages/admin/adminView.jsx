@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
     FaUsers,
@@ -13,13 +13,14 @@ import {
     FaBell,
 } from "react-icons/fa";
 import axios from "axios";
-import { ShowToast } from "../../components/lustreToaster";
 import RevenueChart from "../admin/revenueChart";
 import jwt_decode from "jwt-decode";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
+import isBetween from "dayjs/plugin/isBetween";
 import ActiveUsersChart from "../admin/activeUsersChart";
 import RevenueCard from "../admin/revenueCard";
+
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -32,6 +33,7 @@ import {
 } from "chart.js";
 
 dayjs.extend(isoWeek);
+dayjs.extend(isBetween);
 
 ChartJS.register(
     CategoryScale,
@@ -53,6 +55,7 @@ export default function AdminView() {
         role: "admin",
         image: defaultImage,
     });
+
     const themeClasses = {
         white: { bg: "bg-white", text: "text-gray-800", icon: "text-gray-600", title: "text-gray-900", border: "border-gray-300" },
         blue: { bg: "bg-blue-200", text: "text-blue-900", icon: "text-blue-700", title: "text-blue-900", border: "border-blue-300" },
@@ -66,8 +69,12 @@ export default function AdminView() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [activeView, setActiveView] = useState("daily");
+    // State to manage the unread booking count
     const [todayBookingCount, setTodayBookingCount] = useState(0);
 
+    const prevBookingCount = useRef(todayBookingCount);
+
+    // Auth / admin load
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (!token) return navigate("/login");
@@ -77,14 +84,44 @@ export default function AdminView() {
                 fullName: decoded.fullName || "Admin",
                 role: decoded.role || "admin",
                 image: decoded.image || defaultImage,
+                email: decoded.email || "admin@gmail.com",
             });
         } catch (err) {
             console.error("Invalid token:", err);
-            ShowToast("error", "Invalid session", "Please login again.");
             navigate("/login");
         }
     }, [navigate]);
 
+    // Revenue calculation
+    const calculateRevenueFromList = (appointmentsList = []) => {
+        const now = dayjs();
+        const todayStart = now.startOf("day");
+        const weekStart = now.subtract(6, "day").startOf("day");
+        const monthStart = now.subtract(29, "day").startOf("day");
+
+        let daily = 0, weekly = 0, monthly = 0, total = 0;
+
+        appointmentsList.forEach(a => {
+            const price = Number(a.price) || 0;
+            total += price;
+
+            if (!a.date) return;
+            const apptDate = dayjs(a.date).startOf("day");
+
+            if (apptDate.isSame(todayStart)) daily += price;
+            if (apptDate.isBetween(weekStart, now.endOf("day"), null, "[]")) weekly += price;
+            if (apptDate.isBetween(monthStart, now.endOf("day"), null, "[]")) monthly += price;
+        });
+
+        return {
+            daily: Number(daily.toFixed(2)),
+            weekly: Number(weekly.toFixed(2)),
+            monthly: Number(monthly.toFixed(2)),
+            total: Number(total.toFixed(2)),
+        };
+    };
+
+    // Fetch stats
     const fetchStats = async () => {
         try {
             setLoading(true);
@@ -105,12 +142,15 @@ export default function AdminView() {
 
             const customers = usersData.filter(u => u.role === "user").length;
             const admins = usersData.filter(u => u.role === "admin").length;
-            const messages = messagesRes.data.length || 0;
+            const messages = (messagesRes.data && messagesRes.data.length) || 0;
 
             const appointmentsData = appointmentsRes.data || [];
-            setAppointments(
-                appointmentsData.map(a => ({ ...a, price: (a.fullPayment || 0) + (a.duePayment || 0) }))
-            );
+            const appointmentsWithPrice = appointmentsData.map(a => ({
+                ...a,
+                price: (Number(a.fullPayment) || 0) + (Number(a.duePayment) || 0),
+            }));
+
+            setAppointments(appointmentsWithPrice);
 
             setStats([
                 { icon: FaUsers, title: "Customers", value: customers, color: "blue", description: "Registered users" },
@@ -119,44 +159,35 @@ export default function AdminView() {
                 { icon: FaCalendarAlt, title: "Total Appointments", value: appointmentsData.length, color: "white", description: "All-time bookings" },
             ]);
 
-            // Update today's booking count correctly
-            const today = dayjs().startOf("day");
-            const todayCount = appointmentsData.filter(a => dayjs(a.date).isSame(today, "day")).length;
+            const todayStart = dayjs().startOf("day");
+
+            const todayCount = appointmentsWithPrice.filter(a => a.date && dayjs(a.date).isSame(todayStart, "day")).length;
+
             setTodayBookingCount(todayCount);
 
-
         } catch (err) {
-            console.error(err);
-            ShowToast("error", "Failed to load stats");
+            console.error("fetchStats error:", err);
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
+
         fetchStats();
-        const interval = setInterval(fetchStats, 60000);
-        return () => clearInterval(interval);
+
+
     }, []);
 
-    const calculateRevenue = () => {
-        const now = dayjs();
-        let total = 0, weekly = 0, monthly = 0, daily = 0;
 
-        appointments.forEach(a => {
-            const price = a.price || 0;
-            const apptDate = dayjs(a.date);
+    const handleNotificationClick = () => {
 
-            total += price;
-            if (apptDate.isSame(now, "day")) daily += price;
-            if (apptDate.isAfter(now.subtract(7, "day")) && apptDate.isBefore(now.add(1, "day"))) weekly += price;
-            if (apptDate.isAfter(now.subtract(30, "day")) && apptDate.isBefore(now.add(1, "day"))) monthly += price;
-        });
+        setTodayBookingCount(0);
 
-        return { total, weekly, monthly, daily };
+
+        navigate("/admin/orders");
     };
-
-    const revenue = useMemo(() => calculateRevenue(), [appointments]);
+    // ----------------------------------------
 
     const quickLinks = [
         { title: "Customers", icon: FaUsers, path: "/admin/customers", color: "white", subtitle: "Manage all user accounts" },
@@ -165,9 +196,11 @@ export default function AdminView() {
         { title: "Appointments", icon: FaCalendarAlt, path: "/admin/orders", color: "white", subtitle: "View and edit bookings" },
     ];
 
+    const revenue = React.useMemo(() => calculateRevenueFromList(appointments), [appointments]);
+
+
     return (
         <div className="p-4 sm:p-8 min-h-screen bg-gray-50 font-sans">
-
             <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0 mb-6 sm:mb-8 pb-4 border-b border-gray-200">
                 <h1 className="text-center sm:text-left w-full sm:w-auto text-2xl sm:text-3xl font-light tracking-wide text-gray-900">
                     <span className="font-arial font-bold text-xl md:text-2xl uppercase">
@@ -178,16 +211,14 @@ export default function AdminView() {
                     onClick={fetchStats}
                     disabled={loading}
                     className={`flex items-center gap-2 px-4 py-2 rounded-full font-medium text-gray-900 cursor-pointer transition-all duration-300
-                    ${loading
-                            ? "bg-gray-200 cursor-not-allowed opacity-70"
-                            : "bg-gray-100 hover:bg-gray-200 active:scale-95"
-                        }`}
+                    ${loading ? "bg-gray-200 cursor-not-allowed opacity-70" : "bg-gray-100 hover:bg-gray-200 active:scale-95"}`}
                 >
                     <FaSyncAlt className={`${loading ? "animate-spin" : ""} text-gray-700 text-sm`} />
                     {loading ? "Refreshing..." : "Refresh"}
                 </button>
             </header>
 
+            {/* Admin Info + Notifications */}
             <section className="flex items-center justify-between mb-8 p-4 border border-blue-200 rounded-xl shadow-sm bg-white">
                 <div className="flex items-center gap-4">
                     <img
@@ -209,12 +240,10 @@ export default function AdminView() {
                     </div>
                 </div>
 
+                {/* Bell Icon (FIXED onClick handler) */}
                 <div
                     className="relative cursor-pointer hover:scale-110 transition"
-                    onClick={() => {
-                        navigate("/admin/orders");
-                        setTodayBookingCount(0);
-                    }}
+                    onClick={handleNotificationClick}
                 >
                     <FaBell className="text-blue-600 text-[20px]" />
                     {todayBookingCount > 0 && (
