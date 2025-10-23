@@ -77,21 +77,18 @@ export default function Success() {
 
             <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
                 {loading ? (
-                    <div className="text-center px-4 sm:px-0">
-                        <h1 className="text-xl sm:text-2xl font-semibold mb-2">Processing Payment...</h1>
-                        <p className="text-gray-600 text-sm sm:text-base">
+                    <div className="text-center px-2 sm:px-0">
+                        <h1 className="text-lg sm:text-2xl font-semibold mb-2">Processing Payment...</h1>
+                        <p className="text-gray-600 text-xs sm:text-sm md:text-base">
                             Please wait while we confirm your appointment at <span className="font-semibold">LUSTRE SALON</span>.
                         </p>
                     </div>
                 ) : (
-                    <div className="bg-white shadow-lg p-6 sm:p-8 max-w-md w-full text-center mx-2 sm:mx-0">
-
-
-
+                    <div className="bg-white shadow-lg p-5 sm:p-8 max-w-md w-full text-center rounded-lg mx-2 sm:mx-0">
                         <div className="flex justify-center mb-4">
                             <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gray-100 flex items-center justify-center">
                                 <svg
-                                    className="w-10 h-10 sm:w-12 sm:h-12 text-black"
+                                    className="w-10 h-10 sm:w-12 sm:h-12 text-green-600"
                                     fill="none"
                                     stroke="currentColor"
                                     strokeWidth="3"
@@ -102,12 +99,12 @@ export default function Success() {
                             </div>
                         </div>
 
-                        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Payment Successful</h1>
-                        <p className="text-gray-600 text-sm sm:text-base mb-6">
+                        <h1 className="text-lg sm:text-2xl font-bold text-gray-900 mb-2">Payment Successful</h1>
+                        <p className="text-gray-600 text-xs sm:text-sm md:text-base mb-6">
                             Thank you for your payment. Your appointment is confirmed.
                         </p>
 
-                        <p className="text-gray-500 text-sm sm:text-base">
+                        <p className="text-gray-500 text-xs sm:text-sm md:text-base">
                             Redirecting to homepage in <span className="font-semibold">{countdown}</span> seconds...
                         </p>
                     </div>
@@ -116,5 +113,6 @@ export default function Success() {
 
             <Footer />
         </>
+
     );
 }
