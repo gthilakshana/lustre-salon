@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { HiMail, HiPhone, HiLockClosed } from "react-icons/hi";
 import "react-international-phone/style.css";
 import { ShowToast } from "../components/lustreToaster";
 import axios from "axios";
@@ -12,6 +13,7 @@ export default function Login() {
     const [mobile, setMobile] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [useMobile, setUseMobile] = useState(false);
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "auto" });
@@ -32,7 +34,7 @@ export default function Login() {
 
         try {
             const response = await axios.post(
-                import.meta.env.VITE_API_URL + "/api/users/login",
+                `${import.meta.env.VITE_API_URL}/api/users/login`,
                 { email, mobile, password }
             );
 
@@ -46,7 +48,6 @@ export default function Login() {
                     "Your account is blocked. Please contact Lustre Salon admin for assistance."
                 );
             }
-
 
             if (user?.role === "admin") {
                 setLoading(false);
@@ -68,7 +69,7 @@ export default function Login() {
 
             setTimeout(() => {
                 navigate("/user");
-            }, 2000);
+            }, 1500);
         } catch (error) {
             const errorMsg = error?.response?.data?.message || "Login failed.";
             ShowToast(
@@ -85,89 +86,97 @@ export default function Login() {
         <>
             <Header />
 
-            <div className="min-h-screen flex pt-16 flex-col bg-white">
-                <main className="flex-1 flex items-center justify-center px-4 mt-16 mb-16">
-                    <div className="w-full max-w-md bg-white p-4">
-                        <h1 className="text-2xl md:text-3xl font-bold uppercase text-center mb-8">Login</h1>
+            <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 pt-30 px-8 md:px-4 py-10">
+                <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md ">
+                    <h1 className="text-2xl md:text-3xl font-bold text-center mb-8 uppercase text-gray-900">
+                        Login
+                    </h1>
 
-                        <form onSubmit={handleLogin} className="space-y-4">
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="Gmail address"
-                                className="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
-                            />
-
-                            <div className="flex items-center gap-2">
-                                <div className="flex-1 h-px bg-gray-300"></div>
-                                <span className="text-gray-500 text-sm">OR</span>
-                                <div className="flex-1 h-px bg-gray-300"></div>
+                    <form onSubmit={handleLogin} className="space-y-5">
+                        {!useMobile && (
+                            <div className="relative">
+                                <HiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Gmail address"
+                                    className="w-full pl-10 pr-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                />
                             </div>
+                        )}
 
-                            <div className="flex">
-                                <span className="flex items-center justify-center px-4 border-t border-b border-l rounded-l-md bg-gray-100 text-gray-700">
-                                    +1
-                                </span>
-
+                        {useMobile && (
+                            <div className="relative flex items-center">
+                                <HiPhone className="absolute left-3 text-gray-400 w-5 h-5" />
                                 <input
                                     type="tel"
                                     value={mobile}
                                     onChange={(e) => setMobile(e.target.value)}
                                     placeholder="Mobile number"
-                                    className="flex-1 h-[54px] w-full px-4 border-t border-b border-r-0 focus:outline-none"
+                                    className="flex-1 pl-10 pr-4 py-3 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-black"
                                 />
-
                                 <button
                                     type="button"
-                                    className="h-[54px] px-5 bg-black text-white font-medium rounded-r-md cursor-pointer hover:bg-gray-800 transition"
+                                    className="px-4 py-3 bg-black text-white rounded-r-md font-medium hover:bg-gray-800 transition"
                                 >
                                     Verify
                                 </button>
                             </div>
+                        )}
 
+                        <div className="relative">
+                            <HiLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                             <input
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Password"
-                                className="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                className="w-full pl-10 pr-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                             />
+                        </div>
 
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="w-full py-3 cursor-pointer bg-black text-white font-medium rounded-md hover:bg-gray-800 transition flex items-center justify-center "
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full py-3 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition flex justify-center items-center"
+                        >
+                            {loading ? (
+                                <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                            ) : (
+                                "Login"
+                            )}
+                        </button>
+
+                        <div className="flex justify-between text-sm text-gray-600">
+                            <Link
+                                to="/forgotPassword"
+                                className="hover:underline text-gray-900 font-medium"
                             >
-                                {loading ? (
-                                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                                ) : (
-                                    "Login"
-                                )}
+                                Forgot password?
+                            </Link>
+                            <button
+                                type="button"
+                                onClick={() => setUseMobile(!useMobile)}
+                                className="text-gray-900 font-medium hover:underline"
+                            >
+                                {useMobile ? "Use Email Instead" : "Use Mobile Instead"}
                             </button>
+                        </div>
 
-                            <p className="text-right text-sm text-gray-600">
-                                <Link
-                                    to="/forgotPassword"
-                                    className="text-black font-medium hover:underline"
-                                >
-                                    Forgot password?
-                                </Link>
-                            </p>
-
-                            <p className="text-center text-sm text-gray-600 mt-6 border-t pt-6">
-                                Don’t have an account?{" "}
-                                <Link
-                                    to="/register"
-                                    className="text-black font-medium hover:underline"
-                                >
-                                    Create one
-                                </Link>
-                            </p>
-                        </form>
-                    </div>
-                </main>
+                        <p className="text-center text-sm text-gray-600 mt-6 border-t pt-6">
+                            Don’t have an account?{" "}
+                            <Link
+                                to="/register"
+                                className="text-gray-900 font-medium hover:underline"
+                            >
+                                Create one
+                            </Link>
+                        </p>
+                    </form>
+                </div>
             </div>
+
             <Footer />
         </>
     );
