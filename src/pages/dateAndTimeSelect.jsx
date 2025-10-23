@@ -13,6 +13,7 @@ import Calendar from "../components/calender";
 import TimeSlots from "../components/timeSlots";
 import Tabs from "../components/tabs";
 import Cart from "../components/cart";
+import StepNavigation from "../components/stepNavigation";
 import Footer from "../components/footer";
 
 
@@ -218,6 +219,13 @@ export default function DateAndTimeSelect() {
         { id: "Hair extension services", label: "Hair extension services" },
     ];
 
+    const steps = [
+        { id: "barber", label: "Select Barber", path: "/appointment" },
+        { id: "select", label: "Select Service" },
+        { id: "datetime", label: "Pick Date & Time" },
+        { id: "cart", label: "Confirm Payment" },
+    ];
+
     return (
         <>
             <Header />
@@ -229,72 +237,11 @@ export default function DateAndTimeSelect() {
             >
                 <div className="absolute inset-0 bg-black/50"></div>
 
-                <div className="relative z-10 w-full flex flex-col items-center">
+                <div className="relative z-10 w-full flex flex-col items-center mt-5">
 
-                    <div className="w-full flex justify-center py-10">
-                        <div className="flex bg-white shadow-lg overflow-hidden">
+                    {/* Step Navigation */}
+                    <StepNavigation steps={steps} activeStep={step} navigate={navigate} employeeName={employeeName} setStep={setStep} />
 
-
-                            <button
-                                className={`px-8 py-4 text-sm cursor-pointer font-semibold border-r transition-colors duration-300 flex items-center justify-center 
-                                    ${step === "barber" || employeeName ? "bg-black text-white" : "bg-white text-black"}`}
-                                onClick={() => navigate("/appointment")}
-                                disabled={step === "barber"}
-                            >
-                                <span
-                                    className={`sm:hidden w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold bg-black text-white`}
-                                >
-                                    1
-                                </span>
-                                <span className="hidden sm:inline">Select Barber</span>
-                            </button>
-
-
-
-                            <button
-                                className={`px-8 py-4 text-sm cursor-pointer font-semibold border-r transition-colors duration-300 flex items-center justify-center 
-                                    ${step === "select" ? "bg-black text-white" : "bg-white text-black hover:bg-black hover:text-white"}`}
-                                onClick={() => setStep("select")}
-                            >
-                                <span
-                                    className={`sm:hidden w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold bg-black text-white`}
-                                >
-                                    2
-                                </span>
-                                <span className="hidden sm:inline">Select Service</span>
-                            </button>
-
-
-
-                            <button
-                                className={`px-8 py-4 text-sm cursor-pointer font-semibold border-r transition-colors duration-300 flex items-center justify-center 
-                                    ${step === "datetime" ? "bg-black text-white" : "bg-white text-black hover:bg-black hover:text-white"}`}
-                                onClick={() => handleNextStep("datetime")}
-                            >
-                                <span
-                                    className={`sm:hidden w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold bg-black text-white`}
-                                >
-                                    3
-                                </span>
-                                <span className="hidden sm:inline">Pick Date & Time</span>
-                            </button>
-
-
-
-                            <button
-                                className={`px-8 py-4 text-sm cursor-pointer font-semibold transition-colors duration-300 flex items-center justify-center 
-                                    ${step === "cart" ? "bg-black text-white" : "bg-white text-black hover:bg-black hover:text-white"}`}
-                                onClick={() => setStep("cart")}
-                            >
-                                <span
-                                    className={`sm:hidden w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold bg-black text-white`}
-                                >
-                                    4
-                                </span>
-                                <span className="hidden sm:inline">Confirm Payment</span>
-                            </button>
-                        </div>
-                    </div>
 
                     {/* --- Main Content --- */}
                     <div className="w-full p-4  bg-white/90 backdrop-blur-md shadow-xl text-center flex flex-col items-center h-full">
@@ -358,17 +305,19 @@ export default function DateAndTimeSelect() {
 
 
                                     {/* Confirm Button */}
+
                                     {selectedServices.length > 0 && (
                                         <div className="w-full flex justify-end mt-6">
                                             <button
                                                 onClick={() => setStep("datetime")}
-                                                className="flex px-8 py-2 items-center justify-center rounded bg-red-500 w-auto h-[50px] font-medium text-white shadow cursor-pointer hover:bg-red-600 hover:text-white transition"
+                                                className="flex items-center justify-center px-4  md:px-8 py-3  rounded-full bg-red-500 w-auto  text-sm sm:text-base md:text-md font-medium text-white shadow cursor-pointer hover:bg-red-600 transition"
                                             >
                                                 Confirm Selection
-                                                <HiArrowRight className="ml-2 w-5 h-5" />
+
                                             </button>
                                         </div>
                                     )}
+
                                 </motion.div>
                             )}
 
@@ -428,12 +377,13 @@ export default function DateAndTimeSelect() {
                                     >
                                         <button
                                             onClick={handleAddToCart}
-                                            className="flex items-center justify-center px-4 sm:px-8 py-2 sm:py-2.5 rounded bg-red-500 h-[45px] sm:h-[50px] w-full sm:w-auto font-medium text-white shadow cursor-pointer hover:bg-red-600 transition"
+                                            className="flex items-center justify-center px-4  md:px-8 py-3  rounded-full bg-red-500 w-auto  text-sm sm:text-base md:text-md font-medium text-white shadow cursor-pointer hover:bg-red-600 transition"
                                         >
                                             Confirm Appointment
-                                            <HiCheck className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
+
                                         </button>
                                     </motion.div>
+
                                 </motion.div>
                             )}
 

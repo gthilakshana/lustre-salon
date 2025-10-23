@@ -1,12 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import StepNavigation from "../components/stepNavigation";
 import ServiceCard from "../components/serviceCard";
 
 export default function Appointment() {
     const navigate = useNavigate();
+    const [step, setStep] = useState("barber");
 
     // Scroll to top on page load
     useEffect(() => {
@@ -33,6 +35,13 @@ export default function Appointment() {
 
     };
 
+    const steps = [
+        { id: 1, label: "Select Barber", path: "/select-barber" },
+        { id: 2, label: "Select Service", path: "/date-time-select" },
+        { id: 3, label: "Pick Date & Time", path: "/date-time-select" },
+        { id: 4, label: "Confirm Payment", path: "/date-time-select" },
+    ];
+
     return (
         <>
             <Header />
@@ -43,52 +52,17 @@ export default function Appointment() {
             >
                 <div className="absolute inset-0 bg-black/50"></div>
 
-                <div className="relative z-10 w-full flex flex-col items-center">
-
-                    <div className="w-full flex justify-center py-12">
-                        <div className="flex bg-white shadow-lg overflow-hidden">
-
-                            <button className="px-8 py-4 text-sm font-semibold border-r bg-black text-white transition-colors duration-300 flex items-center justify-center">
-                                <span className="sm:hidden w-8 h-8 flex items-center justify-center rounded-full bg-black text-white text-sm font-bold">
-                                    1
-                                </span>
-                                <span className="hidden sm:inline">Select Barber</span>
-                            </button>
+                <div className="relative z-10 w-full flex flex-col items-center mt-5">
 
 
-                            <button
-                                onClick={() => navigate("/date-time-select")}
-                                className="px-8 py-4 text-sm font-semibold border-r hover:bg-black hover:text-white transition-colors duration-300 flex items-center justify-center"
-                            >
-                                <span className="sm:hidden w-8 h-8 flex items-center justify-center rounded-full bg-black text-white text-sm font-bold">
-                                    2
-                                </span>
-                                <span className="hidden sm:inline">Select Service</span>
-                            </button>
+                    {/* Step Navigation */}
+                    <StepNavigation
+                        steps={steps}
+                        activeStep={step}
+                        setStep={setStep}
+                        employeeName={null}
+                    />
 
-
-                            <button
-                                onClick={() => navigate("/date-time-select")}
-                                className="px-8 py-4 text-sm font-semibold border-r hover:bg-black hover:text-white transition-colors duration-300 flex items-center justify-center"
-                            >
-                                <span className="sm:hidden w-8 h-8 flex items-center justify-center rounded-full bg-black text-white text-sm font-bold">
-                                    3
-                                </span>
-                                <span className="hidden sm:inline">Pick Date &amp; Time</span>
-                            </button>
-
-
-                            <button
-                                onClick={() => navigate("/date-time-select")}
-                                className="px-8 py-4 text-sm font-semibold hover:bg-black hover:text-white transition-colors duration-300 flex items-center justify-center"
-                            >
-                                <span className="sm:hidden w-8 h-8 flex items-center justify-center rounded-full bg-black text-white text-sm font-bold">
-                                    4
-                                </span>
-                                <span className="hidden sm:inline">Confirm Payment</span>
-                            </button>
-                        </div>
-                    </div>
 
 
                     <motion.div

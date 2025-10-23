@@ -138,47 +138,81 @@ export default function Cart({ cartItems, setCartItems, user }) {
     if (!cartItems.length) return <p className="text-gray-500 mt-6">Please select a service, date/time, and gender.</p>;
 
     return (
-        <div className="flex flex-col gap-4 mt-6 w-full max-w-7xl mx-auto">
+        <div className="flex flex-col gap-6 mt-6 w-full max-w-4xl mx-auto px-2 sm:px-4">
+            {/* Cart Items */}
             {cartItems.map((item, index) => (
-                <motion.div key={item.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="flex justify-between items-center p-4 border rounded-lg shadow hover:shadow-lg transition">
-                    <div className="flex flex-col">
-                        <h3 className="font-semibold text-lg">{item.title || item.serviceName || "Service"}</h3>
-                        <p className="text-gray-600">{formatter.format(Number(item.price || 0))}</p>
-                        <p className="text-gray-500">{item.date} at {item.time} - {item.endTime || addMinutesToTimeStr(item.time || "9:00 AM", 45)}</p>
-                        <p className="text-gray-500">For: {item.gender}</p>
-                        <p className="text-gray-500">Stylist: {item.stylist || item.stylistName || "Unnamed Stylist"}</p>
-                        <p className="text-gray-500">Payment Type: {item.paymentType || (paymentOption === "book-only" ? "Book Only" : paymentOption === "half" ? "Half" : "Full")}</p>
+                <motion.div
+                    key={item.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="flex flex-col sm:flex-row justify-between items-center p-4 sm:p-5 border rounded-lg shadow hover:shadow-lg bg-white transition"
+                >
+                    <div className="flex flex-col gap-1 sm:flex-1">
+                        <h3 className="font-semibold text-base sm:text-lg text-gray-800">{item.title || item.serviceName || "Service"}</h3>
+                        <p className="text-gray-600 text-sm sm:text-base">{formatter.format(Number(item.price || 0))}</p>
+                        <p className="text-gray-500 text-xs sm:text-sm">{item.date} at {item.time} - {item.endTime || addMinutesToTimeStr(item.time || "9:00 AM", 45)}</p>
+                        <p className="text-gray-500 text-xs sm:text-sm">For: {item.gender}</p>
+                        <p className="text-gray-500 text-xs sm:text-sm">Stylist: {item.stylist || item.stylistName || "Unnamed Stylist"}</p>
+                        <p className="text-gray-500 text-xs sm:text-sm">Payment Type: {item.paymentType || (paymentOption === "book-only" ? "Book Only" : paymentOption === "half" ? "Half" : "Full")}</p>
                     </div>
-                    <button onClick={() => handleDelete(item.id || item._id)} className="text-red-500 hover:text-red-700 transition cursor-pointer">
-                        <RiDeleteBin6Line size={20} />
+                    <button
+                        onClick={() => handleDelete(item.id || item._id)}
+                        className="text-red-500 items-end self-end  hover:text-red-700 transition cursor-pointer mt-6 md:mt-0"
+                    >
+                        <RiDeleteBin6Line size={22} />
                     </button>
                 </motion.div>
             ))}
 
-            <div className="mt-6 p-5 flex flex-col gap-3 shadow-sm">
-                <div className="flex flex-wrap gap-4">
+            {/* Payment Option Selection */}
+            <div className="mt-6 p-5 flex flex-col gap-3 shadow-sm rounded-md bg-gray-50">
+                <h4 className="font-semibold text-gray-700 text-sm sm:text-base">Select Payment Option</h4>
+                <div className="flex flex-wrap gap-2 sm:gap-4">
                     {["full", "half", "book-only"].map(opt => (
-                        <label key={opt} className={`cursor-pointer px-5 py-2 border transition font-medium uppercase ${paymentOption === opt ? "bg-red-500 text-white" : "bg-white text-black hover:bg-gray-200"}`}>
-                            <input type="radio" name="paymentOption" value={opt} checked={paymentOption === opt} onChange={() => setPaymentOption(opt)} className="hidden" />
-                            {opt === "full" ? "Full Payment" : opt === "half" ? "Half Payment" : "Book Only"}
+                        <label
+                            key={opt}
+                            className={`cursor-pointer px-4 sm:px-5 py-2 sm:py-2 border rounded-md transition font-medium uppercase text-xs sm:text-sm ${paymentOption === opt ? "bg-red-500 text-white border-red-500" : "bg-white text-gray-700 hover:bg-gray-200 border-gray-300"}`}
+                        >
+                            <input
+                                type="radio"
+                                name="paymentOption"
+                                value={opt}
+                                checked={paymentOption === opt}
+                                onChange={() => setPaymentOption(opt)}
+                                className="hidden"
+                            />
+                            {opt === "full" ? "Full" : opt === "half" ? "Half" : "Book"}
                         </label>
                     ))}
                 </div>
-                <p className="text-gray-600 mt-4">{getDescription()}</p>
+                <p className="text-gray-600 mt-2 text-xs sm:text-sm">{getDescription()}</p>
             </div>
 
-            <div className="flex flex-col gap-1 mt-4 p-4 border-t border-gray-300">
-                <div className="flex justify-between w-full"><h3 className="text-lg font-medium">Payment Now:</h3><span className="text-lg font-semibold">{formatter.format(amounts.payNow)}</span></div>
-                <div className="flex justify-between w-full"><h3 className="text-md font-medium text-gray-500">Due Amount:</h3><span className="text-lg font-semibold text-gray-500">{formatter.format(amounts.due)}</span></div>
+            {/* Payment Summary */}
+            <div className="flex flex-col gap-1 mt-4 p-4 border-t border-gray-300 bg-white rounded-md shadow-sm">
+                <div className="flex justify-between w-full text-sm sm:text-base">
+                    <h3 className="font-medium text-gray-700">Payment Now:</h3>
+                    <span className="font-semibold text-gray-800">{formatter.format(amounts.payNow)}</span>
+                </div>
+                <div className="flex justify-between w-full text-sm sm:text-base">
+                    <h3 className="text-gray-500 font-medium">Due Amount:</h3>
+                    <span className="text-gray-500 font-semibold">{formatter.format(amounts.due)}</span>
+                </div>
             </div>
 
-            <div className="flex justify-end mt-4 gap-3">
-                <button onClick={handleCheckout} className={`flex items-center cursor-pointer gap-2 px-6 py-3 font-semibold rounded shadow transition ${paymentOption === "book-only" ? "bg-black text-white hover:bg-gray-800" : "bg-red-500 text-white hover:bg-red-600"}`}>
-                    <FaCreditCard size={18} />
+            {/* Checkout Button */}
+            <div className="flex flex-col sm:flex-row justify-end mt-4 gap-2 sm:gap-3">
+                <button
+                    onClick={handleCheckout}
+                    className={`flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-3 font-semibold rounded-md shadow-md transition text-sm sm:text-base ${paymentOption === "book-only" ? "bg-black text-white hover:bg-gray-800" : "bg-red-500 text-white hover:bg-red-600"}`}
+                >
+                    <FaCreditCard size={18} className="sm:w-5 sm:h-5" />
                     {paymentOption === "book-only" ? "Book Appointment" : "Proceed to Checkout"}
                 </button>
             </div>
         </div>
+
+
     );
 }
