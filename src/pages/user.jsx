@@ -170,7 +170,7 @@ export default function User() {
     return (
         <>
             <Header />
-            <div className="w-full min-h-screen pt-30 bg-gray-50 flex justify-center p-3">
+            <div className="w-full min-h-screen pt-30 bg-gray-50 flex justify-center p-3 mb-10">
                 <div className="w-full max-w-6xl flex gap-6 md:flex-row flex-col">
 
                     {/* Sidebar */}
@@ -274,7 +274,7 @@ export default function User() {
 
                         {activeTab === "appointments" && (
                             <div>
-                                <h2 className="text-md md:text-xl uppercase font-semibold  text-gray-800 mb-4">
+                                <h2 className="text-md md:text-xl uppercase font-semibold mb-5 text-gray-800 ">
                                     My Appointments
                                 </h2>
 
