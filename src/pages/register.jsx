@@ -77,7 +77,7 @@ export default function Register() {
                     <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
                         <h1 className="text-xl md:text-2xl font-bold text-center mb-8 uppercase">Create Account</h1>
 
-                        <form onSubmit={handleRegister} className="space-y-4">
+                        <form onSubmit={handleRegister} className="space-y-3">
 
                             {/* Full Name */}
                             <div className="relative">
@@ -87,7 +87,7 @@ export default function Register() {
                                     value={fullName}
                                     onChange={(e) => setFullName(e.target.value)}
                                     placeholder="Full Name"
-                                    className="w-full pl-10 pr-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full pl-10 pr-4 py-3 text-base md:text-base border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                             </div>
 
@@ -100,7 +100,7 @@ export default function Register() {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Email Address"
-                                    className="w-full pl-10 px-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full pl-10 px-4 py-3 text-base md:text-base border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                             </div>
 
@@ -116,7 +116,7 @@ export default function Register() {
                                         setMobile(val);
                                     }}
                                     placeholder="Mobile number (USA)"
-                                    className="w-full pl-10 px-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full pl-10 px-4 py-3 text-base md:text-base border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                     pattern="^1?\d{10}$"
                                     title="Enter a valid USA mobile number (10 digits, optionally starting with 1)"
                                 />
@@ -125,7 +125,7 @@ export default function Register() {
 
                             {/* Gender */}
                             <div className="flex items-center gap-6 border px-4 py-3 rounded-md">
-                                <label className="flex items-center gap-2 text-xs md:text-md">
+                                <label className="flex items-center gap-2 text-base md:text-base">
                                     <input
                                         type="radio"
                                         name="gender"
@@ -135,7 +135,7 @@ export default function Register() {
                                     />
                                     Male
                                 </label>
-                                <label className="flex items-center gap-2 text-xs md:text-md">
+                                <label className="flex items-center gap-2 text-base md:text-base">
                                     <input
                                         type="radio"
                                         name="gender"
@@ -155,7 +155,7 @@ export default function Register() {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="Password"
-                                    className="w-full pl-10 px-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full pl-10 px-4 py-3 text-base md:text-base border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                             </div>
 
@@ -167,7 +167,7 @@ export default function Register() {
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                     placeholder="Confirm Password"
-                                    className="w-full pl-10 px-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full pl-10 px-4 py-3 text-base md:text-base border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                             </div>
 
@@ -175,7 +175,7 @@ export default function Register() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full py-3 bg-black cursor-pointer text-xs md:text-md text-white font-medium rounded-md hover:bg-gray-800 transition flex items-center justify-center"
+                                className="w-full py-3 bg-black cursor-pointer text-base md:text-base text-white font-medium rounded-md hover:bg-gray-800 transition flex items-center justify-center"
                             >
                                 {loading ? (
                                     <span className="w-5 h-5 border-2  border-white border-t-transparent rounded-full animate-spin"></span>

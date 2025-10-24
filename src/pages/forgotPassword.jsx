@@ -53,7 +53,7 @@ export default function ForgotPassword() {
                             Forgot Password
                         </h1>
 
-                        <form onSubmit={handleForgotPassword} className="space-y-5">
+                        <form onSubmit={handleForgotPassword} className="space-y-3">
 
                             {/* Email */}
                             <div className="relative">
@@ -63,7 +63,7 @@ export default function ForgotPassword() {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Email Address"
-                                    className="w-full pl-10 pr-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full pl-10 pr-4 py-3 text-base md:text-base border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                             </div>
 
@@ -87,7 +87,7 @@ export default function ForgotPassword() {
                                         setMobile(val);
                                     }}
                                     placeholder="Mobile number (USA)"
-                                    className="w-full pl-10 px-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full pl-10 px-4 py-3 text-base md:text-base border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                     pattern="^1?\d{10}$"
                                     title="Enter a valid USA mobile number (10 digits, optionally starting with 1)"
                                 />
@@ -100,7 +100,7 @@ export default function ForgotPassword() {
                                 className={`w-full py-3 ${loading
                                     ? "bg-gray-500 cursor-not-allowed"
                                     : "bg-black hover:bg-gray-800"
-                                    } text-white font-medium text-xs md:text-md rounded-md transition flex items-center justify-center`}
+                                    } text-white font-medium text-base md:text-base rounded-md transition flex items-center justify-center`}
                             >
                                 {loading ? (
                                     <span className="w-5 h-5 border-2  border-white border-t-transparent rounded-full animate-spin"></span>

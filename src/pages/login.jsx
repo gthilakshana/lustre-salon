@@ -92,7 +92,7 @@ export default function Login() {
                         Login
                     </h1>
 
-                    <form onSubmit={handleLogin} className="space-y-5">
+                    <form onSubmit={handleLogin} className="space-y-3">
                         {!useMobile && (
                             <div className="relative">
                                 <HiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
@@ -101,7 +101,7 @@ export default function Login() {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Gmail address"
-                                    className="w-full pl-10 pr-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full pl-10 pr-4 py-3 text-base md:text-base border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                             </div>
                         )}
@@ -119,7 +119,7 @@ export default function Login() {
                                         setMobile(val);
                                     }}
                                     placeholder="Mobile number (USA)"
-                                    className="w-full pl-10 px-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full pl-10 px-4 py-3 text-base md:text-base border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                     pattern="^1?\d{10}$"
                                     title="Enter a valid USA mobile number (10 digits, optionally starting with 1)"
                                 />
@@ -134,17 +134,17 @@ export default function Login() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Password"
-                                className="w-full pl-10 pr-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                className="w-full pl-10 pr-4 py-3 text-base md:text-base border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                             />
                         </div>
 
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full py-3 bg-black text-xs md:text-md text-white font-medium rounded-md hover:bg-gray-800 transition flex justify-center items-center"
+                            className="w-full py-3 bg-black text-base md:text-base text-white font-medium rounded-md hover:bg-gray-800 transition flex justify-center items-center"
                         >
                             {loading ? (
-                                <span className="w-5 h-5 border-2 text-xs md:text-md border-white border-t-transparent rounded-full animate-spin" />
+                                <span className="w-5 h-5 border-2 text-base md:text-base border-white border-t-transparent rounded-full animate-spin" />
                             ) : (
                                 "Login"
                             )}
