@@ -202,7 +202,7 @@ export default function AdminTable() {
                                 >
                                     <td className="px-3 py-2">{c.fullName}</td>
                                     <td className="px-3 py-2">{c.email}</td>
-                                    <td className="px-3 py-2">+1 {c.mobileNumber}</td>
+                                    <td className="px-3 py-2">{c.mobileNumber}</td>
                                     <td className="px-3 py-2">{c.gender}</td>
                                     <td className="px-3 py-2">
                                         <span className="px-2 py-1 text-xs rounded-md bg-gray-100 text-gray-700">

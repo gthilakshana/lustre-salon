@@ -181,7 +181,7 @@ export default function User() {
 
 
                             <p className="text-xs text-gray-300 mt-1 tracking-wider">
-                                +1 {user.mobileNumber}
+                                {user.mobileNumber}
                             </p>
 
 
@@ -252,7 +252,7 @@ export default function User() {
 
 
                                 <p className="text-xs text-gray-300 mt-1 tracking-wider">
-                                    +1 {user.mobileNumber}
+                                    {user.mobileNumber}
                                 </p>
 
 

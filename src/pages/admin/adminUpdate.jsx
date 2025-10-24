@@ -88,7 +88,7 @@ export default function AdminUpdate({ isOpen, onClose, admin, refresh }) {
                                 onChange={(e) => setFullName(e.target.value)}
                                 required
                                 className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-2 focus:ring-gray-200 outline-none"
-                                placeholder="Admin Name"
+                                placeholder="Update Admin Name"
                             />
                         </div>
 
@@ -99,6 +99,7 @@ export default function AdminUpdate({ isOpen, onClose, admin, refresh }) {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Update email"
                                 required
                                 className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-2 focus:ring-gray-200 outline-none"
                             />
@@ -109,20 +110,23 @@ export default function AdminUpdate({ isOpen, onClose, admin, refresh }) {
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
                             <div className="flex">
-                                <span className="flex items-center justify-center px-4 border-t border-b border-l rounded-l-md bg-gray-100 text-gray-700">
-                                    +1
-                                </span>
+
                                 <input
                                     type="tel"
                                     value={mobileNumber}
-                                    onChange={(e) => setMobileNumber(e.target.value)}
-                                    placeholder="### ### ####"
-
-                                    className="flex-1 h-[54px] w-full px-4 border-t border-b border-r rounded-r-md focus:outline-none"
+                                    onChange={(e) => {
+                                        const val = e.target.value.replace(/\D/g, ""); // Keep only digits
+                                        setMobileNumber(val);
+                                    }}
+                                    placeholder="Update mobile number"
+                                    className="w-full border border-gray-300 px-3 py-2 rounded-lg focus:ring-2 focus:ring-gray-200 outline-none"
                                     required
+                                    pattern="^1?[2-9]\d{2}[2-9]\d{2}\d{4}$"
+                                    title="Enter a valid USA mobile number (10 digits, optionally starting with 1)"
                                 />
                             </div>
                         </div>
+
 
 
 

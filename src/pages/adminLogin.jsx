@@ -30,6 +30,17 @@ export default function AdminLogin() {
             );
         }
 
+        if (mobile) {
+            const usaMobileRegex = /^1?[2-9]\d{2}[2-9]\d{2}\d{4}$/;
+            if (!usaMobileRegex.test(mobile)) {
+                return ShowToast(
+                    "error",
+                    "Invalid Mobile Number",
+                    "Please enter a valid USA mobile number (10 digits, optionally starting with 1)."
+                );
+            }
+        }
+
         setLoading(true);
 
         try {
@@ -111,9 +122,14 @@ export default function AdminLogin() {
                                 <input
                                     type="tel"
                                     value={mobile}
-                                    onChange={(e) => setMobile(e.target.value)}
-                                    placeholder="Mobile number"
+                                    onChange={(e) => {
+                                        const val = e.target.value.replace(/\D/g, "");
+                                        setMobile(val);
+                                    }}
+                                    placeholder="Mobile number (USA)"
                                     className="w-full pl-10 pr-4 py-3 text-base md:text-base border border-gray-700 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                                    pattern="^1?[2-9]\d{2}[2-9]\d{2}\d{4}$"
+                                    title="Enter a valid USA mobile number (10 digits, optionally starting with 1)"
                                 />
                             </div>
                         )}

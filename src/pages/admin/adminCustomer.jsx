@@ -162,7 +162,7 @@ export default function AdminCustomer() {
                                 <td className="px-3 py-2">{c.email}</td>
 
                                 <td className="px-3 py-2">{c.gender}</td>
-                                <td className="px-3 py-2">+1 {c.mobileNumber}</td>
+                                <td className="px-3 py-2">{c.mobileNumber}</td>
                                 <td className="px-3 py-2">
                                     <span className="px-2 py-1 rounded-md text-xs bg-gray-100 text-gray-700">{c.role}</span>
                                 </td>

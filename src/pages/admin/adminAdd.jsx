@@ -27,6 +27,21 @@ export default function AdminAdd({ isOpen, onClose, refresh }) {
         e.preventDefault();
         setIsLoading(true);
 
+
+        // USA mobile validation
+        if (formData.mobile) {
+            const usaMobileRegex = /^1?[2-9]\d{2}[2-9]\d{2}\d{4}$/;
+            if (!usaMobileRegex.test(formData.mobile)) {
+                ShowToast(
+                    "error",
+                    "Invalid Mobile Number",
+                    "Please enter a valid USA mobile number (10 digits, optionally starting with 1)."
+                );
+                setIsLoading(false);
+                return;
+            }
+        }
+
         try {
             const token = localStorage.getItem("token");
             if (!token) {
@@ -137,22 +152,26 @@ export default function AdminAdd({ isOpen, onClose, refresh }) {
 
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
-                        <div className="flex">
-                            <span className="flex items-center justify-center px-4 border-t border-b border-l rounded-l-md bg-gray-100 text-gray-700">
-                                +1
-                            </span>
-                            <input
-                                type="tel"
-                                name="mobile"
-                                value={formData.mobile}
-                                onChange={handleChange}
-                                placeholder="### ### ####"
-                                className="flex-1 h-[54px] w-full px-4 border-t border-b border-r rounded-r-md focus:outline-none"
-                                required
-                            />
-                        </div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Mobile Number
+                        </label>
+                        <input
+                            type="tel"
+                            name="mobile"
+                            value={formData.mobile}
+                            onChange={(e) => {
+                                const val = e.target.value.replace(/\D/g, ""); // Keep digits only
+                                setFormData({ ...formData, mobile: val });
+                            }}
+                            placeholder="Enter mobile number"
+                            className="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-2 focus:ring-gray-400 outline-none"
+                            required
+                            pattern="^1?[2-9]\d{2}[2-9]\d{2}\d{4}$"
+                            title="Enter a valid USA mobile number (10 digits, optionally starting with 1)"
+                        />
                     </div>
+
+
 
 
 
