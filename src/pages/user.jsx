@@ -154,11 +154,11 @@ export default function User() {
                 <div className="max-w-6xl mx-auto px-4">
 
                     {/* MOBILE PROFILE HEADER */}
-                    <div className="md:hidden w-full px-5 pt-3">
+                    <div className="md:hidden w-full  pt-3">
                         <div className="flex flex-col items-center text-center py-6 rounded-2xl shadow-xl 
         bg-black/95 text-white border border-white/10 backdrop-blur-xl">
 
-                            {/* Avatar */}
+
                             <div className="relative flex items-center justify-center">
                                 <img
                                     src={user.image || "/user.png"}
@@ -166,7 +166,7 @@ export default function User() {
                                     className="w-14 h-14 rounded-full object-cover border-[3px] border-white/90 shadow-md"
                                 />
 
-                                {/* Online Badge */}
+
                                 <span
                                     className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 
         border-2 border-black rounded-full shadow-sm"
@@ -174,24 +174,24 @@ export default function User() {
                             </div>
 
 
-                            {/* Name */}
+
                             <h3 className="mt-3 text-[15px] font-bold uppercase tracking-wide">
                                 {user.fullName}
                             </h3>
 
-                            {/* Mobile */}
+
                             <p className="text-xs text-gray-300 mt-1 tracking-wider">
                                 +1 {user.mobileNumber}
                             </p>
 
-                            {/* Accent */}
+
                             <div className="w-10 h-[2px] bg-red-500 rounded-full mt-3"></div>
                         </div>
                     </div>
 
 
                     {/* MOBILE NAV TABS (Bottom) */}
-                    <div className="md:hidden w-full mt-4 mb-6 px-5">
+                    <div className="md:hidden w-full mt-4 mb-6">
                         <div className="flex justify-between items-center bg-gray-50 text-white backdrop-blur-xl
         rounded-2xl shadow-xl px-2 py-2 border border-white/10">
 
@@ -351,7 +351,7 @@ export default function User() {
 
                                     {loading ? (
                                         <div className="flex justify-center items-center min-h-[150px]">
-                                            <span className="w-8 h-8 border-2 border-gray-600 border-t-transparent rounded-full animate-spin" />
+                                            <span className="w-6 h-6 border-3 border-gray-400 border-t-transparent rounded-full animate-spin" />
                                         </div>
                                     ) : appointments.length > 0 ? (
                                         <div className="grid gap-5">
