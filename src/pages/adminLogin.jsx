@@ -100,7 +100,7 @@ export default function AdminLogin() {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Gmail address"
-                                    className="w-full pl-10 pr-4 py-3 text-xs md:text-md border border-gray-700 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                                    className="w-full pl-10 pr-4 py-3 text-base md:text-base border-gray-700 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                                 />
                             </div>
                         )}
@@ -113,7 +113,7 @@ export default function AdminLogin() {
                                     value={mobile}
                                     onChange={(e) => setMobile(e.target.value)}
                                     placeholder="Mobile number"
-                                    className="w-full pl-10 pr-4 py-3 text-xs md:text-md border border-gray-700 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                                    className="w-full pl-10 pr-4 py-3 text-base md:text-base border border-gray-700 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                                 />
                             </div>
                         )}
@@ -125,14 +125,14 @@ export default function AdminLogin() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Password"
-                                className="w-full pl-10 pr-4 py-3 text-xs md:text-md border border-gray-700 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                                className="w-full pl-10 pr-4 py-3 text-base md:text-base border border-gray-700 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                             />
                         </div>
 
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full py-3 bg-red-600 text-white text-xs md:text-md font-medium rounded-md hover:bg-red-700 transition flex justify-center items-center"
+                            className="w-full py-3 bg-red-600 text-white text-base md:text-base font-medium rounded-md hover:bg-red-700 transition flex justify-center items-center"
                         >
                             {loading ? (
                                 <span className="w-5 h-5 border-2  border-white border-t-transparent rounded-full animate-spin" />
