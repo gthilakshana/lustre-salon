@@ -153,9 +153,48 @@ export default function User() {
             <div className="w-full min-h-screen bg-gray-50 pt-35 pb-10">
                 <div className="max-w-6xl mx-auto px-4">
 
-                    {/* MOBILE TABS */}
-                    <div className="md:hidden mb-6">
-                        <div className="flex justify-between items-center bg-white/90 backdrop-blur-sm rounded-xl shadow-md px-2 py-2 border border-gray-100">
+                    {/* MOBILE PROFILE HEADER */}
+                    <div className="md:hidden w-full px-5 pt-3">
+                        <div className="flex flex-col items-center text-center py-6 rounded-2xl shadow-xl 
+        bg-black/95 text-white border border-white/10 backdrop-blur-xl">
+
+                            {/* Avatar */}
+                            <div className="relative flex items-center justify-center">
+                                <img
+                                    src={user.image || "/user.png"}
+                                    alt="User Avatar"
+                                    className="w-14 h-14 rounded-full object-cover border-[3px] border-white/90 shadow-md"
+                                />
+
+                                {/* Online Badge */}
+                                <span
+                                    className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 
+        border-2 border-black rounded-full shadow-sm"
+                                ></span>
+                            </div>
+
+
+                            {/* Name */}
+                            <h3 className="mt-3 text-[15px] font-bold uppercase tracking-wide">
+                                {user.fullName}
+                            </h3>
+
+                            {/* Mobile */}
+                            <p className="text-xs text-gray-300 mt-1 tracking-wider">
+                                +1 {user.mobileNumber}
+                            </p>
+
+                            {/* Accent */}
+                            <div className="w-10 h-[2px] bg-red-500 rounded-full mt-3"></div>
+                        </div>
+                    </div>
+
+
+                    {/* MOBILE NAV TABS (Bottom) */}
+                    <div className="md:hidden w-full mt-4 mb-6 px-5">
+                        <div className="flex justify-between items-center bg-gray-50 text-white backdrop-blur-xl
+        rounded-2xl shadow-xl px-2 py-2 border border-white/10">
+
                             {tabs.map(tab => {
                                 const isActive = activeTab === tab.id;
 
@@ -171,21 +210,18 @@ export default function User() {
                                                 setActiveTab(tab.id);
                                             }
                                         }}
-                                        className={`flex flex-col items-center flex-1 py-2 transition-all duration-300 ${isActive ? "text-black font-semibold" : "text-gray-500"
-                                            }`}
+                                        className={`flex flex-col items-center flex-1 py-2 transition-all duration-300 
+                        ${isActive ? "text-red-500 font-semibold" : "text-gray-700"}`}
                                     >
-
-                                        <div className="mb-1">
+                                        <div className="mb-1 text-[18px]">
                                             {tab.icon}
                                         </div>
 
-
-                                        <span className="text-[11px]">{tab.label}</span>
-
+                                        <span className="text-[11px] tracking-wide">{tab.label}</span>
 
                                         <div
-                                            className={`h-1 w-7 mt-2 rounded-full transition-all duration-300 ${isActive ? "bg-black" : "bg-transparent"
-                                                }`}
+                                            className={`h-1 w-7 mt-2 rounded-full transition-all duration-300 
+                            ${isActive ? "bg-red-500" : "bg-transparent"}`}
                                         />
                                     </button>
                                 );
@@ -194,18 +230,33 @@ export default function User() {
                     </div>
 
 
+
+
                     <div className="flex flex-col md:flex-row gap-6 ">
 
                         {/* SIDEBAR - desktop only */}
                         <aside className="hidden h-[510px] md:flex md:flex-col md:w-80 bg-white rounded-lg shadow-md overflow-hidden ">
                             <div className="flex flex-col items-center px-6 py-8 bg-black text-white">
-                                <img
-                                    src={user.image || "/user.png"}
-                                    alt="User Avatar"
-                                    className="w-14 h-14 rounded-full object-cover border-4 border-white shadow-md mb-3"
-                                />
-                                <h3 className="text-sm font-semibold uppercase">{user.fullName}</h3>
-                                <p className="text-xs opacity-90 mt-1">+1 {user.mobileNumber}</p>
+                                <div className="relative">
+                                    <img
+                                        src={user.image || "/user.png"}
+                                        alt="User Avatar"
+                                        className="w-16 h-16 rounded-full object-cover border-4 border-white/80 shadow-lg"
+                                    />
+                                    <span className="absolute bottom-1 right-1 w-3 h-3 bg-green-500 border-2 border-black rounded-full"></span>
+                                </div>
+
+                                <h3 className="mt-3 text-[15px] font-bold uppercase tracking-wide">
+                                    {user.fullName}
+                                </h3>
+
+
+                                <p className="text-xs text-gray-300 mt-1 tracking-wider">
+                                    +1 {user.mobileNumber}
+                                </p>
+
+
+                                <div className="w-10 h-[2px] bg-red-500 rounded-full mt-3"></div>
                             </div>
 
                             <div className="flex-1 overflow-auto">

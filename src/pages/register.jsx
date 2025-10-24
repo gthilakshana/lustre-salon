@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import Footer from "../components/footer";
-import { HiMail, HiPhone, HiLockClosed } from "react-icons/hi";
+import { HiMail, HiPhone, HiLockClosed, HiUser } from "react-icons/hi";
 
 export default function Register() {
     const navigate = useNavigate();
@@ -72,54 +72,54 @@ export default function Register() {
         <>
             <Header />
 
-            <div className="min-h-screen flex flex-col bg-gray-50 pt-20 px-4  py-10">
+            <div className="min-h-screen flex flex-col bg-gray-50 pt-20  ">
                 <main className="flex-1 flex items-center justify-center px-4 py-16">
                     <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
-                        <h1 className="text-2xl md:text-3xl font-bold text-center mb-8 uppercase">Create Account</h1>
+                        <h1 className="text-xl md:text-2xl font-bold text-center mb-8 uppercase">Create Account</h1>
 
                         <form onSubmit={handleRegister} className="space-y-4">
 
                             {/* Full Name */}
                             <div className="relative">
-                                <HiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                <HiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                                 <input
                                     type="text"
                                     value={fullName}
                                     onChange={(e) => setFullName(e.target.value)}
                                     placeholder="Full Name"
-                                    className="w-full pl-10 px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full pl-10 pr-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                             </div>
 
+
                             {/* Email */}
                             <div className="relative">
-                                <HiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                <HiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                                 <input
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Email Address"
-                                    className="w-full pl-10 px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full pl-10 px-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                             </div>
 
                             {/* Mobile */}
-                            <div className="relative flex">
-                                <span className="flex items-center justify-center px-4 border rounded-l-md bg-gray-100 text-gray-600">
-                                    +1
-                                </span>
+                            <div className="relative flex items-center">
+                                <HiPhone className="absolute left-3 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
+
                                 <input
                                     type="tel"
                                     value={mobile}
                                     onChange={(e) => setMobile(e.target.value)}
-                                    placeholder="Mobile Number"
-                                    className="flex-1 px-4 py-3 border-t border-b border-r focus:outline-none rounded-r-md"
+                                    placeholder="Mobile number"
+                                    className="flex-1 pl-10 pr-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                             </div>
 
                             {/* Gender */}
                             <div className="flex items-center gap-6 border px-4 py-3 rounded-md">
-                                <label className="flex items-center gap-2">
+                                <label className="flex items-center gap-2 text-xs md:text-md">
                                     <input
                                         type="radio"
                                         name="gender"
@@ -129,7 +129,7 @@ export default function Register() {
                                     />
                                     Male
                                 </label>
-                                <label className="flex items-center gap-2">
+                                <label className="flex items-center gap-2 text-xs md:text-md">
                                     <input
                                         type="radio"
                                         name="gender"
@@ -143,25 +143,25 @@ export default function Register() {
 
                             {/* Password */}
                             <div className="relative">
-                                <HiLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                <HiLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                                 <input
                                     type="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="Password"
-                                    className="w-full pl-10 px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full pl-10 px-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                             </div>
 
                             {/* Confirm Password */}
                             <div className="relative">
-                                <HiLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                <HiLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                                 <input
                                     type="password"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                     placeholder="Confirm Password"
-                                    className="w-full pl-10 px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full pl-10 px-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                             </div>
 
@@ -169,21 +169,21 @@ export default function Register() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full py-3 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition flex items-center justify-center"
+                                className="w-full py-3 bg-black cursor-pointer text-xs md:text-md text-white font-medium rounded-md hover:bg-gray-800 transition flex items-center justify-center"
                             >
                                 {loading ? (
-                                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                                    <span className="w-5 h-5 border-2  border-white border-t-transparent rounded-full animate-spin"></span>
                                 ) : (
                                     "Create Account"
                                 )}
                             </button>
 
                             {/* Login Link */}
-                            <p className="text-center text-sm text-gray-600 mt-6 border-t pt-6">
+                            <p className="text-center text-xs md:text-md text-gray-600 mt-6 border-t pt-6">
                                 Already have an account?{" "}
                                 <Link
                                     to="/login"
-                                    className="text-black font-medium hover:underline"
+                                    className="text-black text-xs md:text-md font-medium hover:underline"
                                 >
                                     Login
                                 </Link>

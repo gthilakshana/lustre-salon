@@ -14,25 +14,22 @@ const iconMap = {
 export const LustreToaster = () => (
     <Toaster
         position="bottom-right"
+        reverseOrder={false}
         toastOptions={{
             duration: 3000,
             style: {
                 fontFamily: "Inter, sans-serif, 'Helvetica Neue', Arial",
+                maxWidth: "90vw",
+                padding: "0",
             },
         }}
     />
 );
 
 // --- Toast Function ---
-export const ShowToast = (
-    type = "info",
-    message = "",
-    description = "",
-    actions = []
-) => {
+export const ShowToast = (type = "info", message = "", description = "", actions = []) => {
     return toast.custom((t) => {
         const Icon = iconMap[type] || iconMap.info;
-
 
         const pause = () => toast.pause(t.id);
         const resume = () => toast.resume(t.id);
@@ -41,9 +38,8 @@ export const ShowToast = (
             <div
                 onMouseEnter={pause}
                 onMouseLeave={resume}
-                className={`${t.visible ? "animate-enter" : "animate-leave"} 
-                flex flex-col gap-2 w-80 p-4 shadow-2xl bg-black text-white rounded-lg`}
-                style={{ backdropFilter: "blur(5px)" }}
+                className={`${t.visible ? "animate-enter" : "animate-leave"
+                    } flex flex-col gap-2 w-full max-w-sm p-4 sm:p-5 shadow-2xl bg-black/90 text-white rounded-lg backdrop-blur-md`}
             >
                 {/* Header */}
                 <div className="flex justify-between items-start">
@@ -51,10 +47,10 @@ export const ShowToast = (
                         <img
                             src={SalonLogo}
                             alt="Lustre Salon"
-                            className="w-6 h-6 rounded-full border border-white/50"
+                            className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-white/30"
                         />
                         {Icon}
-                        <span className="font-bold text-base uppercase text-red-500 tracking-wider">
+                        <span className="font-bold text-sm sm:text-base uppercase text-red-500 tracking-wide">
                             Lustre Salon
                         </span>
                     </div>
@@ -72,16 +68,16 @@ export const ShowToast = (
                 </div>
 
                 {/* Message */}
-                <div className="text-sm border-t border-white/10 pt-2 mt-1">
+                <div className="text-sm sm:text-base border-t border-white/20 pt-2 mt-1">
                     <div className="text-white font-medium">{message}</div>
                     {description && (
-                        <div className="text-xs text-gray-300 mt-1">{description}</div>
+                        <div className="text-xs sm:text-sm text-gray-300 mt-1">{description}</div>
                     )}
                 </div>
 
                 {/* Action Buttons */}
                 {actions.length > 0 && (
-                    <div className="flex gap-3 mt-3">
+                    <div className="flex flex-wrap gap-2 mt-3">
                         {actions.map((action, idx) => (
                             <button
                                 key={idx}
@@ -89,8 +85,8 @@ export const ShowToast = (
                                     action.onClick?.();
                                     toast.dismiss(t.id);
                                 }}
-                                className="bg-white/10 px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-wide 
-                                text-white hover:bg-red-700 transition-colors duration-200 
+                                className="bg-white/10 px-3 py-1.5 rounded text-xs sm:text-sm font-semibold uppercase tracking-wide
+                                text-white hover:bg-red-700 transition-colors duration-200
                                 border border-white/20 hover:border-red-700"
                             >
                                 {action.label}
@@ -102,4 +98,3 @@ export const ShowToast = (
         );
     });
 };
-

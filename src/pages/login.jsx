@@ -86,63 +86,59 @@ export default function Login() {
         <>
             <Header />
 
-            <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 pt-30 px-8 md:px-4 py-10">
+            <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 pt-30 px-4">
                 <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md ">
-                    <h1 className="text-2xl md:text-3xl font-bold text-center mb-8 uppercase text-gray-900">
+                    <h1 className="text-xl md:text-2xl font-bold text-center mb-8 uppercase text-gray-900">
                         Login
                     </h1>
 
                     <form onSubmit={handleLogin} className="space-y-5">
                         {!useMobile && (
                             <div className="relative">
-                                <HiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                <HiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                                 <input
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Gmail address"
-                                    className="w-full pl-10 pr-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full pl-10 pr-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                 />
                             </div>
                         )}
 
                         {useMobile && (
                             <div className="relative flex items-center">
-                                <HiPhone className="absolute left-3 text-gray-400 w-5 h-5" />
+                                <HiPhone className="absolute left-3 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
+
                                 <input
                                     type="tel"
                                     value={mobile}
                                     onChange={(e) => setMobile(e.target.value)}
                                     placeholder="Mobile number"
-                                    className="flex-1 pl-10 pr-4 py-3 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="flex-1 pl-10 pr-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                 />
-                                <button
-                                    type="button"
-                                    className="px-4 py-3 bg-black text-white rounded-r-md font-medium hover:bg-gray-800 transition"
-                                >
-                                    Verify
-                                </button>
                             </div>
+
                         )}
 
                         <div className="relative">
-                            <HiLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                            <HiLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                             <input
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Password"
-                                className="w-full pl-10 pr-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                className="w-full pl-10 pr-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                             />
                         </div>
 
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full py-3 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition flex justify-center items-center"
+                            className="w-full py-3 bg-black text-xs md:text-md text-white font-medium rounded-md hover:bg-gray-800 transition flex justify-center items-center"
                         >
                             {loading ? (
-                                <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                <span className="w-5 h-5 border-2 text-xs md:text-md border-white border-t-transparent rounded-full animate-spin" />
                             ) : (
                                 "Login"
                             )}
@@ -151,24 +147,24 @@ export default function Login() {
                         <div className="flex justify-between text-sm text-gray-600">
                             <Link
                                 to="/forgotPassword"
-                                className="hover:underline text-gray-900 font-medium"
+                                className="hover:underline text-xs md:text-md text-gray-900 font-medium"
                             >
                                 Forgot password?
                             </Link>
                             <button
                                 type="button"
                                 onClick={() => setUseMobile(!useMobile)}
-                                className="text-gray-900 font-medium hover:underline"
+                                className="text-gray-900 text-xs md:text-md font-medium hover:underline"
                             >
                                 {useMobile ? "Use Email Instead" : "Use Mobile Instead"}
                             </button>
                         </div>
 
-                        <p className="text-center text-sm text-gray-600 mt-6 border-t pt-6">
+                        <p className="text-center text-xs md:text-md text-gray-600 mt-6 border-t pt-6">
                             Don’t have an account?{" "}
                             <Link
                                 to="/register"
-                                className="text-gray-900 font-medium hover:underline"
+                                className="text-gray-900 text-xs md:text-md font-medium hover:underline"
                             >
                                 Create one
                             </Link>
