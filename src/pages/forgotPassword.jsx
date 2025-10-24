@@ -87,7 +87,7 @@ export default function ForgotPassword() {
                                         setMobile(val);
                                     }}
                                     placeholder="Mobile number (USA)"
-                                    className="flex-1 pl-10 pr-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full pl-10 px-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                     pattern="^1?\d{10}$"
                                     title="Enter a valid USA mobile number (10 digits, optionally starting with 1)"
                                 />
