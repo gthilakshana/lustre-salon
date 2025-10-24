@@ -17,6 +17,7 @@ export default function Register() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
+
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "auto" });
     }, []);
@@ -45,6 +46,19 @@ export default function Register() {
                 "Password must be at least 6 characters, include uppercase, lowercase, number, and special character."
             );
         }
+
+
+        // USA mobile validation
+        const usaMobileRegex = /^1?[2-9]\d{2}[2-9]\d{2}\d{4}$/;
+        if (!usaMobileRegex.test(mobile)) {
+            setLoading(false);
+            return ShowToast(
+                "error",
+                "Invalid Mobile Number",
+                "Please enter a valid USA mobile number (10 digits, optionally starting with 1)."
+            );
+        }
+
 
         setLoading(true);
         try {
@@ -117,9 +131,10 @@ export default function Register() {
                                     }}
                                     placeholder="Mobile number (USA)"
                                     className="w-full pl-10 px-4 py-3 text-base md:text-base border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
-                                    pattern="^1?\d{10}$"
+                                    pattern="^1?[2-9]\d{2}[2-9]\d{2}\d{4}$"
                                     title="Enter a valid USA mobile number (10 digits, optionally starting with 1)"
                                 />
+
 
                             </div>
 
