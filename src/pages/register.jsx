@@ -112,15 +112,15 @@ export default function Register() {
                                     type="tel"
                                     value={mobile}
                                     onChange={(e) => {
-
                                         const val = e.target.value.replace(/\D/g, "");
                                         setMobile(val);
                                     }}
                                     placeholder="Mobile number (USA)"
-                                    className="flex-1 pl-10 pr-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="flex-1 pl-10 pr-4 py-3 text-base md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                                     pattern="^1?\d{10}$"
                                     title="Enter a valid USA mobile number (10 digits, optionally starting with 1)"
                                 />
+
                             </div>
 
                             {/* Gender */}
