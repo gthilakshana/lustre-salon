@@ -98,7 +98,8 @@ export const generateInvoicePDF = async (appointmentGroup, customer) => {
     doc.setTextColor(...MUTED_TEXT);
 
     doc.text(`Name: ${customer?.name || "Valued Customer"}`, boxX + boxPaddingX, currentY + boxPaddingY + 7);
-    doc.text(`Mobile: ${customer?.mobile || "(555) 555-5555"}`, boxX + boxPaddingX, currentY + boxPaddingY + 13);
+    doc.text(`Mobile: ${customer?.mobileNumber || "(555) 555-5555"}`, boxX + boxPaddingX, currentY + boxPaddingY + 13);
+
     doc.text(`Email: ${customer?.email || "customer@email.com"}`, boxX + boxPaddingX, currentY + boxPaddingY + 19);
 
     doc.text(`Invoice Date: ${dayjs().format("DD MMM YYYY")}`, boxX + boxWidth / 2 + 10, currentY + boxPaddingY + 7);
