@@ -34,28 +34,33 @@ export const ShowToast = (type = "info", message = "", description = "", actions
         const pause = () => toast.pause(t.id);
         const resume = () => toast.resume(t.id);
 
+
+        const headerColorClass = {
+            success: "text-green-500",
+            info: "text-blue-500",
+            warning: "text-yellow-400",
+            error: "text-red-500",
+        }[type] || "text-gray-400";
+
         return (
             <div
                 onMouseEnter={pause}
                 onMouseLeave={resume}
-                className={`${t.visible ? "animate-enter" : "animate-leave"
-                    } flex flex-col gap-2 w-full max-w-sm p-4 sm:p-5 shadow-2xl bg-black/90 text-white rounded-lg backdrop-blur-md`}
+                className={`${t.visible ? "animate-enter" : "animate-leave"} 
+                    flex flex-col gap-2 w-[80vw] md:w-[90vw] max-w-sm p-4 sm:p-5 shadow-2xl bg-black text-white rounded-lg backdrop-blur-md`}
             >
                 {/* Header */}
                 <div className="flex justify-between items-start">
                     <div className="flex items-center gap-2">
-                        <img
-                            src={SalonLogo}
-                            alt="Lustre Salon"
-                            className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-white/30"
-                        />
-                        {Icon}
-                        <span className="font-bold text-sm sm:text-base uppercase text-red-500 tracking-wide">
+
+                        <div className={`font-bold text-xs md:text-sm uppercase tracking-wide ${headerColorClass}`}>
                             Lustre Salon
-                        </span>
+                        </div>
+                        <div className={`p-1.5 rounded-full ${headerColorClass}`}>
+                            {Icon}
+                        </div>
                     </div>
 
-                    {/* Close Button */}
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
@@ -68,7 +73,7 @@ export const ShowToast = (type = "info", message = "", description = "", actions
                 </div>
 
                 {/* Message */}
-                <div className="text-sm sm:text-base border-t border-white/20 pt-2 mt-1">
+                <div className="text-xs md:text-sm border-t border-white/20 pt-2 mt-1">
                     <div className="text-white font-medium">{message}</div>
                     {description && (
                         <div className="text-xs sm:text-sm text-gray-300 mt-1">{description}</div>
@@ -85,9 +90,9 @@ export const ShowToast = (type = "info", message = "", description = "", actions
                                     action.onClick?.();
                                     toast.dismiss(t.id);
                                 }}
-                                className="bg-white/10 px-3 py-1.5 rounded text-xs sm:text-sm font-semibold uppercase tracking-wide
-                                text-white hover:bg-red-700 transition-colors duration-200
-                                border border-white/20 hover:border-red-700"
+                                className="bg-white/10 px-3 py-1.5 rounded text-xs md:text-sm font-semibold uppercase tracking-wide
+                                    text-white hover:bg-red-700 transition-colors duration-200
+                                    border border-white/20 hover:border-red-700"
                             >
                                 {action.label}
                             </button>

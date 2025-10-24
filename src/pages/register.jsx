@@ -56,12 +56,12 @@ export default function Register() {
             ShowToast(
                 "success",
                 "Registration Successful",
-                response.data.message || "Welcome to Lustre Salon! Please login to continue."
+                response.data.description || "Welcome to Lustre Salon! Please login to continue."
             );
 
             setTimeout(() => navigate("/login"), 2000);
         } catch (error) {
-            const errorMsg = error?.response?.data?.message || "Signup failed.";
+            const errorMsg = error?.response?.data?.description || "Signup failed.";
             ShowToast("error", "Registration Failed", errorMsg);
         } finally {
             setLoading(false);
@@ -111,9 +111,15 @@ export default function Register() {
                                 <input
                                     type="tel"
                                     value={mobile}
-                                    onChange={(e) => setMobile(e.target.value)}
-                                    placeholder="Mobile number"
+                                    onChange={(e) => {
+
+                                        const val = e.target.value.replace(/\D/g, "");
+                                        setMobile(val);
+                                    }}
+                                    placeholder="Mobile number (USA)"
                                     className="flex-1 pl-10 pr-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    pattern="^1?\d{10}$"
+                                    title="Enter a valid USA mobile number (10 digits, optionally starting with 1)"
                                 />
                             </div>
 

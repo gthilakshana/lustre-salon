@@ -38,7 +38,7 @@ export default function Login() {
                 { email, mobile, password }
             );
 
-            const { message, token, user } = response.data;
+            const { description, token, user } = response.data;
 
             if (user?.status === "blocked") {
                 setLoading(false);
@@ -61,7 +61,7 @@ export default function Login() {
             ShowToast(
                 "success",
                 "Login Successful",
-                message || "Welcome back to Lustre Salon!"
+                description || "Welcome back to Lustre Salon!"
             );
 
             if (token) localStorage.setItem("token", token);
@@ -113,13 +113,19 @@ export default function Login() {
                                 <input
                                     type="tel"
                                     value={mobile}
-                                    onChange={(e) => setMobile(e.target.value)}
-                                    placeholder="Mobile number"
+                                    onChange={(e) => {
+
+                                        const val = e.target.value.replace(/\D/g, "");
+                                        setMobile(val);
+                                    }}
+                                    placeholder="Mobile number (USA)"
                                     className="flex-1 pl-10 pr-4 py-3 text-xs md:text-md border rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                                    pattern="^1?\d{10}$"
+                                    title="Enter a valid USA mobile number (10 digits, optionally starting with 1)"
                                 />
                             </div>
-
                         )}
+
 
                         <div className="relative">
                             <HiLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
