@@ -5,6 +5,7 @@ import { ShowToast } from "../components/lustreToaster";
 import axios from "axios";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import { HiMail, HiPhone, HiLockClosed } from "react-icons/hi";
 
 export default function AdminLogin() {
     const navigate = useNavigate();
@@ -12,6 +13,7 @@ export default function AdminLogin() {
     const [mobile, setMobile] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [useMobile, setUseMobile] = useState(false);
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "auto" });
@@ -47,7 +49,6 @@ export default function AdminLogin() {
                 );
             }
 
-
             if (user?.role !== "admin") {
                 setLoading(false);
                 return ShowToast(
@@ -66,16 +67,13 @@ export default function AdminLogin() {
             if (token) localStorage.setItem("token", token);
             if (user) localStorage.setItem("user", JSON.stringify(user));
 
-            setTimeout(() => {
-                navigate("/admin");
-            }, 2000);
+            setTimeout(() => { navigate("/admin"); }, 2000);
         } catch (error) {
             const errorMsg = error?.response?.data?.message || "Login failed.";
             ShowToast(
                 "error",
                 "Login Failed",
-                errorMsg || "Please try again or contact system support."
-            );
+                errorMsg || "Please try again or contact system support.");
         } finally {
             setLoading(false);
         }
@@ -84,104 +82,89 @@ export default function AdminLogin() {
     return (
         <>
             <Header />
+            <div
+                className="min-h-screen flex justify-center items-center pt-16 bg-cover bg-center bg-no-repeat"
+                style={{ backgroundImage: "url('/adminLogin.png')" }}
+            >
+                <div className="w-full max-w-md bg-black/90 backdrop-blur-md p-8 m-4 rounded-lg shadow-2xl">
+                    <h1 className="text-xl md:text-2xl font-bold uppercase text-center text-white mb-8">
+                        Admin Login
+                    </h1>
 
-            <div className="min-h-screen flex pt-16 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/adminLogin.png')" }}>
-                <main className="flex flex-1 items-center justify-center px-4">
-
-                    <div className="w-full max-w-md bg-black shadow-xl  p-8 m-4">
-                        <h1 className="text-2xl md:text-3xl font-bold uppercase text-center text-white mb-8">
-                            Admin Login
-                        </h1>
-
-                        <form onSubmit={handleLogin} className="space-y-4">
-
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="Gmail address"
-                                className="w-full px-4 py-3 border border-gray-600 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
-                            />
-
-
-                            <div className="flex items-center gap-2">
-                                <div className="flex-1 h-px bg-gray-600"></div>
-                                <span className="text-gray-400 text-sm">OR</span>
-                                <div className="flex-1 h-px bg-gray-600"></div>
+                    <form onSubmit={handleLogin} className="space-y-5">
+                        {!useMobile && (
+                            <div className="relative">
+                                <HiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Gmail address"
+                                    className="w-full pl-10 pr-4 py-3 text-xs md:text-md border border-gray-700 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                                />
                             </div>
+                        )}
 
-
-                            <div className="flex">
-                                <span className="flex items-center justify-center px-4 border-t border-b border-l rounded-l-md bg-gray-800 text-white">
-                                    +1
-                                </span>
-
+                        {useMobile && (
+                            <div className="relative">
+                                <HiPhone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                                 <input
                                     type="tel"
                                     value={mobile}
                                     onChange={(e) => setMobile(e.target.value)}
                                     placeholder="Mobile number"
-                                    className="flex-1 h-[54px] w-full px-4 border-t border-b border-r-0 bg-gray-900 text-white focus:outline-none"
+                                    className="w-full pl-10 pr-4 py-3 text-xs md:text-md border border-gray-700 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                                 />
-
-                                <button
-                                    type="button"
-                                    className="h-[54px] px-5 bg-gray-700 text-white font-medium rounded-r-md cursor-pointer hover:bg-gray-600 transition"
-                                >
-                                    Verify
-                                </button>
                             </div>
+                        )}
 
-
+                        <div className="relative">
+                            <HiLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                             <input
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Password"
-                                className="w-full px-4 py-3 border border-gray-600 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+                                className="w-full pl-10 pr-4 py-3 text-xs md:text-md border border-gray-700 bg-gray-900 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                             />
+                        </div>
 
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full py-3 bg-red-600 text-white text-xs md:text-md font-medium rounded-md hover:bg-red-700 transition flex justify-center items-center"
+                        >
+                            {loading ? (
+                                <span className="w-5 h-5 border-2  border-white border-t-transparent rounded-full animate-spin" />
+                            ) : (
+                                "Admin Login"
+                            )}
+                        </button>
 
+                        <div className="flex justify-between text-sm">
+                            <Link to="/forgotPassword" className="text-gray-300 hover:underline text-xs md:text-md">
+                                Forgot password?
+                            </Link>
                             <button
-                                type="submit"
-                                disabled={loading}
-                                className="w-full py-3 cursor-pointer bg-red-600 text-white font-medium rounded-md hover:bg-red-700 transition flex items-center justify-center"
+                                type="button"
+                                onClick={() => setUseMobile(!useMobile)}
+                                className="text-gray-300 hover:underline text-xs md:text-md"
                             >
-                                {loading ? (
-                                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                                ) : (
-                                    "Admin Login"
-                                )}
+                                {useMobile ? "Use Email Instead" : "Use Mobile Instead"}
                             </button>
+                        </div>
 
-
-                            <p className="text-right text-sm text-gray-400">
-                                <Link
-                                    to="/forgotPassword"
-                                    className="text-white font-medium hover:underline"
-                                >
-                                    Forgot password?
-                                </Link>
-                            </p>
-
-
-                            <p className="text-center text-sm text-gray-400 mt-6 border-t border-gray-700 pt-6">
-                                Go back to{" "}
-                                <Link
-                                    to="/login"
-                                    className="text-white font-medium hover:underline"
-                                >
-                                    User Login
-                                </Link>
-                            </p>
-                        </form>
-                    </div>
-
-                </main>
+                        <p className="text-center text-xs md:text-md text-gray-400 mt-6 border-t border-gray-700 pt-6">
+                            Go back to{" "}
+                            <Link to="/login" className="text-white text-xs md:text-md font-medium hover:underline">
+                                User Login
+                            </Link>
+                        </p>
+                    </form>
+                </div>
             </div>
 
             <Footer />
         </>
-
     );
 }
