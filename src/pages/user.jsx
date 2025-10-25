@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import { FaCalendarAlt, FaTachometerAlt } from "react-icons/fa";
+import { FaTachometerAlt } from "react-icons/fa";
 import { FaChartPie, FaCalendarCheck, FaPlusCircle, FaSignOutAlt } from "react-icons/fa";
-import { RiBook2Fill } from "react-icons/ri";
-import { IoMdLogOut } from "react-icons/io";
+import { MdOutlineViewTimeline } from "react-icons/md";
+import { LuUserRoundCheck } from "react-icons/lu";
+import { RxDashboard } from "react-icons/rx";
+import { IoMdLogOut, IoMdBook } from "react-icons/io";
 import { useNavigate, Link } from "react-router-dom";
 import Header from "../components/header";
 import Footer from "../components/footer";
@@ -140,10 +142,10 @@ export default function User() {
 
 
     const tabs = [
-        { id: "dashboard", label: "Dashboard", icon: <FaChartPie size={18} /> },
-        { id: "appointments", label: "Appointments", icon: <FaCalendarCheck size={18} /> },
-        { id: "book", label: "Book Now", icon: <FaPlusCircle size={20} /> },
-        { id: "logout", label: "Logout", icon: <FaSignOutAlt size={18} /> },
+        { id: "dashboard", label: "Dashboard", icon: <RxDashboard size={18} /> },
+        { id: "appointments", label: "Appointments", icon: <MdOutlineViewTimeline size={18} /> },
+        { id: "book", label: "Book Now", icon: <IoMdBook size={20} /> },
+        { id: "logout", label: "Logout", icon: <IoMdLogOut size={18} /> },
     ];
 
     return (
@@ -175,12 +177,12 @@ export default function User() {
 
 
 
-                            <h3 className="mt-3 text-[15px] font-bold uppercase tracking-wide">
+                            <h3 className="mt-3 text-[13px]  uppercase tracking-wide">
                                 {user.fullName}
                             </h3>
 
 
-                            <p className="text-xs text-gray-300 mt-1 tracking-wider">
+                            <p className="text-[10px] text-gray-300 mt-1 tracking-wider">
                                 {user.mobileNumber}
                             </p>
 
@@ -192,8 +194,8 @@ export default function User() {
 
                     {/* MOBILE NAV TABS (Bottom) */}
                     <div className="md:hidden w-full mt-4 mb-6">
-                        <div className="flex justify-between items-center bg-gray-50 text-white backdrop-blur-xl
-        rounded-2xl shadow-xl px-2 py-2 border border-white/10">
+                        <div className="flex justify-between items-center border-2 border-gray-200 rounded-2xl  text-white 
+          px-2 py-2 ">
 
                             {tabs.map(tab => {
                                 const isActive = activeTab === tab.id;
@@ -217,7 +219,7 @@ export default function User() {
                                             {tab.icon}
                                         </div>
 
-                                        <span className="text-[11px] tracking-wide">{tab.label}</span>
+                                        <span className="text-[10px] tracking-wide">{tab.label}</span>
 
                                         <div
                                             className={`h-1 w-7 mt-2 rounded-full transition-all duration-300 
@@ -265,7 +267,7 @@ export default function User() {
                                         onClick={() => setActiveTab("dashboard")}
                                         className={`flex items-center gap-4 px-6 py-4 transition ${activeTab === "dashboard" ? "bg-gray-50" : "hover:bg-gray-50"}`}
                                     >
-                                        <FaTachometerAlt className="text-black" size={17} />
+                                        <RxDashboard className="text-black" size={17} />
                                         <span className="text-sm font-medium text-gray-800">Dashboard</span>
                                     </button>
 
@@ -273,7 +275,7 @@ export default function User() {
                                         onClick={() => setActiveTab("appointments")}
                                         className={`flex items-center gap-4 px-6 py-4 transition ${activeTab === "appointments" ? "bg-gray-50" : "hover:bg-gray-50"}`}
                                     >
-                                        <FaCalendarAlt className="text-black" size={17} />
+                                        <MdOutlineViewTimeline className="text-black" size={17} />
                                         <span className="text-sm font-medium text-gray-800">Appointments</span>
                                     </button>
 
@@ -281,7 +283,7 @@ export default function User() {
                                         onClick={() => navigate("/appointment")}
                                         className="flex items-center gap-4 px-6 py-4 hover:bg-gray-50 transition"
                                     >
-                                        <RiBook2Fill className="text-black" size={17} />
+                                        <IoMdBook className="text-black" size={17} />
                                         <span className="text-sm font-medium text-gray-800">Book Now</span>
                                     </button>
 
@@ -311,16 +313,16 @@ export default function User() {
                                         <div className="p-5 bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                                             <div className="flex items-center justify-between">
                                                 <div>
-                                                    <p className="text-sm font-medium text-gray-500">Upcoming Appointments</p>
-                                                    <p className="text-3xl font-extrabold text-red-500 mt-2">{pendingAppointmentsCount}</p>
+                                                    <p className="text-xs md:text-sm font-medium text-gray-500">Upcoming Appointments</p>
+                                                    <p className="text-2xl md:text-3xl font-extrabold text-red-500 mt-2">{pendingAppointmentsCount}</p>
                                                 </div>
-                                                <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
-                                                    <FaCalendarAlt className="text-red-500" size={18} />
+                                                <div className="w-10 h-10  rounded-full bg-red-100 flex items-center justify-center">
+                                                    <MdOutlineViewTimeline className="text-red-500" size={18} />
                                                 </div>
                                             </div>
                                             <button
                                                 onClick={() => setActiveTab("appointments")}
-                                                className="mt-4 text-xs font-medium text-red-600 cursor-pointer hover:underline"
+                                                className="mt-4 text-[10px] font-medium text-red-600 cursor-pointer hover:underline"
                                             >
                                                 View All Bookings →
                                             </button>
@@ -330,13 +332,13 @@ export default function User() {
                                         <div className="p-5 bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                                             <div className="flex items-center justify-between">
                                                 <div>
-                                                    <p className="text-sm font-medium text-gray-500">Profile Status</p>
-                                                    <p className="text-sm text-gray-700 mt-2">
+                                                    <p className="text-xs md:text-sm font-medium text-gray-500">Profile Status</p>
+                                                    <p className="text-xs md:text-sm text-gray-700 mt-2">
                                                         Your profile is active and visible to stylists.
                                                     </p>
                                                 </div>
                                                 <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                                                    <FaTachometerAlt className="text-green-600" size={18} />
+                                                    <LuUserRoundCheck className="text-green-600" size={18} />
                                                 </div>
                                             </div>
                                         </div>
@@ -347,7 +349,7 @@ export default function User() {
 
                             {activeTab === "appointments" && (
                                 <section>
-                                    <h2 className="text-base md:text-lg font-semibold uppercase mb-4">My Appointments</h2>
+                                    <h2 className="text-sm md:text-lg font-semibold uppercase mb-4">My Appointments</h2>
 
                                     {loading ? (
                                         <div className="flex justify-center items-center min-h-[150px]">
@@ -361,7 +363,7 @@ export default function User() {
                                         </div>
                                     ) : (
                                         <div className="mt-6 p-6 bg-white rounded-lg shadow-md">
-                                            <p className="text-sm text-gray-500">You have no upcoming or recent past appointments.</p>
+                                            <p className="text-xs md:text-sm text-gray-500">You have no upcoming or recent past appointments.</p>
                                         </div>
                                     )}
                                 </section>

@@ -72,7 +72,7 @@ export default function AppointmentCard({ appointmentGroup }) {
                 email: user.email || "N/A",
             };
 
-            await downloadInvoice(appointmentGroup, customer); // must handle mobile download
+            await downloadInvoice(appointmentGroup, customer);
 
         } catch (err) {
             alert(`Failed to generate invoice: ${err.message}`);
@@ -100,7 +100,7 @@ export default function AppointmentCard({ appointmentGroup }) {
             </div>
 
             <div className="border-b border-gray-200 pb-3 mb-3 mt-12">
-                <h2 className="text-sm font-semibold uppercase text-gray-900 tracking-wide">
+                <h2 className="text-xs md:text-sm font-semibold uppercase text-gray-900 tracking-wide">
                     {services.join(", ")}
                 </h2>
                 {subNames.length > 0 && (
@@ -181,10 +181,10 @@ export default function AppointmentCard({ appointmentGroup }) {
                 <button
                     onClick={() => !isCompleted && handleDownloadInvoice()}
                     disabled={isCompleted || loadingInvoice}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-sm text-xs font-semibold transition
+                    className={`flex items-center gap-2 px-5 py-2 rounded-md text-xs  font-semibold transition
                     ${isCompleted || loadingInvoice
                             ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                            : "bg-black text-white hover:bg-gray-800"
+                            : "bg-gray-800 text-white hover:bg-gray-700 cursor-pointer   "
                         }`}
                 >
                     {loadingInvoice ? "Generating..." : <><FaDownload size={12} /> Invoice</>}
